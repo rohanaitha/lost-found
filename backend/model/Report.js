@@ -1,0 +1,35 @@
+import mongoose from "mongoose";
+
+const reportSchema = new mongoose.Schema(
+  {
+    reportType: {
+      type: String,
+      enum: ["lost", "found"], // only these 2 values allowed
+      required: true,
+    },
+    itemName: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      default: "",
+    },
+    date: {
+      type: String, // keep as string since you’re passing from input[type=date]
+      required: true,
+    },
+    location: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String, // Cloudinary URL
+      default: "",
+    },
+  },
+  { timestamps: true }
+);
+
+const Report = mongoose.model("Report", reportSchema);
+export default Report;
