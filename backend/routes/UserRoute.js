@@ -12,6 +12,7 @@ const router = express.Router();
 router.post("/register", adduser);
 router.post("/login", loginUser);
 router.get("/myprofile", authMiddleware, getMyProfile);
-router.post("/electronics",authMiddleware, createReport);
+router.post("/electronics", authMiddleware, createReport);
+router.post("/jewellery", authMiddleware, createReport);
 
 export default router;

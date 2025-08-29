@@ -27,6 +27,11 @@ const reportSchema = new mongoose.Schema(
       type: String, // Cloudinary URL
       default: "",
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User", // links to User collection
+      required: true,
+    },
   },
   { timestamps: true }
 );

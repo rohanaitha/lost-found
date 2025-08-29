@@ -1,8 +1,10 @@
 import Report from "../model/report.js";
+import Profile from "../model/Profile.js";
 
 // Create new report
 export const createReport = async (req, res) => {
   try {
+    
     const { reportType, itemName, description, date, location, image } =
       req.body;
 
@@ -18,6 +20,7 @@ export const createReport = async (req, res) => {
       date,
       location,
       imageUrl: image || "",
+      userId: req.user.id,  // to store in db with users ref
     });
 
     res
