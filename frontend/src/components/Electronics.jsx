@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export default function Electronics() {
   const [reportType, setReportType] = useState("");
@@ -8,6 +9,8 @@ export default function Electronics() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
+
+  const navigate = useNavigate();
 
 
 const handleSubmit = async (e) => {
@@ -67,6 +70,7 @@ const handleSubmit = async (e) => {
     setDate("");
     setLocation("");
     setImage(null);
+    navigate("/home");
   } catch (err) {
     console.error("❌ Error submitting report:", err);
     alert("Failed to submit report. Make sure you are logged in.");
