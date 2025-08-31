@@ -14,5 +14,6 @@ router.post("/login", loginUser);
 router.get("/myprofile", authMiddleware, getMyProfile);
 router.post("/electronics", authMiddleware, createReport);
 router.post("/jewellery", authMiddleware, createReport);
+router.post("/docs",authMiddleware,createReport)
 
 export default router;
