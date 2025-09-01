@@ -32,6 +32,11 @@ const reportSchema = new mongoose.Schema(
       ref: "User", // links to User collection
       required: true,
     },
+    profileId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile", // connects to Profile model
+      required: true,
+    },
   },
   { timestamps: true }
 );

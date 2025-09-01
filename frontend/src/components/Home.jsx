@@ -13,7 +13,7 @@ function Home() {
         const res = await axios.get("http://localhost:5000/reports", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(res);
+        console.log("response:",res);
         setPosts(res.data);
       } catch (err) {
         console.error("Error fetching posts:", err);
@@ -36,7 +36,7 @@ function Home() {
           >
             <div className="flex items-center gap-2">
               <span className="font-semibold">
-                {post.userId?.username || "Unknown User"}
+                {post.profileId?.fullName || "Unknown User"}
               </span>
               <span className="text-gray-500 text-sm">
                 {new Date(post.createdAt).toLocaleString()}

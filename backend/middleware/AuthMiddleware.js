@@ -16,6 +16,7 @@ const authMiddleware = (req, res, next) => {
       process.env.JWT_SECRET || "defaultSecret"
     );
     req.user = decoded; // store user info in request
+    console.log("user:",req.user);
     next();
   } catch (err) {
     console.error(err);
