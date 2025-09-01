@@ -25,6 +25,37 @@ function MyProfile() {
     fetchProfile();
   }, []);
 
+  const handleAvatarUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "lostfound_preset"); // Cloudinary preset
+
+    try {
+      // Upload to Cloudinary
+      const cloudRes = await fetch(
+        "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
+        { method: "POST", body: formData }
+      );
+      const data = await cloudRes.json();
+
+      // Update backend with new avatar URL
+      const token = localStorage.getItem("jwt_token");
+      const res = await axios.put(
+        "http://localhost:5000/update-avatar",
+        { avatar: data.secure_url },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setProfile(res.data); // update profile state
+    } catch (err) {
+      console.error(err);
+      alert("Failed to upload avatar");
+    }
+  };
+
   if (!profile)
     return <p className="text-white text-center mt-10">Loading...</p>;
 
@@ -35,12 +66,31 @@ function MyProfile() {
         {/* Profile Header */}
         <div className="w-full max-w-3xl bg-white/5 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/10">
           <div className="flex items-center gap-6">
-            {/* Avatar */}
-            <img
-              src={profile.avatar || "https://via.placeholder.com/150"}
-              alt="avatar"
-              className="w-28 h-28 rounded-full border-4 border-pink-500 shadow-lg"
-            />
+            {/* Avatar with upload */}
+            <div className="relative">
+              <img
+                src={profile.avatar || "https://via.placeholder.com/150"}
+                alt="avatar"
+                className="w-28 h-28 rounded-full border-4 border-pink-500 shadow-lg"
+              />
+
+              {/* Hidden file input */}
+              <input
+                id="avatarUpload"
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarUpload}
+                className="hidden"
+              />
+
+              {/* Clickable icon that triggers input */}
+              <label
+                htmlFor="avatarUpload"
+                className="absolute bottom-0 right-0 w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center text-white text-sm font-bold cursor-pointer"
+              >
+                ✎
+              </label>
+            </div>
 
             {/* User Info */}
             <div className="flex-1">
@@ -87,7 +137,6 @@ function MyProfile() {
                   alt="post"
                   className="w-full h-60 object-cover rounded-md"
                 />
-                {/* Hover overlay like Insta */}
                 <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white font-semibold text-lg transition">
                   ❤️ {post.likes} • 💬 {post.comments}
                 </div>

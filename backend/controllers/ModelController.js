@@ -107,3 +107,21 @@ export const getMyProfile = async (req, res) => {
     res.status(500).json({ msg: "Error fetching profile", error: err });
   }
 };
+
+// PUT /update-avatar
+export const updateAvatar = async (req, res) => {
+  try {
+    const { avatar } = req.body;
+    if (!avatar) return res.status(400).json({ msg: "No avatar URL provided" });
+
+    const profile = await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      { avatar },
+      { new: true }
+    );
+
+    res.status(200).json(profile);
+  } catch (err) {
+    res.status(500).json({ msg: "Error updating avatar", error: err });
+  }
+};
