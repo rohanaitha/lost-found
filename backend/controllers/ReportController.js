@@ -40,7 +40,7 @@ export const createReport = async (req, res) => {
 export const getReports = async (req, res) => {
   try {
     const reports = await Report.find()
-      .populate("profileId", "fullName") // so you get username on card
+      .populate("profileId", "fullName avatar") // so you get username on card
       .sort({ createdAt: -1 }); // newest first
 
     res.json(reports);

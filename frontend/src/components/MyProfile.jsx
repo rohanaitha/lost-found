@@ -111,20 +111,7 @@ function MyProfile() {
           <p className="mt-4 text-gray-200">{profile.bio}</p>
 
           {/* Stats */}
-          <div className="mt-4 flex gap-6 text-center">
-            <div>
-              <span className="font-bold text-lg">120</span>
-              <p className="text-gray-400 text-sm">Posts</p>
-            </div>
-            <div>
-              <span className="font-bold text-lg">4.5K</span>
-              <p className="text-gray-400 text-sm">Followers</p>
-            </div>
-            <div>
-              <span className="font-bold text-lg">980</span>
-              <p className="text-gray-400 text-sm">Following</p>
-            </div>
-          </div>
+          
         </div>
 
         {/* Posts Grid */}

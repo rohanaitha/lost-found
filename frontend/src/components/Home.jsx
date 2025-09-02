@@ -28,29 +28,45 @@ function Home() {
       <Categories />
 
       {/* Feed Section */}
-      <div className="max-w-3xl mx-auto mt-6 space-y-4">
+
+      <div className="space-y-4 max-w-3xl mx-auto">
         {posts.map((post) => (
           <div
             key={post._id}
-            className="bg-white rounded-xl shadow-md p-4 space-y-2"
+            className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg p-4 space-y-3 hover:shadow-2xl transition duration-300"
           >
-            <div className="flex items-center gap-2">
-              <span className="font-semibold">
-                {post.profileId?.fullName || "Unknown User"}
-              </span>
-              <span className="text-gray-500 text-sm">
-                {new Date(post.createdAt).toLocaleString()}
-              </span>
-            </div>
-            <p className="text-gray-800">{post.itemName}</p>
-            <p className="text-gray-600">{post.description}</p>
-            {post.imageUrl && (
+            {/* Post Header */}
+            <div className="flex items-center gap-3">
               <img
-                src={post.imageUrl}
-                alt={post.itemName}
-                className="rounded-lg w-full object-cover"
+                src={post.profileId?.avatar || "Unknown User"}
+                alt={post.profileId?.fullName || "Unknown User"}
+                className="w-10 h-10 rounded-full border-2 border-pink-500 object-cover"
               />
+              <div className="flex flex-col">
+                <span className="font-semibold text-black">
+                  {post.profileId?.fullName || "Unknown User"}
+                </span>
+                <span className="text-gray-400 text-xs">
+                  {new Date(post.createdAt).toLocaleString()}
+                </span>
+              </div>
+            </div>
+
+            {/* Post Image */}
+            {post.imageUrl && (
+              <div className="w-full max-h-[400px] overflow-hidden rounded-2xl">
+                <img
+                  src={post.imageUrl}
+                  alt={post.itemName}
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+              </div>
             )}
+            {/* Post Content */}
+            <div className="space-y-2">
+              <p className="text-black font-medium">{post.itemName}</p>
+              <p className="text-gray-900 text-sm">{post.description}</p>
+            </div>
           </div>
         ))}
       </div>
