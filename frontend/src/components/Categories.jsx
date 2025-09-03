@@ -25,7 +25,6 @@ export default function Home() {
   const categories = [
     { name: "accesories", icon: <ShoppingBag size={30} /> },
     { name: "electronics", icon: <Smartphone size={30} /> },
-    { name: "Keys", icon: <Key size={30} /> },
     { name: "jewellery", icon: <Gem size={30} /> },
     { name: "Clothes", icon: <Shirt size={30} /> },
     { name: "docs", icon: <FileUser size={30} />},

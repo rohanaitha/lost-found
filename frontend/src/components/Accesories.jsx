@@ -1,90 +1,219 @@
-export default function Accesories(){
-        return (
-          <div className="flex items-center justify-center min-h-screen bg-[url('https://i.pinimg.com/1200x/aa/70/bd/aa70bddf588809111aecfa14d3720863.jpg')] bg-cover bg-center">
-            <div className="absolute inset-0 bg-black/60"></div>
-            <div className="w-[380px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20  text-gray-900">
-              <h2 className="text-center text-3xl font-serif font-bold mb-6 text-white">
-                Accesories
-              </h2>
+import { useState } from "react";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 
-              <form className="space-y-5">
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Report Type
-                  </label>
-                  <select className="w-full rounded-lg bg-transparent text-white p-2 focus:outline-none focus:ring-2 focus:ring-white outline-none">
-                    <option value="">Select...</option>
-                    <option value="lost">Lost</option>
-                    <option value="found">Found</option>
-                  </select>
-                </div>
+export default function Accessories() {
+  const [step, setStep] = useState(1);
 
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Item Name
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. chain, bracelet, rings"
-                    className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-white focus:outline-none focus:ring-2 focus:ring-white outline-none"
-                  />
-                </div>
+  // Form states
+  const [reportType, setReportType] = useState("");
+  const [itemCategory, setItemCategory] = useState("");
+  const [otherItem, setOtherItem] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
+  const [image, setImage] = useState(null);
 
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Description
-                  </label>
-                  <textarea
-                    placeholder="Enter details like color, brand, etc."
-                    className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-white outline-none focus:outline-none focus:ring-2 focus:ring-white resize-none h-20"
-                  />
-                </div>
+  const handleNext = () => setStep((prev) => prev + 1);
+  const handlePrev = () => setStep((prev) => prev - 1);
 
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Date Lost/Found
-                  </label>
-                  <input
-                    type="date"
-                    className="w-full rounded-lg bg-transparent text-white p-2 outline-none focus:outline-none focus:ring-2 focus:ring-white"
-                  />
-                </div>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({
+      reportType,
+      itemCategory,
+      otherItem,
+      description,
+      date,
+      location,
+      image,
+    });
+  };
 
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Location
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Where it was lost/found"
-                    className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-white outline-none focus:outline-none focus:ring-2 focus:ring-white"
-                  />
-                </div>
+  return (
+    <div className="relative min-h-screen flex items-center justify-center font-['Inter']">
+      {/* Background Image (Luxury Gradient + Abstract) */}
+      <div className="absolute inset-0 bg-[url('https://i.pinimg.com/1200x/d6/9b/71/d69b7159d263fa950be54c6f7b44e763.jpg')] bg-cover bg-center"></div>
 
-                {/* Fancy File Upload */}
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Upload Item Image
-                  </label>
-                  <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer bg-white/60 hover:bg-white/80 transition">
-                    <span className="text-gray-700 text-sm">
-                      Click to upload
-                    </span>
-                    <span className="text-gray-500 text-xs">
-                      PNG, JPG (max 5MB)
-                    </span>
-                    <input type="file" className="hidden " />
-                  </label>
-                </div>
+      {/* Overlay for glass effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/90"></div>
 
-                <button
-                  type="submit"
-                  className="w-full rounded-lg bg-gray-900 hover:bg-gray-700 transition font-semibold py-2 text-white"
+      {/* Form Container */}
+      <div className="relative w-[420px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20 text-white">
+        <h2 className="text-center text-3xl font-bold mb-6 tracking-wide drop-shadow-lg">
+          Accessories
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Step 1 */}
+          {step === 1 && (
+            <>
+              <div>
+                <label className="block text-sm mb-1 text-gray-200">
+                  Report Type
+                </label>
+                <select
+                  value={reportType}
+                  onChange={(e) => setReportType(e.target.value)}
+                  className="w-full rounded-lg bg-white/20 text-white p-2 outline-none"
                 >
-                  Submit Report
-                </button>
-              </form>
-            </div>
+                  <option className="bg-gray-800" value="">
+                    Select...
+                  </option>
+                  <option className="bg-gray-800" value="lost">
+                    Lost
+                  </option>
+                  <option className="bg-gray-800" value="found">
+                    Found
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1 text-gray-200">
+                  Choose Accessory Category
+                </label>
+                <select
+                  value={itemCategory}
+                  onChange={(e) => setItemCategory(e.target.value)}
+                  className="w-full rounded-lg bg-white/20 text-white p-2 outline-none"
+                >
+                  <option className="bg-gray-800" value="">
+                    Select...
+                  </option>
+                  <option className="bg-gray-800" value="wallet">
+                    Wallet
+                  </option>
+                  <option className="bg-gray-800" value="watch">
+                    Watch
+                  </option>
+                  <option className="bg-gray-800" value="sunglasses">
+                    Sunglasses
+                  </option>
+                  <option className="bg-gray-800" value="belt">
+                    Belt
+                  </option>
+                  <option className="bg-gray-800" value="bag">
+                    Bag
+                  </option>
+                  <option className="bg-gray-800" value="cap">
+                    Cap
+                  </option>
+                  <option className="bg-gray-800" value="other">
+                    Other
+                  </option>
+                </select>
+
+                {itemCategory === "other" && (
+                  <input
+                    type="text"
+                    value={otherItem}
+                    onChange={(e) => setOtherItem(e.target.value)}
+                    placeholder="Mention your item"
+                    className="w-full rounded-lg bg-white/20 text-white p-2 placeholder-gray-400 outline-none mt-2"
+                  />
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Step 2 */}
+          {step === 2 && (
+            <>
+              <div>
+                <label className="block text-sm mb-1 text-gray-200">
+                  Description
+                </label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Describe the accessory..."
+                  className="w-full rounded-lg bg-white/20 text-white p-2 placeholder-gray-400 outline-none resize-none h-20"
+                  rows="3"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1 text-gray-200">Date</label>
+                <input
+                  type="date"
+                  value={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  className="w-full rounded-lg bg-white/20 text-white p-2 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm mb-1 text-gray-200">
+                  Location
+                </label>
+                <input
+                  type="text"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="Enter location"
+                  className="w-full rounded-lg bg-white/20 text-white p-2 placeholder-gray-400 outline-none"
+                />
+              </div>
+            </>
+          )}
+
+          {/* Step 3 */}
+          {step === 3 && (
+            <>
+              <div>
+                <label className="block text-sm mb-1 text-gray-200">
+                  Upload Image
+                </label>
+                <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer bg-white/20 hover:bg-white/30 transition">
+                  <span className="text-gray-200 text-sm">Click to upload</span>
+                  <span className="text-gray-300 text-xs">
+                    PNG, JPG (max 5MB)
+                  </span>
+                  <input
+                    type="file"
+                    className="hidden"
+                    onChange={(e) => setImage(e.target.files[0])}
+                  />
+                </label>
+                {image && (
+                  <p className="mt-2 text-sm text-gray-200">
+                    Selected: {image.name}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between mt-4">
+            {step > 1 && (
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="px-4 py-2 rounded-lg bg-gray-500/80 text-white hover:bg-gray-600 flex items-center gap-2 transition"
+              >
+                <ArrowLeft size={16} /> Previous
+              </button>
+            )}
+            {step < 3 ? (
+              <button
+                type="button"
+                onClick={handleNext}
+                className="ml-auto px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600 flex items-center gap-2 transition"
+              >
+                Next <ArrowRight size={16} />
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="ml-auto px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 flex items-center gap-2 transition"
+              >
+                Submit Report <Check size={16} />
+              </button>
+            )}
           </div>
-        );
+        </form>
+      </div>
+    </div>
+  );
 }
