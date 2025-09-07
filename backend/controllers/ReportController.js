@@ -1,49 +1,44 @@
-import Report from "../model/report.js";
 import Profile from "../model/Profile.js";
+import AccessoryReport from "../model/Accesories.js";
+import ClothesReport from "../model/Clothes.js";
+import DocReport from "../model/Docs.js";
+import ElectronicsReport from "../model/Electronics.js";
+import JewelleryReport from "../model/Jewellery.js";
 
 // Create new report
-export const createReport = async (req, res) => {
-  try {
-    const { reportType, itemName, description, date, location, image } =
-      req.body;
-
-    // Validate required fields
-    if (!reportType || !itemName || !date || !location) {
-      return res.status(400).json({ error: "Missing required fields" });
-    }
-    const profile = await Profile.findOne({ userId: req.user.id }); //TO FIND THE USER PROFILE...
-    if (!profile) {
-      return res.status(404).json({ error: "Profile not found" });
-    }
-
-    const newReport = await Report.create({
-      reportType,
-      itemName,
-      description,
-      date,
-      location,
-      imageUrl: image || "",
-      userId: req.user.id, // to store in db with users ref
-      profileId: profile._id,
-    });
-
-    res
-      .status(201)
-      .json({ message: "Report submitted successfully", report: newReport });
-    console.log("profile verify:", newReport);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Failed to submit report" });
-  }
-};
 
 export const getReports = async (req, res) => {
   try {
-    const reports = await Report.find()
-      .populate("profileId", "fullName avatar") // so you get username on card
-      .sort({ createdAt: -1 }); // newest first
+    const accesories = await AccessoryReport.find().populate(
+      "profileId",
+      "fullName avatar"
+    );
+    const clothes = await ClothesReport.find().populate(
+      "profileId",
+      "fullName avatar"
+    );
+    const docs = await DocReport.find().populate(
+      "profileId",
+      "fullName avatar"
+    );
+    const electronics = await ElectronicsReport.find().populate(
+      "profileId",
+      "fullName avatar"
+    );
+    const jewellery = await JewelleryReport.find().populate(
+      "profileId",
+      "fullName avatar"
+    );
+    const allReports = [
+      ...clothes.map((item) => ({ category: "clothes", ...item._doc })),
+      ...electronics.map((item) => ({ category: "electronics", ...item._doc })),
+      ...jewellery.map((item) => ({ category: "jewellery", ...item._doc })),
+      ...accesories.map((item) => ({ category: "accessories", ...item._doc })),
+      ...docs.map((item) => ({ category: "docs", ...item._doc })),
+    ];
+    allReports.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
-    res.json(reports);
+    res.json(allReports);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch reports" });

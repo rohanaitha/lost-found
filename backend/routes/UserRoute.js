@@ -6,7 +6,7 @@ import {
 } from "../controllers/ModelController.js";
 import express from "express";
 import authMiddleware from "../middleware/AuthMiddleware.js";
-import { createReport, getReports } from "../controllers/ReportController.js";
+import { getReports } from "../controllers/ReportController.js";
 import { createDocs, docReports } from "../controllers/DocController.js";
 import { createClothes, getClothesReports } from "../controllers/ClothController.js";
 import { createAccessory, getAccessories } from "../controllers/AccesoriesController.js";
