@@ -3,15 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Clothes() {
-  // Default states
+  // States
   const [reportType, setReportType] = useState("");
   const [itemName, setItemName] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
-
-  // Extra fields
   const [gender, setGender] = useState("");
   const [size, setSize] = useState("");
   const [color, setColor] = useState("");
@@ -19,16 +17,15 @@ export default function Clothes() {
   const [pattern, setPattern] = useState("");
   const [brand, setBrand] = useState("");
   const [reward, setReward] = useState("");
-
-  // Step control
   const [step, setStep] = useState(1);
+
+  const navigate = useNavigate();
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handlePrev = () => setStep((prev) => prev - 1);
-  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       let imageUrl = "";
       const token = localStorage.getItem("jwt_token");
@@ -37,15 +34,10 @@ export default function Clothes() {
         const data = new FormData();
         data.append("file", image);
         data.append("upload_preset", "lostfound_preset");
-
         const cloudRes = await fetch(
           "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
-          {
-            method: "POST",
-            body: data,
-          }
+          { method: "POST", body: data }
         );
-
         const cloudData = await cloudRes.json();
         imageUrl = cloudData.secure_url;
       }
@@ -64,15 +56,18 @@ export default function Clothes() {
         brand,
         reward: reportType === "lost" ? reward : "",
       };
+
       const res = await axios.post("http://localhost:5000/clothes", payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
-      console.log("report sumitted:", res.data);
-      alert("report submitted!!");
 
+      alert("Report submitted!");
+      console.log("✅ Report submitted:", res.data);
+
+      // Reset
       setReportType("");
       setItemName("");
       setDescription("");
@@ -82,14 +77,15 @@ export default function Clothes() {
       setGender("");
       setSize("");
       setColor("");
+      setMaterial("");
       setPattern("");
       setBrand("");
       setReward("");
       setStep(1);
       navigate("/home");
     } catch (err) {
-      console.error("❌ Error submitting report:", err);
-      alert("Failed to submit report. Make sure you are logged in.");
+      console.error("❌ Error:", err);
+      alert("Failed to submit. Make sure you are logged in.");
     }
   };
 
@@ -101,15 +97,11 @@ export default function Clothes() {
           "url('https://i.pinimg.com/736x/43/d1/35/43d135d38689527d117c56015d80a458.jpg')",
       }}
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 "></div>
-
-      {/* Form container */}
+      <div className="absolute inset-0 bg-black/40"></div>
       <div className="relative w-full max-w-2xl bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/30 p-8 text-white">
         <h2 className="text-3xl font-semibold mb-6 text-center tracking-wide drop-shadow-lg">
           Clothes
         </h2>
-
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Step 1 */}
           {step === 1 && (
@@ -133,7 +125,7 @@ export default function Clothes() {
                   type="text"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 focus:outline-none placeholder-gray-600"
+                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600 focus:outline-none"
                   placeholder="e.g. T-shirt, Jacket"
                 />
               </div>
@@ -143,7 +135,7 @@ export default function Clothes() {
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 focus:outline-none placeholder-gray-600"
+                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600 focus:outline-none"
                   placeholder="Brief details"
                 />
               </div>

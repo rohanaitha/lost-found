@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Accessories() {
   const [step, setStep] = useState(1);
@@ -13,31 +15,78 @@ export default function Accessories() {
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
 
+  const navigate = useNavigate();
+
   const handleNext = () => setStep((prev) => prev + 1);
   const handlePrev = () => setStep((prev) => prev - 1);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
-      reportType,
-      itemCategory,
-      otherItem,
-      description,
-      date,
-      location,
-      image,
-    });
+    try {
+      let imageUrl = "";
+      const token = localStorage.getItem("jwt_token");
+
+      if (image) {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "lostfound_preset");
+
+        const cloudRes = await fetch(
+          "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
+          { method: "POST", body: data }
+        );
+
+        const cloudData = await cloudRes.json();
+        imageUrl = cloudData.secure_url;
+        console.log("Cloudinary Response:", imageUrl);
+      }
+
+      const payload = {
+        reportType,
+        itemCategory: itemCategory === "other" ? otherItem : itemCategory,
+        description,
+        date,
+        location,
+        image: imageUrl,
+      };
+
+      const res = await axios.post(
+        "http://localhost:5000/accesories",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("✅ Report Submitted:", res.data);
+      alert("Report submitted successfully!");
+
+      // Reset form
+      setReportType("");
+      setItemCategory("");
+      setOtherItem("");
+      setDescription("");
+      setDate("");
+      setLocation("");
+      setImage(null);
+      setStep(1);
+      navigate("/home");
+    } catch (err) {
+      console.error("❌ Error submitting report:", err);
+      alert("Failed to submit report. Make sure you are logged in.");
+    }
   };
 
   return (
     <div className="relative min-h-screen flex items-center justify-center font-['Inter']">
-      {/* Background Image (Luxury Gradient + Abstract) */}
+      {/* Background & Overlay */}
       <div className="absolute inset-0 bg-[url('https://i.pinimg.com/1200x/d6/9b/71/d69b7159d263fa950be54c6f7b44e763.jpg')] bg-cover bg-center"></div>
-
-      {/* Overlay for glass effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/90"></div>
 
-      {/* Form Container */}
+      {/* Form */}
       <div className="relative w-[420px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20 text-white">
         <h2 className="text-center text-3xl font-bold mb-6 tracking-wide drop-shadow-lg">
           Accessories
@@ -113,6 +162,16 @@ export default function Accessories() {
                   />
                 )}
               </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-600"
+                >
+                  Next <ArrowRight size={16} />
+                </button>
+              </div>
             </>
           )}
 
@@ -128,7 +187,6 @@ export default function Accessories() {
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Describe the accessory..."
                   className="w-full rounded-lg bg-white/20 text-white p-2 placeholder-gray-400 outline-none resize-none h-20"
-                  rows="3"
                 />
               </div>
 
@@ -153,6 +211,23 @@ export default function Accessories() {
                   placeholder="Enter location"
                   className="w-full rounded-lg bg-white/20 text-white p-2 placeholder-gray-400 outline-none"
                 />
+              </div>
+
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="px-4 py-2 rounded-lg bg-gray-500 hover:bg-gray-600"
+                >
+                  <ArrowLeft size={16} /> Previous
+                </button>
+                <button
+                  type="button"
+                  onClick={handleNext}
+                  className="px-4 py-2 rounded-lg bg-teal-500 hover:bg-teal-600"
+                >
+                  Next <ArrowRight size={16} />
+                </button>
               </div>
             </>
           )}
@@ -181,37 +256,24 @@ export default function Accessories() {
                   </p>
                 )}
               </div>
+
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  onClick={handlePrev}
+                  className="px-4 py-2 rounded-lg bg-gray-500 hover:bg-gray-600"
+                >
+                  <ArrowLeft size={16} /> Previous
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 rounded-lg bg-green-500 hover:bg-green-600"
+                >
+                  Submit Report <Check size={16} />
+                </button>
+              </div>
             </>
           )}
-
-          {/* Navigation Buttons */}
-          <div className="flex justify-between mt-4">
-            {step > 1 && (
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="px-4 py-2 rounded-lg bg-gray-500/80 text-white hover:bg-gray-600 flex items-center gap-2 transition"
-              >
-                <ArrowLeft size={16} /> Previous
-              </button>
-            )}
-            {step < 3 ? (
-              <button
-                type="button"
-                onClick={handleNext}
-                className="ml-auto px-4 py-2 rounded-lg bg-teal-500 text-white hover:bg-teal-600 flex items-center gap-2 transition"
-              >
-                Next <ArrowRight size={16} />
-              </button>
-            ) : (
-              <button
-                type="submit"
-                className="ml-auto px-4 py-2 rounded-lg bg-green-500 text-white hover:bg-green-600 flex items-center gap-2 transition"
-              >
-                Submit Report <Check size={16} />
-              </button>
-            )}
-          </div>
         </form>
       </div>
     </div>
