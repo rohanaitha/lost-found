@@ -11,13 +11,14 @@ import { createDocs, docReports } from "../controllers/DocController.js";
 import { createClothes, getClothesReports } from "../controllers/ClothController.js";
 import { createAccessory, getAccessories } from "../controllers/AccesoriesController.js";
 import { createJewellery } from "../controllers/JewelleryController.js";
+import { createElectronics } from "../controllers/ElectronicsController.js";
 
 const router = express.Router();
 
 router.post("/register", adduser);
 router.post("/login", loginUser);
 router.get("/myprofile", authMiddleware, getMyProfile);
-router.post("/electronics", authMiddleware, createReport);
+router.post("/electronics", authMiddleware, createElectronics);
 router.post("/jewellery", authMiddleware, createJewellery);
 router.post("/docs", authMiddleware, createDocs);
 router.post("/clothes",authMiddleware,createClothes)

@@ -14,18 +14,22 @@ export default function Electronics() {
   const [size, setSize] = useState("");
   const [skins, setSkins] = useState("");
   const [charge, setCharge] = useState("");
-  const [lock, SetLock] = useState("");
+  const [lock, setLock] = useState("");
 
-  const [step, setStep] = useState(1); // step tracker
-
+  const [step, setStep] = useState(1);
   const navigate = useNavigate();
 
+  // ------------------- Submit -------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let imageUrl = "";
       const token = localStorage.getItem("jwt_token");
+      if (!token) {
+        alert("Unauthorized! Please login first.");
+        return;
+      }
 
+      let imageUrl = "";
       if (image) {
         const data = new FormData();
         data.append("file", image);
@@ -38,7 +42,6 @@ export default function Electronics() {
             body: data,
           }
         );
-
         const cloudData = await cloudRes.json();
         imageUrl = cloudData.secure_url;
       }
@@ -71,20 +74,7 @@ export default function Electronics() {
 
       console.log("✅ Report Submitted:", res.data);
       alert("Report submitted successfully!");
-
-      setReportType("");
-      setItemName("");
-      setDescription("");
-      setDate("");
-      setLocation("");
-      setImage(null);
-      setBrand("");
-      setModel("");
-      setSize("");
-      setSkins("");
-      setCharge("");
-      SetLock("");
-
+      resetForm();
       navigate("/home");
     } catch (err) {
       console.error("❌ Error submitting report:", err);
@@ -92,15 +82,32 @@ export default function Electronics() {
     }
   };
 
+  // ------------------- Reset -------------------
+  const resetForm = () => {
+    setReportType("");
+    setItemName("");
+    setDescription("");
+    setDate("");
+    setLocation("");
+    setImage(null);
+    setBrand("");
+    setModel("");
+    setSize("");
+    setSkins("");
+    setCharge("");
+    setLock("");
+    setStep(1);
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-[url('https://images.unsplash.com/photo-1504274066651-8d31a536b11a')] bg-cover bg-center">
-      <div className="w-[400px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20 text-gray-900">
+      <div className="w-[400px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20">
         <h2 className="text-center text-3xl font-serif font-bold mb-6 text-gray-900">
           Electronics
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Step 1 */}
+          {/* ------------------- Step 1 ------------------- */}
           {step === 1 && (
             <>
               <div>
@@ -126,8 +133,8 @@ export default function Electronics() {
                   type="text"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  placeholder="e.g. pods, Phone, laptop"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  placeholder="e.g. Pods, Phone, Laptop"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
 
@@ -139,13 +146,13 @@ export default function Electronics() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Enter details like color, brand, etc."
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none resize-none h-20"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500 resize-none h-20"
                 />
               </div>
             </>
           )}
 
-          {/* Step 2 */}
+          {/* ------------------- Step 2 ------------------- */}
           {step === 2 && (
             <>
               <div>
@@ -169,7 +176,7 @@ export default function Electronics() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Where it was lost/found"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
 
@@ -182,7 +189,7 @@ export default function Electronics() {
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                   placeholder="Enter brand name"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
 
@@ -195,13 +202,13 @@ export default function Electronics() {
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
                   placeholder="Enter model name"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
             </>
           )}
 
-          {/* Step 3 */}
+          {/* ------------------- Step 3 ------------------- */}
           {step === 3 && (
             <>
               <div>
@@ -211,7 +218,7 @@ export default function Electronics() {
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
                   placeholder="Enter item size"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
 
@@ -224,7 +231,7 @@ export default function Electronics() {
                   value={skins}
                   onChange={(e) => setSkins(e.target.value)}
                   placeholder="Enter skins if any"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
 
@@ -237,7 +244,7 @@ export default function Electronics() {
                   value={charge}
                   onChange={(e) => setCharge(e.target.value)}
                   placeholder="Charging details"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
 
@@ -246,15 +253,15 @@ export default function Electronics() {
                 <input
                   type="text"
                   value={lock}
-                  onChange={(e) => SetLock(e.target.value)}
+                  onChange={(e) => setLock(e.target.value)}
                   placeholder="Lock details"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 placeholder-gray-500 outline-none"
+                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
                 />
               </div>
             </>
           )}
 
-          {/* Step 4 */}
+          {/* ------------------- Step 4 ------------------- */}
           {step === 4 && (
             <>
               <div>
@@ -281,7 +288,7 @@ export default function Electronics() {
             </>
           )}
 
-          {/* Navigation Buttons */}
+          {/* ------------------- Navigation Buttons ------------------- */}
           <div className="flex justify-between mt-4">
             {step > 1 && (
               <button
