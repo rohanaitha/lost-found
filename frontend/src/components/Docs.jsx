@@ -59,7 +59,7 @@ export default function Docs() {
         docNumber,
         issuingAuthority,
         issuingAuthority:
-        issuingAuthority === "other" ? otherAuthority : issuingAuthority,
+          issuingAuthority === "other" ? otherAuthority : issuingAuthority,
         nameOnDoc,
         identifier,
         reward: reportType === "lost" ? reward : "",
@@ -88,7 +88,7 @@ export default function Docs() {
       setIssuingAuthority("");
       setNameOnDoc("");
       setIdentifier("");
-      
+
       setReward("");
       setStep(1);
 

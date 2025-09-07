@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Clothes() {
   // Default states
@@ -16,7 +17,6 @@ export default function Clothes() {
   const [color, setColor] = useState("");
   const [material, setMaterial] = useState("");
   const [pattern, setPattern] = useState("");
-  const [condition, setCondition] = useState("");
   const [brand, setBrand] = useState("");
   const [reward, setReward] = useState("");
 
@@ -25,38 +25,71 @@ export default function Clothes() {
 
   const handleNext = () => setStep((prev) => prev + 1);
   const handlePrev = () => setStep((prev) => prev - 1);
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("reportType", reportType);
-    formData.append("itemName", itemName);
-    formData.append("description", description);
-    formData.append("date", date);
-    formData.append("location", location);
-    formData.append("image", image);
-
-    // Extra fields
-    formData.append("gender", gender);
-    formData.append("size", size);
-    formData.append("color", color);
-    formData.append("material", material);
-    formData.append("pattern", pattern);
-    formData.append("condition", condition);
-    formData.append("brand", brand);
-    if (reportType === "lost") {
-      formData.append("reward", reward);
-    }
-
     try {
-      await axios.post("http://localhost:5000/api/reports", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+      let imageUrl = "";
+      const token = localStorage.getItem("jwt_token");
+
+      if (image) {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "lostfound_preset");
+
+        const cloudRes = await fetch(
+          "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
+          {
+            method: "POST",
+            body: data,
+          }
+        );
+
+        const cloudData = await cloudRes.json();
+        imageUrl = cloudData.secure_url;
+      }
+
+      const payload = {
+        reportType,
+        itemName,
+        description,
+        date,
+        location,
+        image: imageUrl,
+        gender,
+        size,
+        color,
+        pattern,
+        brand,
+        reward: reportType === "lost" ? reward : "",
+      };
+      const res = await axios.post("http://localhost:5000/clothes", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       });
-      alert("Clothes Report Submitted!");
+      console.log("report sumitted:", res.data);
+      alert("report submitted!!");
+
+      setReportType("");
+      setItemName("");
+      setDescription("");
+      setDate("");
+      setLocation("");
+      setImage(null);
+      setGender("");
+      setSize("");
+      setColor("");
+      setPattern("");
+      setBrand("");
+      setReward("");
+      setStep(1);
+      navigate("/home");
     } catch (err) {
-      console.error(err);
-      alert("Failed to submit report.");
+      console.error("❌ Error submitting report:", err);
+      alert("Failed to submit report. Make sure you are logged in.");
     }
   };
 
@@ -192,8 +225,6 @@ export default function Clothes() {
                   placeholder="e.g. Striped"
                 />
               </div>
-
-              
 
               <div>
                 <label className="block mb-1 text-sm">Brand</label>
