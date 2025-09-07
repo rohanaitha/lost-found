@@ -14,11 +14,12 @@ export default function Docs() {
   // Extra fields
   const [docType, setDocType] = useState("");
   const [docNumber, setDocNumber] = useState("");
+  const [otherDoc, setOtherDoc] = useState("");
   const [issuingAuthority, setIssuingAuthority] = useState("");
   const [nameOnDoc, setNameOnDoc] = useState("");
   const [identifier, setIdentifier] = useState("");
-  const [condition, setCondition] = useState("");
   const [reward, setReward] = useState("");
+  const [otherAuthority, setOtherAuthority] = useState("");
 
   const [step, setStep] = useState(1);
   const navigate = useNavigate();
@@ -54,11 +55,13 @@ export default function Docs() {
         location,
         image: imageUrl,
         docType,
+        docType: docType === "other" ? otherDoc : docType,
         docNumber,
         issuingAuthority,
+        issuingAuthority:
+        issuingAuthority === "other" ? otherAuthority : issuingAuthority,
         nameOnDoc,
         identifier,
-        condition,
         reward: reportType === "lost" ? reward : "",
       };
 
@@ -80,11 +83,12 @@ export default function Docs() {
       setLocation("");
       setImage(null);
       setDocType("");
+      setOtherDoc("");
       setDocNumber("");
       setIssuingAuthority("");
       setNameOnDoc("");
       setIdentifier("");
-      setCondition("");
+      
       setReward("");
       setStep(1);
 
@@ -96,7 +100,7 @@ export default function Docs() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('https://i.pinimg.com/1200x/0a/08/c5/0a08c5c3fb7ec15475c94815c23b7865.jpg')] bg-cover bg-center">
+    <div className="flex items-center justify-center min-h-screen bg-[url('https://i.pinimg.com/1200x/8e/42/7a/8e427a32ce5749db2de8e454adc493ec.jpg')] bg-cover bg-center">
       <div className="w-[400px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20 text-gray-900 relative">
         <h2 className="text-center text-3xl font-serif font-bold mb-6 text-white">
           Docs Report
@@ -140,6 +144,15 @@ export default function Docs() {
                   <option value="work">Work ID</option>
                   <option value="other">Other</option>
                 </select>
+                {/* 👇 Extra field when "Other" selected */}
+                {docType === "other" && (
+                  <textarea
+                    value={otherDoc}
+                    onChange={(e) => setOtherDoc(e.target.value)}
+                    placeholder="Please specify your document type"
+                    className="mt-2 w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none resize-none h-16"
+                  />
+                )}
               </div>
             </>
           )}
@@ -165,7 +178,7 @@ export default function Docs() {
                   Document Number (partial)
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   value={docNumber}
                   onChange={(e) => setDocNumber(e.target.value)}
                   placeholder="e.g. ****1234"
@@ -173,18 +186,66 @@ export default function Docs() {
                 />
               </div>
 
+              {/* Issuing Authority */}
               <div>
                 <label className="block text-sm mb-1 text-white">
                   Issuing Authority
                 </label>
-                <input
-                  type="text"
+                <select
                   value={issuingAuthority}
                   onChange={(e) => setIssuingAuthority(e.target.value)}
-                  placeholder="e.g. Govt of India, University"
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
-                />
+                  className="w-full rounded-lg bg-transparent text-white p-2 outline-none border-b border-white/40 focus:border-b-2 focus:border-yellow-500"
+                >
+                  <option className="text-gray-900" value="">
+                    Select...
+                  </option>
+                  <option className="text-gray-900" value="UIDAI">
+                    UIDAI (Aadhaar)
+                  </option>
+                  <option
+                    className="text-gray-900"
+                    value="Income Tax Department"
+                  >
+                    Income Tax Department (PAN)
+                  </option>
+                  <option
+                    className="text-gray-900"
+                    value="Election Commission of India"
+                  >
+                    Election Commission of India (Voter ID)
+                  </option>
+                  <option className="text-gray-900" value="RTO">
+                    RTO (Driving License)
+                  </option>
+                  <option
+                    className="text-gray-900"
+                    value="Passport Seva Kendra"
+                  >
+                    Passport Seva Kendra
+                  </option>
+                  <option className="text-gray-900" value="College/University">
+                    College/University
+                  </option>
+                  <option className="text-gray-900" value="Employer">
+                    Employer / Company
+                  </option>
+                  <option className="text-gray-900" value="Others">
+                    Others
+                  </option>
+                </select>
               </div>
+
+              {/* Show textarea if "Others" is selected */}
+              {issuingAuthority === "Others" && (
+                <div className="mt-2">
+                  <textarea
+                    value={otherAuthority}
+                    onChange={(e) => setOtherAuthority(e.target.value)}
+                    placeholder="Enter issuing authority name"
+                    className="w-full rounded-lg border-b border-white/40 focus:border-b-2 focus:border-yellow-500 bg-transparent text-white p-2 placeholder-white outline-none resize-none h-16"
+                  />
+                </div>
+              )}
             </>
           )}
 
@@ -202,22 +263,6 @@ export default function Docs() {
                   placeholder="e.g. DOB, Roll No"
                   className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Condition
-                </label>
-                <select
-                  value={condition}
-                  onChange={(e) => setCondition(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-white p-2 outline-none"
-                >
-                  <option value="">Select...</option>
-                  <option value="intact">Intact</option>
-                  <option value="damaged">Damaged</option>
-                  <option value="torn">Torn</option>
-                </select>
               </div>
 
               {reportType === "lost" && (

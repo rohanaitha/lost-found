@@ -193,20 +193,7 @@ export default function Clothes() {
                 />
               </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Condition</label>
-                <select
-                  value={condition}
-                  onChange={(e) => setCondition(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900"
-                >
-                  <option value="">Select</option>
-                  <option value="new">New</option>
-                  <option value="like-new">Like New</option>
-                  <option value="used">Used</option>
-                  <option value="damaged">Damaged</option>
-                </select>
-              </div>
+              
 
               <div>
                 <label className="block mb-1 text-sm">Brand</label>
