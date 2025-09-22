@@ -1,10 +1,13 @@
 import ElectronicsReport from "../model/Electronics.js";
 import Profile from "../model/Profile.js";
+import Model from "../model/Model.js";
 
 // Create new electronics report
 export const createElectronics = async (req, res) => {
   try {
     const profile = await Profile.findOne({ userId: req.user.id });
+    const user = await Model.findOne({ _id: req.user.id });
+    console.log("idcheck:",user)
     if (!profile) {
       return res.status(404).json({ message: "Profile not found" });
     }
@@ -25,7 +28,7 @@ export const createElectronics = async (req, res) => {
     } = req.body;
 
     const electronics = await ElectronicsReport.create({
-      userId: profile._id,
+      userId: user._id,
       profileId: profile._id,
       reportType,
       itemName,

@@ -134,7 +134,10 @@ export default function Electronics() {
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
                   placeholder="e.g. Pods, Phone, Laptop"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -146,7 +149,10 @@ export default function Electronics() {
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Enter details like color, brand, etc."
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500 resize-none h-20"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
             </>
@@ -163,7 +169,10 @@ export default function Electronics() {
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -176,7 +185,10 @@ export default function Electronics() {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="Where it was lost/found"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -189,7 +201,10 @@ export default function Electronics() {
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
                   placeholder="Enter brand name"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -202,7 +217,10 @@ export default function Electronics() {
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
                   placeholder="Enter model name"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
             </>
@@ -218,7 +236,10 @@ export default function Electronics() {
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
                   placeholder="Enter item size"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -231,7 +252,10 @@ export default function Electronics() {
                   value={skins}
                   onChange={(e) => setSkins(e.target.value)}
                   placeholder="Enter skins if any"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -244,7 +268,10 @@ export default function Electronics() {
                   value={charge}
                   onChange={(e) => setCharge(e.target.value)}
                   placeholder="Charging details"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
 
@@ -255,7 +282,10 @@ export default function Electronics() {
                   value={lock}
                   onChange={(e) => setLock(e.target.value)}
                   placeholder="Lock details"
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none placeholder-gray-500"
+                  className="w-full bg-transparent text-gray-900 p-2 
+             border-b-2 border-gray-400 
+             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
+             outline-none placeholder-gray-500 transition-all duration-300"
                 />
               </div>
             </>
