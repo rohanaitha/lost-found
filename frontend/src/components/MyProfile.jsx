@@ -77,16 +77,29 @@ function MyProfile() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen bg-gray-950 text-white flex flex-col items-center py-10">
-        {/* Profile Header */}
-        <div className="w-full max-w-3xl bg-white/5 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/10">
-          <div className="flex items-center gap-6">
-            {/* Avatar with upload */}
+
+      <div
+        className="min-h-screen text-white  py-10  bg-center "
+        style={{
+          backgroundImage:
+            "url('https://i.pinimg.com/736x/9a/51/32/9a5132622ae5f668acb465d9035978f7.jpg')",
+        }}
+      >
+        {/* Profile Section */}
+        <div className="w-full max-w-3xl mx-auto text-white py-10">
+          {/* Centered Heading (username big at top) */}
+          <h1 className="text-6xl font-bold font-serif text-center mb-8">
+            {profile.fullName}
+          </h1>
+
+          {/* Avatar + Small Username (aligned left) */}
+          <div className="flex items-start gap-6">
+            {/* Avatar */}
             <div className="relative">
               <img
                 src={profile.avatar || "https://via.placeholder.com/150"}
                 alt="avatar"
-                className="w-28 h-28 rounded-full border-4 border-pink-500 shadow-lg"
+                className="w-28 h-28 rounded-full border-4 border-white shadow-lg"
               />
 
               {/* Hidden file input */}
@@ -98,42 +111,40 @@ function MyProfile() {
                 className="hidden"
               />
 
-              {/* Clickable icon that triggers input */}
+              {/* Clickable icon */}
               <label
                 htmlFor="avatarUpload"
-                className="absolute bottom-0 right-0 w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center text-white text-sm font-bold cursor-pointer"
+                className="absolute bottom-0 right-0 w-10 h-10 bg-gray-400 rounded-full flex items-center justify-center text-white text-sm font-bold cursor-pointer"
               >
                 ✎
               </label>
             </div>
 
-            {/* User Info */}
-            <div className="flex-1">
-              <div className="flex items-center gap-4">
-                <h2 className="text-2xl font-bold">{profile.fullName}</h2>
-                <button className="px-4 py-1 text-sm rounded-lg bg-pink-600 hover:bg-pink-700">
-                  Follow
-                </button>
-              </div>
-              <p className="text-gray-300">@{profile.username}</p>
-              <p className="mt-2 text-gray-400 text-sm">
-                Joined {new Date(profile.createdAt).toDateString()}
-              </p>
+            {/* Small Username beside avatar */}
+            <div className="flex flex-col justify-center">
+              <p className="text-gray-200 text-xl">{profile.fullName}...❣</p>
             </div>
           </div>
 
-          {/* Bio */}
-          <p className="mt-4 text-gray-200">{profile.bio}</p>
+          {/* Bio directly under avatar (aligned left) */}
+          <div className="mt-4 ml-1">
+            <p className="text-gray-200 text-lg">{profile.bio}</p>
+          </div>
 
-          {/* Stats */}
+          {/* Joined date under bio (aligned left) */}
+          <div className="mt-2 ml-1">
+            <p className="text-gray-200 text-m">
+              Joined {new Date(profile.createdAt).toDateString()}
+            </p>
+          </div>
         </div>
-      </div>
 
-      {/*POSTS*/}
-      <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto">
-        {myPosts.map((post) => (
-          <PostCard key={post._id} post={post} />
-        ))}
+        {/* POSTS */}
+        <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto py-10">
+          {myPosts.map((post) => (
+            <PostCard key={post._id} post={post} />
+          ))}
+        </div>
       </div>
     </>
   );

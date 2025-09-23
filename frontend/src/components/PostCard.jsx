@@ -15,7 +15,7 @@ export default function PostCard({ post }) {
         }`}
       >
         {/* Front Side */}
-        <div className="absolute inset-0 w-full h-full backface-hidden bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg overflow-hidden flex flex-col">
+        <div className="absolute inset-0 w-full h-full backface-hidden bg-white backdrop-blur-md border border-white/20 rounded-2xl shadow-lg overflow-hidden flex flex-col">
           {/* Header */}
           <div className="flex items-center gap-3 p-3 flex-shrink-0">
             <img
@@ -43,7 +43,7 @@ export default function PostCard({ post }) {
               />
             </div>
           )}
-
+          <div className="border-t border-gray-300 border-2 mx-5 my-3"></div>
           {/* Description with scroll */}
           <div className="p-3 h-24 overflow-y-auto flex-shrink-0">
             <h2 className="text-lg font-semibold text-black">
