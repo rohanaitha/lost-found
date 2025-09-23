@@ -27,7 +27,7 @@ function Home() {
       <Navbar />
       <Categories />
 
-      <div className="space-y-4 max-w-3xl mx-auto">
+      <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto">
         {posts.map((post) => (
           <PostCard key={post._id} post={post} />
         ))}

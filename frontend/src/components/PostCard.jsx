@@ -6,7 +6,7 @@ export default function PostCard({ post }) {
 
   return (
     <div
-      className="relative w-full h-[420px] [perspective:1000px] cursor-pointer"
+      className="relative w-[28vw] h-[70vh] [perspective:1000px] cursor-pointer"
       onClick={() => setFlipped(!flipped)}
     >
       <div

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
-
+import PostCard from "./PostCard";
 function MyProfile() {
   const [profile, setProfile] = useState(null);
+  const [myPosts, setMyPosts] = useState([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -24,7 +25,21 @@ function MyProfile() {
     };
     fetchProfile();
   }, []);
-
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      try {
+        const token = localStorage.getItem("jwt_token");
+        const response = await axios.get("http://localhost:5000/myPosts", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setMyPosts(response.data);
+      } catch (err) {
+        console.log("myposts:", err);
+        alert("post load failed");
+      }
+    };
+    fetchMyPosts();
+  }, []);
   const handleAvatarUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -111,28 +126,14 @@ function MyProfile() {
           <p className="mt-4 text-gray-200">{profile.bio}</p>
 
           {/* Stats */}
-          
         </div>
+      </div>
 
-        {/* Posts Grid */}
-        <div className="mt-10 grid grid-cols-3 gap-2 w-full max-w-3xl">
-          {profile.posts?.length > 0 ? (
-            profile.posts.map((post, index) => (
-              <div key={index} className="relative group">
-                <img
-                  src={post.image}
-                  alt="post"
-                  className="w-full h-60 object-cover rounded-md"
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white font-semibold text-lg transition">
-                  ❤️ {post.likes} • 💬 {post.comments}
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="col-span-3 text-center text-gray-400">No posts yet</p>
-          )}
-        </div>
+      {/*POSTS*/}
+      <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto">
+        {myPosts.map((post) => (
+          <PostCard key={post._id} post={post} />
+        ))}
       </div>
     </>
   );
