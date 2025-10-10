@@ -1,16 +1,27 @@
 import React from "react";
 import { Bell, LogOut, User, Search, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Navbar() {
+  const [Searchbar, setSearchbar] = useState("");
+
   const navigate = useNavigate();
 
   function handleLogout() {
     localStorage.removeItem("jwt_token");
-    
+
     navigate("/login");
   }
-
+  const handleSearch = (event) => {
+    setSearchbar(event.target.value);
+    console.log("search: ", Searchbar);
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      navigate(`/searchResults/${Searchbar}`);
+    }
+  };
   return (
     <nav
       className="w-full bg-cover bg-center backdrop-blur-sm  shadow-lg px-6 py-3 flex items-center justify-between border-b border-white/20"
@@ -37,6 +48,9 @@ function Navbar() {
           className="w-full pl-10 pr-4 py-2 rounded-full bg-black/30 border border-white/30 
         text-white placeholder-gray-300 focus:outline-none focus:ring-2 
         focus:ring-yellow-400 shadow-inner backdrop-blur-md"
+          onChange={handleSearch}
+          value={Searchbar}
+          onKeyDown={handleKeyDown}
         />
       </div>
 

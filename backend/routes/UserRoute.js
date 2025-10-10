@@ -10,6 +10,7 @@ import {
   getReports,
   myPosts,
   otherPosts,
+  searchPosts,
 } from "../controllers/ReportController.js";
 import { createDocs, docReports } from "../controllers/DocController.js";
 import {
@@ -42,4 +43,5 @@ router.get("/clothreport", authMiddleware, getClothesReports);
 router.get("/myPosts", authMiddleware, myPosts);
 router.get("/profile/:fullName", getOtherProfile);
 router.get("/posts/:profileId", otherPosts);
+router.get("/searchResults/:title",searchPosts)
 export default router;

@@ -80,11 +80,34 @@ export const otherPosts = async (req, res) => {
       ) {
         finalPost.push(myPost);
       }
-       console.log("checking: ", myPost.profileId._id.toString());
+      console.log("checking: ", myPost.profileId._id.toString());
     }
     res.json(finalPost);
     console.log("result: ", finalPost);
     console.log("checking: ", req.params.profileId);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Failed to fetch reports" });
+  }
+};
+
+export const searchPosts = async (req, res) => {
+  try {
+    const searchedPosts = [];
+    const allReports = await fetchAllReports();
+    for (const myPost of allReports) {
+      if (
+        myPost.itemName
+          ?.toLowerCase()
+          .includes(req.params.title?.toLowerCase()) ||
+        myPost.itemCategory
+          ?.toLowerCase()
+          .includes(req.params.title?.toLowerCase())
+      ) {
+        searchedPosts.push(myPost);
+      }
+    }
+    res.json(searchedPosts);
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to fetch reports" });
