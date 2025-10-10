@@ -1,9 +1,14 @@
 import { useState } from "react";
 import DynamicFields from "./DynamicFields";
+import { useNavigate } from "react-router-dom";
 
 export default function PostCard({ post }) {
+  const navigate = useNavigate();
   const [flipped, setFlipped] = useState(false);
+    const handleProfileClick = () => {
+      navigate(`/profile/${post.profileId?.fullName}`);
 
+    };
   return (
     <div
       className="relative w-[28vw] h-[70vh] [perspective:1000px] cursor-pointer"
@@ -17,7 +22,10 @@ export default function PostCard({ post }) {
         {/* Front Side */}
         <div className="absolute inset-0 w-full h-full backface-hidden bg-white backdrop-blur-md border border-white/20 rounded-2xl shadow-lg overflow-hidden flex flex-col">
           {/* Header */}
-          <div className="flex items-center gap-3 p-3 flex-shrink-0">
+          <div
+            className="flex items-center gap-3 p-3 flex-shrink-0"
+            onClick={handleProfileClick}
+          >
             <img
               src={post.profileId?.avatar || "https://via.placeholder.com/50"}
               alt={post.profileId?.fullName || "Unknown User"}
@@ -43,13 +51,13 @@ export default function PostCard({ post }) {
               />
             </div>
           )}
-          <div className="border-t border-gray-300 border-2 mx-5 my-3"></div>
+          <div className="border-t border-gray-300 border-2 mx-5 my-3 "></div>
           {/* Description with scroll */}
           <div className="p-3 h-24 overflow-y-auto flex-shrink-0">
             <h2 className="text-lg font-semibold text-black">
               {post.itemName}
             </h2>
-            <p className="text-sm text-gray-700 whitespace-pre-line">
+            <p className="text-sm  text-gray-700 whitespace-pre-line">
               {post.description}
             </p>
           </div>

@@ -17,21 +17,23 @@ import Accesories from './components/Accesories';
 import Keys from './components/Keys';
 import Clothes from './components/Clothes';
 import MyProfile from './components/MyProfile';
+import OtherProfile from './components/OtherProfile';
 function App() {
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/register' element = {<Login/>}/>
-        <Route path='/home' element = {<Home/>}/>
-        <Route path='/login' element = {<SignIn/>}/>
-        <Route path='/electronics' element= {<Electronics/>}/>
-        <Route path='/docs' element = {<Docs/>}/>
-        <Route path='/jewellery' element = {<Jewellery/>}/>
-        <Route path='/accesories' element={<Accesories/>}/>
-        <Route path='/keys' element={<Keys/>}/>
-        <Route path='/clothes' element={<Clothes/>}/>
-        <Route path='/myprofile' element={<MyProfile/>}/>
+        <Route path="/register" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/electronics" element={<Electronics />} />
+        <Route path="/docs" element={<Docs />} />
+        <Route path="/jewellery" element={<Jewellery />} />
+        <Route path="/accesories" element={<Accesories />} />
+        <Route path="/keys" element={<Keys />} />
+        <Route path="/clothes" element={<Clothes />} />
+        <Route path="/myprofile" element={<MyProfile />} />
+        <Route path="/profile/:fullName" element = {<OtherProfile/>} />
       </Routes>
     </BrowserRouter>
   );

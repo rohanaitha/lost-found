@@ -60,7 +60,7 @@ export default function Accessories() {
           },
         }
       );
-
+      
       console.log("✅ Report Submitted:", res.data);
       alert("Report submitted successfully!");
 

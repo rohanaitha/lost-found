@@ -6,7 +6,11 @@ import {
 } from "../controllers/ModelController.js";
 import express from "express";
 import authMiddleware from "../middleware/AuthMiddleware.js";
-import { getReports, myPosts } from "../controllers/ReportController.js";
+import {
+  getReports,
+  myPosts,
+  otherPosts,
+} from "../controllers/ReportController.js";
 import { createDocs, docReports } from "../controllers/DocController.js";
 import {
   createClothes,
@@ -18,6 +22,7 @@ import {
 } from "../controllers/AccesoriesController.js";
 import { createJewellery } from "../controllers/JewelleryController.js";
 import { createElectronics } from "../controllers/ElectronicsController.js";
+import { getOtherProfile } from "../controllers/OtherController.js";
 
 const router = express.Router();
 
@@ -35,5 +40,6 @@ router.put("/update-avatar", authMiddleware, updateAvatar);
 router.get("/docreport", authMiddleware, docReports);
 router.get("/clothreport", authMiddleware, getClothesReports);
 router.get("/myPosts", authMiddleware, myPosts);
-
+router.get("/profile/:fullName", getOtherProfile);
+router.get("/posts/:profileId", otherPosts);
 export default router;

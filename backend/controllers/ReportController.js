@@ -70,3 +70,23 @@ export const myPosts = async (req, res) => {
   }
 };
 
+export const otherPosts = async (req, res) => {
+  try {
+    const finalPost = [];
+    const allReports = await fetchAllReports();
+    for (const myPost of allReports) {
+      if (
+        String(myPost.profileId._id.toString()) === String(req.params.profileId)
+      ) {
+        finalPost.push(myPost);
+      }
+       console.log("checking: ", myPost.profileId._id.toString());
+    }
+    res.json(finalPost);
+    console.log("result: ", finalPost);
+    console.log("checking: ", req.params.profileId);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Failed to fetch reports" });
+  }
+};
