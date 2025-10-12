@@ -7,7 +7,7 @@ export const createElectronics = async (req, res) => {
   try {
     const profile = await Profile.findOne({ userId: req.user.id });
     const user = await Model.findOne({ _id: req.user.id });
-    console.log("idcheck:",user)
+    console.log("idcheck:", user);
     if (!profile) {
       return res.status(404).json({ message: "Profile not found" });
     }
@@ -43,6 +43,11 @@ export const createElectronics = async (req, res) => {
       lock,
       imageUrl: image || "",
     });
+    await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      { $inc: { coins: 10 } }, // increment coins by 10
+      { new: true }
+    );
 
     res
       .status(201)

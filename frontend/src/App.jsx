@@ -19,6 +19,7 @@ import Clothes from './components/Clothes';
 import MyProfile from './components/MyProfile';
 import OtherProfile from './components/OtherProfile';
 import SearchResults from './components/SearchResults';
+import WalletPage from './components/wallet';
 function App() {
 
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/profile/:fullName" element = {<OtherProfile/>} />
         <Route path='/searchResults/:title' element = {<SearchResults/>}/>
+        <Route path='/wallet' element = {<WalletPage/>}/>
       </Routes>
     </BrowserRouter>
   );

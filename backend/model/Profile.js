@@ -19,6 +19,10 @@ const profileSchema = new mongoose.Schema({
     type: String,
     default: "default-avatar.png", // placeholder image
   },
+  coins: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: Date.now,

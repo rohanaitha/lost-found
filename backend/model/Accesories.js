@@ -26,7 +26,7 @@ const accessorySchema = new mongoose.Schema(
     description: { type: String, required: true },
     date: { type: Date, required: true },
     location: { type: String, required: true },
-    image: { type: String, default: "" }, // URL (if you upload to Cloudinary, store secure_url here)
+    imageUrl: { type: String, default: "" }, // URL (if you upload to Cloudinary, store secure_url here)
   },
   { timestamps: true }
 );

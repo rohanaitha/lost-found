@@ -45,6 +45,12 @@ export const createDocs = async (req, res) => {
       userId: req.user.id, // to store in db with users ref
       profileId: profile._id,
     });
+    await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      { $inc: { coins: 10 } }, // increment coins by 10
+      { new: true }
+    );
+
     res
       .status(201)
       .json({ message: "report submitted succesfully", report: newDoc });

@@ -30,8 +30,12 @@ export const createAccessory = async (req, res) => {
       imageUrl: image || "",
       profileId: profile._id,
     });
+    await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      { $inc: { coins: 10 } }, // increment coins by 10
+      { new: true }
+    );
 
-   
     res.status(201).json({ message: "Accessory report created", accessory });
   } catch (error) {
     console.error("Error creating accessory report:", error);
@@ -44,7 +48,7 @@ export const getAccessories = async (req, res) => {
   try {
     const accessories = await AccessoryReport.find()
       .populate("profileId", "fullName avatar")
-      .sort({ createdAt: -1 });;
+      .sort({ createdAt: -1 });
     res.status(200).json(accessories);
   } catch (error) {
     res.status(500).json({ message: "Error fetching reports", error });

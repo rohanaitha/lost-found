@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
+import { useNavigate } from "react-router-dom";
 function MyProfile() {
   const [profile, setProfile] = useState(null);
   const [myPosts, setMyPosts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -73,10 +75,21 @@ function MyProfile() {
 
   if (!profile)
     return <p className="text-white text-center mt-10">Loading...</p>;
-
+  const money = profile?.coins || 0;
+  console.log(money)
   return (
     <>
       <Navbar />
+      {/* 💰 Floating Wallet Button */}
+      <button
+        onClick={() => (navigate("/wallet", { state: { money }}))}
+        className="fixed top-20 right-6 z-50 px-5 py-3 text-lg font-semibold rounded-full 
+             bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 
+             text-white shadow-lg hover:scale-110 hover:shadow-yellow-400/50 
+             transition-all duration-300"
+      >
+        💰 L&F Wallet
+      </button>
 
       <div
         className="min-h-screen text-white  py-10  bg-center "

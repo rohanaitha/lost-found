@@ -17,7 +17,7 @@ export const createClothes = async (req, res) => {
       material,
       pattern,
       brand,
-      reward
+      reward,
     } = req.body;
 
     const profile = await Profile.findOne({ userId: req.user.id });
@@ -42,13 +42,16 @@ export const createClothes = async (req, res) => {
       userId: req.user.id,
       profileId: profile._id,
     });
+    await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      { $inc: { coins: 10 } }, // increment coins by 10
+      { new: true }
+    );
 
-    res
-      .status(201)
-      .json({
-        message: "Clothes report submitted successfully",
-        report: newReport,
-      });
+    res.status(201).json({
+      message: "Clothes report submitted successfully",
+      report: newReport,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to submit clothes report" });

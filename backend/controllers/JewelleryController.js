@@ -38,6 +38,11 @@ export const createJewellery = async (req, res) => {
       uniqueId,
       reward: reportType === "lost" ? reward : null,
     });
+    await Profile.findOneAndUpdate(
+      { userId: req.user.id },
+      { $inc: { coins: 10 } }, // increment coins by 10
+      { new: true }
+    );
 
     res.status(201).json({ message: "Jewellery report created", jewellery });
   } catch (error) {
