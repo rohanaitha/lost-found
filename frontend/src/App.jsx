@@ -20,6 +20,8 @@ import MyProfile from './components/MyProfile';
 import OtherProfile from './components/OtherProfile';
 import SearchResults from './components/SearchResults';
 import WalletPage from './components/wallet';
+import LFMartIntro from './components/LFMartIntro';
+import LFMartMain from './components/LFMartMain';
 function App() {
 
   return (
@@ -35,9 +37,11 @@ function App() {
         <Route path="/keys" element={<Keys />} />
         <Route path="/clothes" element={<Clothes />} />
         <Route path="/myprofile" element={<MyProfile />} />
-        <Route path="/profile/:fullName" element = {<OtherProfile/>} />
-        <Route path='/searchResults/:title' element = {<SearchResults/>}/>
-        <Route path='/wallet' element = {<WalletPage/>}/>
+        <Route path="/profile/:fullName" element={<OtherProfile />} />
+        <Route path="/searchResults/:title" element={<SearchResults />} />
+        <Route path="/wallet" element={<WalletPage />} />
+        <Route path="/lf-mart" element={<LFMartIntro />} />
+        <Route path="/lf-mart/main" element={<LFMartMain />} />
       </Routes>
     </BrowserRouter>
   );
