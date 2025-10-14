@@ -128,6 +128,12 @@ const checkForMatches = async (newPost) => {
     `Potential matches scanned: ${potentialMatches.length}. Matches found: ${matchedPosts.length}`
   );
 
+  // guard: newPost must have an _id
+  if (!newPost || !newPost._id) {
+    console.warn("checkForMatches called with invalid newPost:", newPost);
+    return [];
+  }
+
   // Avoid notifying the user who created the new post
   const filteredMatches = matchedPosts.filter(
     (m) => String(m.userId) !== String(newPost.userId)
@@ -155,6 +161,11 @@ const checkForMatches = async (newPost) => {
 
   // push one aggregated notification per profile
   for (const [profileId, posts] of matchesByProfile.entries()) {
+    // skip notifying the post owner
+    if (String(profileId) === String(newPost.profileId || newPost.userId)) {
+      console.log("Skipping notification for post owner profileId:", profileId);
+      continue;
+    }
     try {
       const notification = {
         type: "match",

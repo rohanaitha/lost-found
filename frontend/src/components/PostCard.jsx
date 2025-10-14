@@ -5,13 +5,12 @@ import { useNavigate } from "react-router-dom";
 export default function PostCard({ post }) {
   const navigate = useNavigate();
   const [flipped, setFlipped] = useState(false);
-    const handleProfileClick = () => {
-      navigate(`/profile/${post.profileId?.fullName}`);
-
-    };
+  const handleProfileClick = () => {
+    navigate(`/profile/${post.profileId?.fullName}`);
+  };
   return (
     <div
-      className="relative w-[28vw] h-[70vh] [perspective:1000px] cursor-pointer"
+      className="relative w-full aspect-[3/4] [perspective:1000px] cursor-pointer"
       onClick={() => setFlipped(!flipped)}
     >
       <div
@@ -43,11 +42,11 @@ export default function PostCard({ post }) {
 
           {/* Image (Full, No Trim like Insta) */}
           {post.imageUrl && (
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-hidden flex items-center justify-center">
               <img
                 src={post.imageUrl}
                 alt={post.itemName}
-                className="w-full h-full object-contain"
+                className="max-h-full max-w-full object-contain"
               />
             </div>
           )}
@@ -74,9 +73,12 @@ export default function PostCard({ post }) {
           <p className="font-bold text-3xl mb-4 text-center drop-shadow-lg">
             {post.itemName}
           </p>
+          <p className="font-bold text-3xl mb-4 text-center drop-shadow-lg">
+            {post.reportType}
+          </p>
 
           <div
-            className="flex-1 overflow-y-auto w-full max-w-md 
+            className="flex-1 overflow-y-auto w-full h-full 
     bg-white/10 backdrop-blur-md rounded-xl p-4 space-y-2 shadow-lg"
           >
             <DynamicFields post={post} />

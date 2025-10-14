@@ -110,9 +110,21 @@ const checkForMatches = async (newPost) => {
       isSame(item.identifier, newPost.identifier)
   );
 
+  // avoid notifying the user who created the new post
+  const filteredMatches = matched.filter(
+    (m) => String(m.userId) !== String(newPost.userId)
+  );
+  if (filteredMatches.length !== matched.length) {
+    console.log(
+      `Filtered out ${
+        matched.length - filteredMatches.length
+      } self-match(es) for docs to avoid notifying the post owner.`
+    );
+  }
+
   // group by profile
   const matchesByProfile = new Map();
-  for (const m of matched) {
+  for (const m of filteredMatches) {
     const pid = m.profileId?._id || m.profileId;
     if (!pid) continue;
     const key = String(pid);
@@ -120,7 +132,18 @@ const checkForMatches = async (newPost) => {
     matchesByProfile.get(key).push(m);
   }
 
+  // guard: ensure newPost has an _id before creating notifications
+  if (!newPost || !newPost._id) {
+    console.warn("checkForMatches called with invalid newPost:", newPost);
+    return;
+  }
+
   for (const [profileId, posts] of matchesByProfile.entries()) {
+    // skip notifying the post owner
+    if (String(profileId) === String(newPost.profileId || newPost.userId)) {
+      console.log("Skipping notification for post owner profileId:", profileId);
+      continue;
+    }
     try {
       const notification = {
         type: "match",

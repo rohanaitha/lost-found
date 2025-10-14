@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
-import { ShoppingBag, Smartphone, Key, Gem, Shirt, FileUser } from "lucide-react";
+import {
+  ShoppingBag,
+  Smartphone,
+  Key,
+  Gem,
+  Shirt,
+  FileUser,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 export default function Home() {
   // --- Carousel images ---
@@ -27,18 +34,17 @@ export default function Home() {
     { name: "electronics", icon: <Smartphone size={30} /> },
     { name: "jewellery", icon: <Gem size={30} /> },
     { name: "Clothes", icon: <Shirt size={30} /> },
-    { name: "docs", icon: <FileUser size={30} />},
+    { name: "docs", icon: <FileUser size={30} /> },
   ];
 
   const [selected, setSelected] = useState(null);
 
-  function handleCategory(name){
+  function handleCategory(name) {
     setSelected(name);
-
   }
 
   return (
-    <div className="relative w-full h-[500px] overflow-hidden  shadow-xl">
+    <div className="relative w-full h-[420px] sm:h-[500px] overflow-hidden  shadow-xl">
       {/* --- Carousel Images --- */}
       <div className="absolute inset-0">
         {images.map((img, i) => (
@@ -59,12 +65,12 @@ export default function Home() {
       {/* --- Categories on top of carousel --- */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
         <h1 className="text-3xl font-bold mb-6">Categories</h1>
-        <div className="flex flex-wrap gap-6 justify-center">
+        <div className="flex flex-wrap gap-4 justify-center">
           {categories.map((cat, i) => (
             <Link key={i} to={`/${cat.name.toLowerCase()}`}>
               <button
                 onClick={() => handleCategory(cat.name)}
-                className={`w-28 h-28 flex flex-col items-center justify-center rounded-full 
+                className={`w-20 sm:w-28 h-20 sm:h-28 flex flex-col items-center justify-center rounded-full 
                           shadow-xl transition-transform duration-200 hover:scale-110 
                           ${
                             selected === cat.name
@@ -73,7 +79,9 @@ export default function Home() {
                           }`}
               >
                 {cat.icon}
-                <span className="mt-2 text-sm font-medium">{cat.name}</span>
+                <span className="mt-2 text-sm font-medium text-center">
+                  {cat.name}
+                </span>
               </button>
             </Link>
           ))}

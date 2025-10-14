@@ -76,18 +76,20 @@ function Notification() {
     return <p className="text-gray-400 text-center mt-10">Loading...</p>;
 
   return (
-    <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto py-10">
+    <div className="max-w-7xl mx-auto px-4 py-10">
       {posts.length === 0 ? (
-        <p className="text-gray-400">No notifications yet.</p>
+        <p className="text-gray-400 text-center">No notifications yet.</p>
       ) : (
-        posts.map((post) => (
-          <div key={post._id} className="w-full">
-            <div className="bg-yellow-100 text-black rounded-lg px-4 py-2 mb-3 text-center font-semibold shadow">
-              🔔 {post.notificationMessage}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <div key={post._id} className="w-full">
+              <div className="bg-yellow-100 text-black rounded-lg px-4 py-2 mb-3 text-center font-semibold shadow">
+                🔔 {post.notificationMessage}
+              </div>
+              <PostCard post={post} />
             </div>
-            <PostCard key={post._id} post={post} />
-          </div>
-        ))
+          ))}
+        </div>
       )}
     </div>
   );

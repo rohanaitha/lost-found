@@ -76,13 +76,13 @@ function MyProfile() {
   if (!profile)
     return <p className="text-white text-center mt-10">Loading...</p>;
   const money = profile?.coins || 0;
-  console.log(money)
+  console.log(money);
   return (
     <>
       <Navbar />
       {/* 💰 Floating Wallet Button */}
       <button
-        onClick={() => (navigate("/wallet", { state: { money }}))}
+        onClick={() => navigate("/wallet", { state: { money } })}
         className="fixed top-20 right-6 z-50 px-5 py-3 text-lg font-semibold rounded-full 
              bg-gradient-to-r from-yellow-400 via-orange-500 to-yellow-400 
              text-white shadow-lg hover:scale-110 hover:shadow-yellow-400/50 
@@ -101,7 +101,7 @@ function MyProfile() {
         {/* Profile Section */}
         <div className="w-full max-w-3xl mx-auto text-white py-10">
           {/* Centered Heading (username big at top) */}
-          <h1 className="text-6xl font-bold font-serif text-center mb-8">
+          <h1 className="text-4xl sm:text-6xl font-bold font-serif text-center mb-8">
             {profile.fullName}
           </h1>
 
@@ -112,7 +112,7 @@ function MyProfile() {
               <img
                 src={profile.avatar || "https://via.placeholder.com/150"}
                 alt="avatar"
-                className="w-28 h-28 rounded-full border-4 border-white shadow-lg"
+                className="w-20 sm:w-28 h-20 sm:h-28 rounded-full border-4 border-white shadow-lg object-cover"
               />
 
               {/* Hidden file input */}
@@ -153,10 +153,14 @@ function MyProfile() {
         </div>
 
         {/* POSTS */}
-        <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto py-10">
-          {myPosts.map((post) => (
-            <PostCard key={post._id} post={post} />
-          ))}
+        <div className="max-w-7xl mx-auto px-4 py-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {myPosts.map((post) => (
+              <div key={post._id} className="w-full">
+                <PostCard post={post} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </>

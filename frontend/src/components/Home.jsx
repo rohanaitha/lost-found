@@ -29,10 +29,14 @@ function Home() {
       <Navbar />
       <Categories />
 
-      <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto">
-        {posts.map((post) => (
-          <PostCard key={post._id} post={post} />
-        ))}
+      <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <div key={post._id} className="w-full">
+              <PostCard post={post} />
+            </div>
+          ))}
+        </div>
       </div>
       <button
         onClick={() => navigate("/lf-mart")}
