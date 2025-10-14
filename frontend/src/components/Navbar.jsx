@@ -1,12 +1,29 @@
 import React from "react";
 import { Bell, LogOut, User, Search, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 function Navbar() {
   const [Searchbar, setSearchbar] = useState("");
-
+  const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const token = localStorage.getItem("jwt_token");
+        const res = await axios.get("http://localhost:5000/me", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setNotifications(res.data);
+        console.log("resnotify: ", res.data);
+      } catch (err) {
+        console.error("Error fetching notifications:", err);
+      }
+    };
+
+    fetchNotifications();
+  }, []);
 
   function handleLogout() {
     localStorage.removeItem("jwt_token");
@@ -57,14 +74,22 @@ function Navbar() {
       {/* Right Side Icons */}
       <div className="flex items-center space-x-6 text-white drop-shadow-md">
         {/* Notifications */}
-        <button className="relative hover:scale-110 transition">
+        <button
+          className="relative hover:scale-110 transition"
+          onClick={() => navigate("/notifications")}
+        >
           <Bell className="w-6 h-6" />
-          <span
-            className="absolute -top-2 -right-2 bg-red-500 text-xs font-bold px-1.5 py-0.5 
-          rounded-full shadow-md"
-          >
-            3
-          </span>
+          {(Array.isArray(notifications) ? notifications : []).filter(
+            (n) => !n.read
+          ).length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-red-500 text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {
+                (Array.isArray(notifications) ? notifications : []).filter(
+                  (n) => !n.read
+                ).length
+              }
+            </span>
+          )}
         </button>
 
         {/* My Profile */}

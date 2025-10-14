@@ -22,6 +22,9 @@ import SearchResults from './components/SearchResults';
 import WalletPage from './components/wallet';
 import LFMartIntro from './components/LFMartIntro';
 import LFMartMain from './components/LFMartMain';
+import Kindness from './components/Kindness';
+import Premium from './components/Premium';
+import Notification from './components/Notification';
 function App() {
 
   return (
@@ -42,6 +45,9 @@ function App() {
         <Route path="/wallet" element={<WalletPage />} />
         <Route path="/lf-mart" element={<LFMartIntro />} />
         <Route path="/lf-mart/main" element={<LFMartMain />} />
+        <Route path="/lf-mart/kindness" element={<Kindness />} />
+        <Route path="/lf-mart/premium" element={<Premium />} />
+        <Route path="/notifications" element={<Notification/>}/>
       </Routes>
     </BrowserRouter>
   );

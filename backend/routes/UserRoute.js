@@ -24,7 +24,8 @@ import {
 import { createJewellery } from "../controllers/JewelleryController.js";
 import { createElectronics } from "../controllers/ElectronicsController.js";
 import { getOtherProfile } from "../controllers/OtherController.js";
-
+import { getNotifications } from "../controllers/NotificationController.js";
+import { getPostByCategoryAndId } from "../controllers/ReportController.js";
 const router = express.Router();
 
 router.post("/register", adduser);
@@ -43,5 +44,8 @@ router.get("/clothreport", authMiddleware, getClothesReports);
 router.get("/myPosts", authMiddleware, myPosts);
 router.get("/profile/:fullName", getOtherProfile);
 router.get("/posts/:profileId", otherPosts);
-router.get("/searchResults/:title",searchPosts)
+router.get("/searchResults/:title", searchPosts);
+router.get("/me", authMiddleware, getNotifications);
+router.get("/post/:category/:id", authMiddleware, getPostByCategoryAndId);
+
 export default router;

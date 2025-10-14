@@ -6,7 +6,7 @@ import ElectronicsReport from "../model/Electronics.js";
 import JewelleryReport from "../model/Jewellery.js";
 
 // 🔹 Reusable function (not an endpoint)
-const fetchAllReports = async () => {
+export const fetchAllReports = async () => {
   const accesories = await AccessoryReport.find().populate(
     "profileId",
     "fullName avatar"
@@ -111,5 +111,44 @@ export const searchPosts = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Failed to fetch reports" });
+  }
+};
+
+
+export const getPostByCategoryAndId = async (req, res) => {
+  try {
+    const { category, id } = req.params;
+    let model;
+
+    switch (category.toLowerCase()) {
+      case "electronics":
+        model = ElectronicsReport;
+        break;
+      case "clothes":
+        model = ClothesReport;
+        break;
+      case "accessories":
+        model = AccessoryReport;
+        break;
+      case "jewellery":
+        model = JewelleryReport;
+        break;
+      case "docs":
+        model = DocReport;
+        break;
+      default:
+        return res.status(400).json({ message: "Invalid category" });
+    }
+
+    const post = await model.findById(id).populate(
+      "profileId",
+      "fullName avatar"
+    );
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    res.status(200).json(post);
+  } catch (err) {
+    console.error("Error fetching post:", err);
+    res.status(500).json({ message: "Server error", error: err });
   }
 };

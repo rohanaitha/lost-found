@@ -38,9 +38,8 @@ function Home() {
         onClick={() => navigate("/lf-mart")}
         className="fixed bottom-6 right-6 bg-gradient-to-r from-gray-900 via-black to-gray-800 
              border border-gray-700 
-             text-gray-200 
-                    p-4 rounded-full shadow-lg transition transform hover:scale-110 hover:rotate-12 
-                   focus:outline-none animate-bounce"
+             text-gray-200 p-4 rounded-full shadow-lg transition transform hover:scale-110 hover:rotate-12 
+             focus:outline-none animate-bounce"
       >
         <ShoppingCart size={28} />
       </button>
