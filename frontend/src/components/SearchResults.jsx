@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function SearchResults() {
   const [filterPost, setFilterPost] = useState([]);
   const { title } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchResult = async () => {
       try {
@@ -69,14 +69,31 @@ function SearchResults() {
       </div>
 
       {/* 🔹 Content */}
-      <div className="relative z-10 w-full flex flex-col items-center justify-center py-10">
-        <div className="space-y-10 flex flex-col justify-center items-center max-w-3xl mx-auto py-10">
-          {filterPost.length > 0 ? (
-            filterPost.map((post) => <PostCard key={post._id} post={post} />)
-          ) : (
-            <p className="text-white text-5xl font-semibold font-serif">
-              No matching posts found 😔
+      <div className="relative z-50 w-full flex flex-col items-center justify-center py-12 px-6">
+        <div className="w-full max-w-7xl">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-white">
+              Search Results
+            </h2>
+            <p className="text-sm text-gray-300">
+              {filterPost.length} result{filterPost.length !== 1 ? "s" : ""}
             </p>
+          </div>
+
+          {filterPost.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filterPost.map((post) => (
+                <div key={post._id} className="w-full">
+                  <PostCard post={post} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="py-24">
+              <p className="text-white text-2xl sm:text-3xl font-semibold font-serif text-center">
+                No matching posts found 😔
+              </p>
+            </div>
           )}
         </div>
       </div>

@@ -5,24 +5,31 @@ import Categories from "./Categories";
 import PostCard from "./PostCard";
 import { ShoppingCart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 function Home() {
   const [posts, setPosts] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const token = localStorage.getItem("jwt_token");
   const navigate = useNavigate();
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/reports", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setPosts(res.data);
+        const res = await axios.get(
+          `http://localhost:5000/reports?page=${page}&limit=6`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        // response shape: { data, total, page, totalPages, perPage }
+        setPosts(res.data.data || []);
+        setTotalPages(res.data.totalPages || 1);
       } catch (err) {
         console.error("Error fetching posts:", err);
       }
     };
     fetchPosts();
-  }, [token]);
+  }, [token, page]);
 
   return (
     <div>
@@ -36,6 +43,71 @@ function Home() {
               <PostCard post={post} />
             </div>
           ))}
+        </div>
+
+        {/* Pagination Controls */}
+        <div className="mt-10 flex items-center justify-center gap-2">
+          {/* Previous Button */}
+          <button
+            onClick={() => setPage((p) => Math.max(1, p - 1))}
+            disabled={page === 1}
+            className={`flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 text-black text-sm font-medium transition ${
+              page === 1
+                ? "opacity-40 cursor-not-allowed"
+                : "hover:bg-white/10 hover:scale-105"
+            }`}
+          >
+            <ChevronLeft size={18} />
+            Prev
+          </button>
+
+          {/* Page Numbers */}
+          <div className="flex items-center gap-1">
+            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => {
+              // show only nearby page numbers + ellipsis
+              if (
+                p === 1 ||
+                p === totalPages ||
+                (p >= page - 1 && p <= page + 1)
+              ) {
+                return (
+                  <button
+                    key={p}
+                    onClick={() => setPage(p)}
+                    className={`w-9 h-9 flex items-center justify-center rounded-full text-sm font-semibold transition ${
+                      p === page
+                        ? "bg-yellow-400 text-black shadow-lg scale-105"
+                        : "bg-white/10 text-white hover:bg-white/20"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                );
+              } else if (p === page - 2 || p === page + 2) {
+                return (
+                  <span key={p} className="px-2 text-gray-400">
+                    <MoreHorizontal size={18} />
+                  </span>
+                );
+              } else {
+                return null;
+              }
+            })}
+          </div>
+
+          {/* Next Button */}
+          <button
+            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            disabled={page === totalPages}
+            className={`flex items-center gap-2 px-3 py-2 rounded-full border border-white/20 text-black text-sm font-medium transition ${
+              page === totalPages
+                ? "opacity-40 cursor-not-allowed"
+                : "hover:bg-white/10 hover:scale-105"
+            }`}
+          >
+            Next
+            <ChevronRight size={18} />
+          </button>
         </div>
       </div>
       <button

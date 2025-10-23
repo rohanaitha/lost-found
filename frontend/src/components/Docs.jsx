@@ -54,12 +54,12 @@ export default function Docs() {
         date,
         location,
         image: imageUrl,
-        docType,
-        docType: docType === "other" ? otherDoc : docType,
+        // send enum values; put free-text into otherDoc/otherAuthority
+        docType: docType,
+        otherDoc: docType === "other" ? otherDoc : "",
         docNumber,
-        issuingAuthority,
-        issuingAuthority:
-          issuingAuthority === "other" ? otherAuthority : issuingAuthority,
+        issuingAuthority: issuingAuthority,
+        otherAuthority: issuingAuthority === "Others" ? otherAuthority : "",
         nameOnDoc,
         identifier,
         reward: reportType === "lost" ? reward : "",

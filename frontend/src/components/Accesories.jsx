@@ -43,7 +43,9 @@ export default function Accessories() {
 
       const payload = {
         reportType,
-        itemCategory: itemCategory === "other" ? otherItem : itemCategory,
+        // keep itemCategory as the enum value (e.g. 'other') and put the free-text into otherItem
+        itemCategory: itemCategory,
+        otherItem: itemCategory === "other" ? otherItem : "",
         description,
         date,
         location,
@@ -60,7 +62,7 @@ export default function Accessories() {
           },
         }
       );
-      
+
       console.log("✅ Report Submitted:", res.data);
       alert("Report submitted successfully!");
 

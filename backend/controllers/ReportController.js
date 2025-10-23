@@ -42,8 +42,17 @@ export const fetchAllReports = async () => {
 export const getReports = async (req, res) => {
   try {
     const allReports = await fetchAllReports();
-    res.json(allReports);
-    console.log(allReports);
+    // pagination
+    const page = Math.max(1, parseInt(req.query.page || "1", 10));
+    const perPage = Math.max(1, parseInt(req.query.limit || "6", 10));
+    const total = allReports.length;
+    const totalPages = Math.ceil(total / perPage) || 1;
+    const start = (page - 1) * perPage;
+    const end = start + perPage;
+    const pageData = allReports.slice(start, end);
+
+    res.json({ data: pageData, total, page, totalPages, perPage });
+    console.log(`reports page=${page} perPage=${perPage} total=${total}`);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch reports" });
@@ -114,7 +123,6 @@ export const searchPosts = async (req, res) => {
   }
 };
 
-
 export const getPostByCategoryAndId = async (req, res) => {
   try {
     const { category, id } = req.params;
@@ -140,10 +148,9 @@ export const getPostByCategoryAndId = async (req, res) => {
         return res.status(400).json({ message: "Invalid category" });
     }
 
-    const post = await model.findById(id).populate(
-      "profileId",
-      "fullName avatar"
-    );
+    const post = await model
+      .findById(id)
+      .populate("profileId", "fullName avatar");
     if (!post) return res.status(404).json({ message: "Post not found" });
 
     res.status(200).json(post);
