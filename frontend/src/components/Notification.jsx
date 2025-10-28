@@ -10,7 +10,7 @@ function Notification() {
     const fetchNotifications = async () => {
       try {
         const token = localStorage.getItem("jwt_token");
-        const res = await axios.get("http://localhost:5000/me", {
+        const res = await axios.get("https://lost-found-rtox.onrender.com/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -25,9 +25,12 @@ function Notification() {
         const postPromises = notifications.map(
           (n) =>
             axios
-              .get(`http://localhost:5000/post/${n.category}/${n.postId}`, {
-                headers: { Authorization: `Bearer ${token}` },
-              })
+              .get(
+                `https://lost-found-rtox.onrender.com/post/${n.category}/${n.postId}`,
+                {
+                  headers: { Authorization: `Bearer ${token}` },
+                }
+              )
               .then((res) => ({
                 // ensure category is present for DynamicFields
                 ...res.data,

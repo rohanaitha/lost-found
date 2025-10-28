@@ -65,12 +65,16 @@ export default function Docs() {
         reward: reportType === "lost" ? reward : "",
       };
 
-      const res = await axios.post("http://localhost:5000/docs", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post(
+        "https://lost-found-rtox.onrender.com/docs",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       console.log("✅ Report Submitted:", res.data);
       alert("Report submitted successfully!");

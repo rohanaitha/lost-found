@@ -57,12 +57,16 @@ export default function Clothes() {
         reward: reportType === "lost" ? reward : "",
       };
 
-      const res = await axios.post("http://localhost:5000/clothes", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const res = await axios.post(
+        "https://lost-found-rtox.onrender.com/clothes",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       alert("Report submitted!");
       console.log("✅ Report submitted:", res.data);

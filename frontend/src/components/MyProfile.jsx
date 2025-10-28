@@ -15,9 +15,12 @@ function MyProfile() {
         console.log("LocalStorage keys:", Object.keys(localStorage));
         console.log(token);
         console.log("Token in MyProfile:", localStorage.getItem("jwt_token"));
-        const response = await axios.get("http://localhost:5000/myprofile", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://lost-found-rtox.onrender.com/myprofile",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         console.log("resp:", response);
         setProfile(response.data);
       } catch (err) {
@@ -31,9 +34,12 @@ function MyProfile() {
     const fetchMyPosts = async () => {
       try {
         const token = localStorage.getItem("jwt_token");
-        const response = await axios.get("http://localhost:5000/myPosts", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
+        const response = await axios.get(
+          "https://lost-found-rtox.onrender.com/myPosts",
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
         setMyPosts(response.data);
       } catch (err) {
         console.log("myposts:", err);
@@ -61,7 +67,7 @@ function MyProfile() {
       // Update backend with new avatar URL
       const token = localStorage.getItem("jwt_token");
       const res = await axios.put(
-        "http://localhost:5000/update-avatar",
+        "https://lost-found-rtox.onrender.com/update-avatar",
         { avatar: data.secure_url },
         { headers: { Authorization: `Bearer ${token}` } }
       );

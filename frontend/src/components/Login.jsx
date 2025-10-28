@@ -13,12 +13,15 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/register", {
-        Username: username,
-        Password: password,
-        Email: email,
-        Pass: pass,
-      });
+      const response = await axios.post(
+        "https://lost-found-rtox.onrender.com/register",
+        {
+          Username: username,
+          Password: password,
+          Email: email,
+          Pass: pass,
+        }
+      );
 
       if (response.status === 200) {
         localStorage.setItem("jwt_token", response.data.token);

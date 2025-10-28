@@ -14,7 +14,7 @@ function Navbar() {
     const fetchNotifications = async () => {
       try {
         const token = localStorage.getItem("jwt_token");
-        const res = await axios.get("http://localhost:5000/me", {
+        const res = await axios.get("https://lost-found-rtox.onrender.com/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setNotifications(res.data);

@@ -62,7 +62,7 @@ export default function Electronics() {
       };
 
       const res = await axios.post(
-        "http://localhost:5000/electronics",
+        "https://lost-found-rtox.onrender.com/electronics",
         payload,
         {
           headers: {

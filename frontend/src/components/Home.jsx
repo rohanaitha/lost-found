@@ -16,7 +16,7 @@ function Home() {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/reports?page=${page}&limit=6`,
+          `https://lost-found-rtox.onrender.com/reports?page=${page}&limit=6`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

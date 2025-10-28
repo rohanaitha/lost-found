@@ -53,7 +53,7 @@ export default function Accessories() {
       };
 
       const res = await axios.post(
-        "http://localhost:5000/accesories",
+        "https://lost-found-rtox.onrender.com/accesories",
         payload,
         {
           headers: {

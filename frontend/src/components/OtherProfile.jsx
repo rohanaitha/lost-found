@@ -12,7 +12,7 @@ function OtherProfile() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/profile/${fullName}`
+          `https://lost-found-rtox.onrender.com/profile/${fullName}`
         );
         console.log("resp:", response);
         setProfile(response.data);
@@ -28,7 +28,7 @@ function OtherProfile() {
       if (!profile?._id) return;
       try {
         const response = await axios.get(
-          `http://localhost:5000/posts/${profile._id}`
+          `https://lost-found-rtox.onrender.com/posts/${profile._id}`
         );
         setMyPosts(response.data);
         console.log("post: ", response.data, profile._id);
