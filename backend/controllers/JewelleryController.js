@@ -100,56 +100,102 @@ const checkForMatches = async (newPost) => {
       isSame(item.uniqueId, newPost.uniqueId) ||
       isSame(item.color, newPost.color)
   );
-  // avoid notifying the user who created the new post
-  const filteredMatches = matched.filter(
-    (m) => String(m.userId) !== String(newPost.userId)
-  );
-  if (filteredMatches.length !== matched.length) {
-    console.log(
-      `Filtered out ${
-        matched.length - filteredMatches.length
-      } self-match(es) for jewellery to avoid notifying the post owner.`
-    );
-  }
-  const matchesByProfile = new Map();
-  for (const m of filteredMatches) {
-    const pid = m.profileId?._id || m.profileId;
-    if (!pid) continue;
-    const key = String(pid);
-    if (!matchesByProfile.has(key)) matchesByProfile.set(key, []);
-    matchesByProfile.get(key).push(m);
-  }
+
   // guard: ensure newPost has an _id
   if (!newPost || !newPost._id) {
     console.warn("checkForMatches called with invalid newPost:", newPost);
-    return;
+    return [];
   }
 
-  for (const [profileId, posts] of matchesByProfile.entries()) {
-    // skip notifying the post owner
-    if (String(profileId) === String(newPost.profileId || newPost.userId)) {
-      console.log("Skipping notification for post owner profileId:", profileId);
-      continue;
+  if (newPost.reportType === "found") {
+    const lostMatches = matched.filter((m) => m.reportType === "lost");
+    const filtered = lostMatches.filter(
+      (m) => String(m.userId) !== String(newPost.userId)
+    );
+
+    const matchesByProfile = new Map();
+    for (const m of filtered) {
+      const pid = m.profileId?._id || m.profileId;
+      if (!pid) continue;
+      const key = String(pid);
+      if (!matchesByProfile.has(key)) matchesByProfile.set(key, []);
+      matchesByProfile.get(key).push(m);
     }
+
+    for (const [profileId, posts] of matchesByProfile.entries()) {
+      if (String(profileId) === String(newPost.profileId || newPost.userId))
+        continue;
+      try {
+        const notification = {
+          type: "match",
+          category: "jewellery",
+          postId: newPost._id,
+          message: `A found post matches your lost report: ${newPost.itemName}`,
+          read: false,
+          createdAt: new Date(),
+          newPost: {
+            _id: newPost._id,
+            itemName: newPost.itemName,
+            location: newPost.location,
+          },
+          matchedPosts: posts.map((p) => ({
+            _id: p._id,
+            itemName: p.itemName,
+            location: p.location,
+          })),
+          matchedCount: posts.length,
+        };
+        await Profile.findByIdAndUpdate(
+          profileId,
+          { $push: { notifications: notification } },
+          { new: true }
+        );
+        console.log(
+          `🔔 Jewellery notification added for lost owner profileId: ${profileId} (matches: ${posts.length})`
+        );
+      } catch (err) {
+        console.error(
+          "Error adding jewellery notification for profileId:",
+          profileId,
+          err
+        );
+      }
+    }
+
+    return filtered;
+  }
+
+  if (newPost.reportType === "lost") {
+    const foundMatches = matched.filter((m) => m.reportType === "found");
+    if (foundMatches.length === 0) return [];
+    const profileId = newPost.profileId || newPost.userId;
+    if (!profileId) return foundMatches;
     try {
+      const primaryFound = foundMatches[0];
       const notification = {
         type: "match",
         category: "jewellery",
-        postId: newPost._id,
-        message: `A new post matches your report: ${newPost.itemName}`,
+        postId: primaryFound?._id || newPost._id,
+        message: `We found ${foundMatches.length} found post(s) that may match your lost report: ${newPost.itemName}`,
         read: false,
         createdAt: new Date(),
-        newPost: {
-          _id: newPost._id,
-          itemName: newPost.itemName,
-          location: newPost.location,
-        },
-        matchedPosts: posts.map((p) => ({
+        newPost: primaryFound
+          ? {
+              _id: primaryFound._id,
+              itemName: primaryFound.itemName,
+              location: primaryFound.location,
+            }
+          : {
+              _id: newPost._id,
+              itemName: newPost.itemName,
+              location: newPost.location,
+            },
+        matchedPosts: foundMatches.map((p) => ({
           _id: p._id,
           itemName: p.itemName,
           location: p.location,
         })),
-        matchedCount: posts.length,
+        matchedCount: foundMatches.length,
       };
       await Profile.findByIdAndUpdate(
         profileId,
@@ -157,14 +203,14 @@ const checkForMatches = async (newPost) => {
         { new: true }
       );
       console.log(
-        `🔔 Jewellery notification added for profileId: ${profileId} (matches: ${posts.length})`
+        `🔔 Notification added for new lost post owner profileId: ${profileId} (matches: ${foundMatches.length})`
       );
     } catch (err) {
-      console.error(
-        "Error adding jewellery notification for profileId:",
-        profileId,
-        err
-      );
+      console.error("Error notifying lost post owner:", profileId, err);
     }
+
+    return foundMatches;
   }
+
+  return [];
 };
