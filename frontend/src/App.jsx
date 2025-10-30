@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import SignIn from './components/signin';
 import Home from './components/Home';
-import Electronics from './components/electronics';
+import Electronics from './components/Electronics';
 import Docs from './components/Docs';
 import Jewellery from './components/Jewellery';
 import Accesories from './components/Accesories';
