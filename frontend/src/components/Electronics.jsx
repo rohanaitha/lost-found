@@ -1,6 +1,7 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Button } from "primereact/button";
 
 export default function Electronics() {
   const [reportType, setReportType] = useState("");
@@ -17,17 +18,23 @@ export default function Electronics() {
   const [lock, setLock] = useState("");
 
   const [step, setStep] = useState(1);
+  const formRef = useRef(null);
   const navigate = useNavigate();
 
-  // ------------------- Submit -------------------
+  const steps = ["Basic Info", "Details", "More Info", "Upload & Submit"];
+
+  const goToStep = (i) => {
+    setStep(i);
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("jwt_token");
-      if (!token) {
-        alert("Unauthorized! Please login first.");
-        return;
-      }
+      if (!token) return alert("Please login first");
 
       let imageUrl = "";
       if (image) {
@@ -37,10 +44,7 @@ export default function Electronics() {
 
         const cloudRes = await fetch(
           "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
-          {
-            method: "POST",
-            body: data,
-          }
+          { method: "POST", body: data }
         );
         const cloudData = await cloudRes.json();
         imageUrl = cloudData.secure_url;
@@ -61,248 +65,245 @@ export default function Electronics() {
         image: imageUrl,
       };
 
-      const res = await axios.post(
-        "https://lost-found-rtox.onrender.com/electronics",
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axios.post("http://localhost:5000/electronics", payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      console.log("✅ Report Submitted:", res.data);
       alert("Report submitted successfully!");
-      resetForm();
+      setReportType("");
+      setItemName("");
+      setDescription("");
+      setDate("");
+      setLocation("");
+      setImage(null);
+      setBrand("");
+      setModel("");
+      setSize("");
+      setSkins("");
+      setCharge("");
+      setLock("");
+      setStep(1);
       navigate("/home");
     } catch (err) {
-      console.error("❌ Error submitting report:", err);
-      alert("Failed to submit report. Make sure you are logged in.");
+      console.error(err);
+      alert("Failed to submit report");
     }
   };
 
-  // ------------------- Reset -------------------
-  const resetForm = () => {
-    setReportType("");
-    setItemName("");
-    setDescription("");
-    setDate("");
-    setLocation("");
-    setImage(null);
-    setBrand("");
-    setModel("");
-    setSize("");
-    setSkins("");
-    setCharge("");
-    setLock("");
-    setStep(1);
-  };
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('https://images.unsplash.com/photo-1504274066651-8d31a536b11a')] bg-cover bg-center">
-      <div className="w-[400px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20">
-        <h2 className="text-center text-3xl font-serif font-bold mb-6 text-gray-900">
+    <div
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage:
+          "url('https://images.unsplash.com/photo-1504274066651-8d31a536b11a')",
+      }}
+    >
+      {/* HEADER */}
+      <div className="text-center py-10">
+        <h1 className="text-5xl md:text-6xl font-extrabold font-serif text-black drop-shadow-xl tracking-wide animate__animated animate__fadeInDown">
           Electronics
-        </h2>
+        </h1>
+        <p className="mt-2 text-black/80 text-lg animate__animated animate__fadeInUp">
+          Lost Something? Let's find it together.
+        </p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* ------------------- Step 1 ------------------- */}
-          {step === 1 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Report Type
-                </label>
+      {/* STEPPER */}
+      {/* STEPPER */}
+      <div className="max-w-3xl mx-auto px-6 mt-6">
+        <div className="relative flex items-center justify-between pb-10">
+          {/* Line Behind Circles (only between dots) */}
+          <div className="absolute top-[28px] left-[6%] right-[6%] h-[4px] bg-white/30 rounded-full"></div>
+
+          {/* Active Filling Line */}
+          <div
+            className="absolute top-[28px] left-[6%] h-[4px] bg-blue-500 rounded-full transition-all duration-500"
+            style={{ width: `${((step - 1) / (steps.length - 1)) * 86}%` }}
+          ></div>
+
+          {steps.map((label, idx) => {
+            const i = idx + 1;
+            const active = i === step;
+            const done = i < step;
+
+            return (
+              <button
+                key={label}
+                className="relative z-10 flex flex-col items-center cursor-pointer"
+                onClick={() => goToStep(i)}
+              >
+                <div
+                  className={`
+              w-12 h-12 flex items-center justify-center rounded-full font-bold text-lg transition-all duration-300
+              ${active ? "bg-blue-600 text-white scale-110 shadow-lg" : ""}
+              ${done && !active ? "bg-blue-500 text-white shadow" : ""}
+              ${
+                !done && !active
+                  ? "bg-white/30 text-black backdrop-blur-xl border border-white/30"
+                  : ""
+              }
+            `}
+                >
+                  {i}
+                </div>
+
+                <span
+                  className={`mt-2 text-sm font-medium ${
+                    active ? "text-black" : "text-black/70"
+                  }`}
+                >
+                  {label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* FORM */}
+      <div className="flex justify-center py-12 px-6">
+        <div
+          ref={formRef}
+          className="w-full max-w-3xl bg-white/10 backdrop-blur-2xl p-10 rounded-3xl shadow-2xl border border-white/30 transition-all duration-500 animate__animated animate__fadeInUp"
+        >
+          <h2 className="text-center text-3xl font-bold mb-8 text-black drop-shadow-lg ">
+            {step === 1 && "Basic Details"}
+            {step === 2 && "Location & Brand Info"}
+            {step === 3 && "Device Specifications"}
+            {step === 4 && "Upload & Submit"}
+          </h2>
+
+          <form className="space-y-6 transition-all duration-500">
+            {/* STEP 1 */}
+            {step === 1 && (
+              <div className="space-y-4 animate__animated animate__fadeIn slow-animation">
                 <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-gray-900 p-2 outline-none"
+                  className="w-full rounded-lg p-3 bg-white/60 border border-gray-300"
                 >
-                  <option value="">Select...</option>
+                  <option value="">Select Report Type</option>
                   <option value="lost">Lost</option>
                   <option value="found">Found</option>
                 </select>
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Item Name
-                </label>
                 <input
-                  type="text"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  placeholder="e.g. Pods, Phone, Laptop"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Item Name"
+                  className="w-full rounded-lg p-3 bg-white/60 border border-gray-300"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Description
-                </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Enter details like color, brand, etc."
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Description"
+                  className="w-full rounded-lg p-3 bg-white/60 border border-gray-300"
                 />
-              </div>
-            </>
-          )}
 
-          {/* ------------------- Step 2 ------------------- */}
-          {step === 2 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Date Lost/Found
-                </label>
+                <div className="flex justify-end">
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(2)}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* STEP 2 */}
+            {step === 2 && (
+              <div className="grid grid-cols-2 gap-4 animate__animated animate__fadeIn slow-animation">
                 <input
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  className="rounded-lg p-3 bg-white/60 border col-span-2"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Location
-                </label>
                 <input
-                  type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Where it was lost/found"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Location"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Brand
-                </label>
                 <input
-                  type="text"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
-                  placeholder="Enter brand name"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Brand"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Model
-                </label>
                 <input
-                  type="text"
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-                  placeholder="Enter model name"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Model"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-            </>
-          )}
 
-          {/* ------------------- Step 3 ------------------- */}
-          {step === 3 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">Size</label>
+                <div className="col-span-2 flex justify-between mt-2">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(1)}
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(3)}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* STEP 3 */}
+            {step === 3 && (
+              <div className="grid grid-cols-2 gap-4 animate__animated animate__fadeIn slow-animation">
                 <input
-                  type="text"
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
-                  placeholder="Enter item size"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Size"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Skins
-                </label>
                 <input
-                  type="text"
                   value={skins}
                   onChange={(e) => setSkins(e.target.value)}
-                  placeholder="Enter skins if any"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Skins"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Charge
-                </label>
                 <input
-                  type="text"
                   value={charge}
                   onChange={(e) => setCharge(e.target.value)}
-                  placeholder="Charging details"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Charge"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">Lock</label>
                 <input
-                  type="text"
                   value={lock}
                   onChange={(e) => setLock(e.target.value)}
-                  placeholder="Lock details"
-                  className="w-full bg-transparent text-gray-900 p-2 
-             border-b-2 border-gray-400 
-             focus:border-[#1f3b73] focus:shadow-[0_2px_8px_#1f3b73] 
-             outline-none placeholder-gray-500 transition-all duration-300"
+                  placeholder="Lock Info"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
-            </>
-          )}
 
-          {/* ------------------- Step 4 ------------------- */}
-          {step === 4 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-gray-800">
-                  Upload Item Image
-                </label>
-                <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer bg-white/60 hover:bg-white/80 transition">
-                  <span className="text-gray-700 text-sm">Click to upload</span>
-                  <span className="text-gray-500 text-xs">
-                    PNG, JPG (max 5MB)
-                  </span>
+                <div className="col-span-2 flex justify-between mt-2">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(2)}
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(4)}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* STEP 4 */}
+            {step === 4 && (
+              <div className="space-y-4 animate__animated animate__fadeIn slow-animation">
+                <label className="border-2 border-dashed p-4 w-full flex flex-col items-center rounded-lg cursor-pointer bg-white/60">
+                  <span>Upload Image</span>
                   <input
                     type="file"
                     className="hidden"
@@ -310,44 +311,26 @@ export default function Electronics() {
                   />
                 </label>
                 {image && (
-                  <p className="mt-2 text-sm text-gray-700">
-                    Selected: {image.name}
-                  </p>
+                  <p className="mt-2 text-sm text-white">{image.name}</p>
                 )}
-              </div>
-            </>
-          )}
 
-          {/* ------------------- Navigation Buttons ------------------- */}
-          <div className="flex justify-between mt-4">
-            {step > 1 && (
-              <button
-                type="button"
-                onClick={() => setStep(step - 1)}
-                className="px-4 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500"
-              >
-                Previous
-              </button>
+                <div className="flex justify-between">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(3)}
+                  />
+                  <Button
+                    label="Submit Report"
+                    icon="pi pi-check"
+                    onClick={handleSubmit}
+                  />
+                </div>
+              </div>
             )}
-            {step < 4 && (
-              <button
-                type="button"
-                onClick={() => setStep(step + 1)}
-                className="ml-auto px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-700"
-              >
-                Next
-              </button>
-            )}
-            {step === 4 && (
-              <button
-                type="submit"
-                className="ml-auto px-4 py-2 rounded-lg bg-gray-900 text-white hover:bg-gray-700"
-              >
-                Submit Report
-              </button>
-            )}
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
