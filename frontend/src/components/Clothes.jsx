@@ -1,9 +1,15 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+
 
 export default function Clothes() {
-  // States
+  const [step, setStep] = useState(1);
+
+  const steps = ["Basic Info", "Clothing Details", "Upload & Submit"];
+  const formRef = useRef(null);
+
   const [reportType, setReportType] = useState("");
   const [itemName, setItemName] = useState("");
   const [description, setDescription] = useState("");
@@ -17,12 +23,13 @@ export default function Clothes() {
   const [pattern, setPattern] = useState("");
   const [brand, setBrand] = useState("");
   const [reward, setReward] = useState("");
-  const [step, setStep] = useState(1);
 
   const navigate = useNavigate();
 
-  const handleNext = () => setStep((prev) => prev + 1);
-  const handlePrev = () => setStep((prev) => prev - 1);
+  const goToStep = (i) => {
+    setStep(i);
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,11 +41,12 @@ export default function Clothes() {
         const data = new FormData();
         data.append("file", image);
         data.append("upload_preset", "lostfound_preset");
-        const cloudRes = await fetch(
+
+        const res = await fetch(
           "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
           { method: "POST", body: data }
         );
-        const cloudData = await cloudRes.json();
+        const cloudData = await res.json();
         imageUrl = cloudData.secure_url;
       }
 
@@ -52,281 +60,262 @@ export default function Clothes() {
         gender,
         size,
         color,
+        material,
         pattern,
         brand,
         reward: reportType === "lost" ? reward : "",
       };
 
-      const res = await axios.post(
+      await axios.post(
         "https://lost-found-rtox.onrender.com/clothes",
         payload,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      alert("Report submitted!");
-      console.log("✅ Report submitted:", res.data);
-
-      // Reset
-      setReportType("");
-      setItemName("");
-      setDescription("");
-      setDate("");
-      setLocation("");
-      setImage(null);
-      setGender("");
-      setSize("");
-      setColor("");
-      setMaterial("");
-      setPattern("");
-      setBrand("");
-      setReward("");
-      setStep(1);
+      alert("Report submitted successfully!");
       navigate("/home");
     } catch (err) {
-      console.error("❌ Error:", err);
-      alert("Failed to submit. Make sure you are logged in.");
+      alert("Failed to submit. Login again.");
+      console.error(err);
     }
   };
 
   return (
-    <div
-      className="min-h-screen flex items-center justify-center p-6 bg-cover bg-center relative"
-      style={{
-        backgroundImage:
-          "url('https://i.pinimg.com/736x/43/d1/35/43d135d38689527d117c56015d80a458.jpg')",
-      }}
-    >
-      <div className="absolute inset-0 bg-black/40"></div>
-      <div className="relative w-full max-w-2xl bg-white/20 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/30 p-8 text-white">
-        <h2 className="text-3xl font-semibold mb-6 text-center tracking-wide drop-shadow-lg">
+    <div className="relative min-h-screen flex items-center justify-center font-['Inter']">
+      {/* BG */}
+      <div className="absolute inset-0 bg-[url('https://i.pinimg.com/736x/43/d1/35/43d135d38689527d117c56015d80a458.jpg')] bg-cover bg-center"></div>
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+      <div className="relative w-full max-w-3xl px-6 py-10">
+        <h1 className="text-5xl font-extrabold text-white text-center mb-2 animate__animated animate__fadeInDown">
           Clothes
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Step 1 */}
-          {step === 1 && (
-            <>
-              <div>
-                <label className="block mb-1 text-sm">Report Type</label>
+        </h1>
+        <p className="text-gray-300 text-center mb-6 animate__animated animate__fadeInUp">
+          Lost clothes? Let the community help you find them.
+        </p>
+
+        {/* Stepper */}
+        <div className="relative flex items-center justify-between pb-10 max-w-3xl mx-auto">
+          <div className="absolute top-[28px] left-[6%] right-[6%] h-[4px] bg-white/30 rounded-full"></div>
+
+          <div
+            className="absolute top-[28px] left-[6%] h-[4px] bg-rose-400 rounded-full transition-all duration-500"
+            style={{ width: `${((step - 1) / (steps.length - 1)) * 86}%` }}
+          ></div>
+
+          {steps.map((label, idx) => {
+            const i = idx + 1;
+            const active = i === step;
+            const done = i < step;
+
+            return (
+              <button
+                key={label}
+                onClick={() => goToStep(i)}
+                className="relative z-10 flex flex-col items-center cursor-pointer"
+              >
+                <div
+                  className={`w-12 h-12 flex items-center justify-center rounded-full font-bold text-lg transition-all duration-300 ${
+                    active
+                      ? "bg-rose-500 scale-110 text-white shadow-lg"
+                      : done
+                      ? "bg-rose-400 text-white shadow"
+                      : "bg-white/30 text-white border border-white/20 backdrop-blur-md"
+                  }`}
+                >
+                  {i}
+                </div>
+                <span
+                  className={`mt-2 text-sm ${
+                    active ? "text-white" : "text-gray-300"
+                  }`}
+                >
+                  {label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        <div
+          ref={formRef}
+          className="w-full bg-white/10 p-10 rounded-3xl shadow-2xl backdrop-blur-xl border border-white/20 text-white animate__animated animate__fadeInUp"
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* STEP 1 */}
+            {step === 1 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 focus:outline-none"
+                  className="w-full p-3 rounded-lg bg-white/20 text-black"
                 >
-                  <option value="">Select</option>
+                  <option value="">Report Type</option>
                   <option value="lost">Lost</option>
                   <option value="found">Found</option>
                 </select>
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Item Name</label>
                 <input
-                  type="text"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600 focus:outline-none"
-                  placeholder="e.g. T-shirt, Jacket"
+                  placeholder="Clothing item e.g. Jacket"
+                  className="w-full p-3 rounded-lg bg-white/20 text-black"
                 />
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Description</label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600 focus:outline-none"
-                  placeholder="Brief details"
-                />
-              </div>
+                  placeholder="Description"
+                  className="w-full p-3 rounded-lg bg-white/20 text-black"
+                ></textarea>
 
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="px-4 py-2 bg-rose-500 rounded-lg hover:bg-rose-600 shadow-md"
-                >
-                  Next
-                </button>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => goToStep(2)}
+                    className="px-5 py-2 rounded-lg bg-rose-500 hover:bg-rose-600 flex items-center gap-2"
+                  >
+                    Next <ArrowRight size={16} />
+                  </button>
+                </div>
               </div>
-            </>
-          )}
+            )}
 
-          {/* Step 2 */}
-          {step === 2 && (
-            <>
-              <div>
-                <label className="block mb-1 text-sm">Gender</label>
+            {/* STEP 2 */}
+            {step === 2 && (
+              <div className="grid grid-cols-2 gap-4 animate__animated animate__fadeIn">
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900"
+                  className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                 >
-                  <option value="">Select</option>
+                  <option value="">Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="unisex">Unisex</option>
                 </select>
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Size</label>
                 <select
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900"
+                  className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                 >
-                  <option value="">Select</option>
-                  <option value="S">Small</option>
-                  <option value="M">Medium</option>
-                  <option value="L">Large</option>
-                  <option value="XL">XL</option>
-                  <option value="XXL">XXL</option>
+                  <option value="">Size</option>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                  <option>XL</option>
+                  <option>XXL</option>
                 </select>
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Color</label>
                 <input
-                  type="text"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600"
-                  placeholder="e.g. Black"
+                  placeholder="Color"
+                  className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                 />
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Material</label>
                 <input
-                  type="text"
                   value={material}
                   onChange={(e) => setMaterial(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600"
-                  placeholder="e.g. Cotton"
+                  placeholder="Material"
+                  className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                 />
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Pattern</label>
                 <input
-                  type="text"
                   value={pattern}
                   onChange={(e) => setPattern(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600"
-                  placeholder="e.g. Striped"
+                  placeholder="Pattern"
+                  className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                 />
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Brand</label>
                 <input
-                  type="text"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600"
-                  placeholder="e.g. Nike"
+                  placeholder="Brand"
+                  className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                 />
-              </div>
 
-              {reportType === "lost" && (
-                <div>
-                  <label className="block mb-1 text-sm">Reward</label>
+                {reportType === "lost" && (
                   <input
                     type="number"
                     value={reward}
                     onChange={(e) => setReward(e.target.value)}
-                    className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600"
-                    placeholder="Enter reward amount"
+                    placeholder="Reward (Optional)"
+                    className="p-3 rounded-lg bg-white/20 text-black col-span-2"
                   />
+                )}
+
+                <div className="col-span-2 flex justify-between">
+                  <button
+                    type="button"
+                    onClick={() => goToStep(1)}
+                    className="px-5 py-2 bg-gray-500 rounded-lg hover:bg-gray-600 flex items-center gap-2"
+                  >
+                    <ArrowLeft size={16} /> Back
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => goToStep(3)}
+                    className="px-5 py-2 bg-rose-500 rounded-lg hover:bg-rose-600 flex items-center gap-2"
+                  >
+                    Next <ArrowRight size={16} />
+                  </button>
                 </div>
-              )}
-
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  className="px-4 py-2 bg-gray-500 rounded-lg hover:bg-gray-600 shadow-md"
-                >
-                  Back
-                </button>
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="px-4 py-2 bg-rose-500 rounded-lg hover:bg-rose-600 shadow-md"
-                >
-                  Next
-                </button>
               </div>
-            </>
-          )}
+            )}
 
-          {/* Step 3 */}
-          {step === 3 && (
-            <>
-              <div>
-                <label className="block mb-1 text-sm">Date</label>
+            {/* STEP 3 */}
+            {step === 3 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <input
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900"
+                  className="w-full p-3 rounded-lg bg-white/20 text-black"
                 />
-              </div>
 
-              <div>
-                <label className="block mb-1 text-sm">Location</label>
                 <input
-                  type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full p-2 rounded-lg bg-white/30 text-gray-900 placeholder-gray-600"
-                  placeholder="Where was it lost/found?"
+                  placeholder="Location"
+                  className="w-full p-3 rounded-lg bg-white/20 text-black"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1">Upload Item Image</label>
-                <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-white/40 rounded-lg cursor-pointer bg-white/40 hover:bg-white/60 transition">
-                  <span className="text-gray-800 text-sm">Click to upload</span>
-                  <span className="text-gray-600 text-xs">
-                    PNG, JPG (max 5MB)
-                  </span>
+                <label className="border-2 border-dashed p-4 w-full flex flex-col items-center rounded-lg cursor-pointer bg-white/20">
+                  <span>Upload Image</span>
                   <input
                     type="file"
                     className="hidden"
                     onChange={(e) => setImage(e.target.files[0])}
                   />
                 </label>
-                {image && (
-                  <p className="mt-2 text-sm text-gray-100">
-                    Selected: {image.name}
-                  </p>
-                )}
-              </div>
 
-              <div className="flex justify-between">
-                <button
-                  type="button"
-                  onClick={handlePrev}
-                  className="px-4 py-2 bg-gray-500 rounded-lg hover:bg-gray-600 shadow-md"
-                >
-                  Back
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-emerald-500 rounded-lg hover:bg-emerald-600 shadow-md"
-                >
-                  Submit
-                </button>
+                {image && <p className="text-sm">{image.name}</p>}
+
+                <div className="flex justify-between">
+                  <button
+                    type="button"
+                    onClick={() => goToStep(2)}
+                    className="px-5 py-2 bg-gray-500 rounded-lg hover:bg-gray-600 flex items-center gap-2"
+                  >
+                    <ArrowLeft size={16} /> Back
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="px-5 py-2 bg-green-500 hover:bg-green-600 rounded-lg flex items-center gap-2"
+                  >
+                    Submit <Check size={16} />
+                  </button>
+                </div>
               </div>
-            </>
-          )}
-        </form>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );

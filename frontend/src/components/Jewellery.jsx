@@ -1,5 +1,7 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
+import { Button } from "primereact/button";
+import { useNavigate } from "react-router-dom";
 
 export default function Jewellery() {
   const [reportType, setReportType] = useState("");
@@ -8,25 +10,33 @@ export default function Jewellery() {
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
-
-  // 🔹 New fields
   const [brand, setBrand] = useState("");
   const [color, setColor] = useState("");
   const [material, setMaterial] = useState("");
   const [uniqueId, setUniqueId] = useState("");
   const [reward, setReward] = useState("");
 
-  // 🔹 Step state
   const [step, setStep] = useState(1);
+  const formRef = useRef(null);
+  const navigate = useNavigate();
+
+  const steps = ["Basic Info", "Details", "More Info", "Upload & Submit"];
+
+  const goToStep = (i) => {
+    setStep(i);
+    if (formRef.current) {
+      formRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      let imageUrl = "";
       const token = localStorage.getItem("jwt_token");
+      if (!token) return alert("Please login first");
 
-      // 1️⃣ Upload image
+      let imageUrl = "";
       if (image) {
         const data = new FormData();
         data.append("file", image);
@@ -34,47 +44,35 @@ export default function Jewellery() {
 
         const cloudRes = await fetch(
           "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
-          {
-            method: "POST",
-            body: data,
-          }
+          { method: "POST", body: data }
         );
-
         const cloudData = await cloudRes.json();
         imageUrl = cloudData.secure_url;
       }
 
-      // 2️⃣ Payload
       const payload = {
         reportType,
         itemName,
         description,
         date,
         location,
-        image: imageUrl,
         brand,
         color,
         material,
         uniqueId,
         reward: reportType === "lost" ? reward : null,
+        image: imageUrl,
       };
 
-      // 3️⃣ API Call
-      const res = await axios.post(
+      await axios.post(
         "https://lost-found-rtox.onrender.com/jewellery",
         payload,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      console.log("✅ Report Submitted:", res.data);
       alert("Report submitted successfully!");
-
-      // 4️⃣ Reset
       setReportType("");
       setItemName("");
       setDescription("");
@@ -87,235 +85,250 @@ export default function Jewellery() {
       setUniqueId("");
       setReward("");
       setStep(1);
+      navigate("/home");
     } catch (err) {
-      console.error("❌ Error submitting report:", err);
-      alert("Failed to submit report. Make sure you are logged in.");
+      console.error(err);
+      alert("Failed to submit report");
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('https://i.pinimg.com/736x/63/d2/4d/63d24d40d82e8e0e7ff38b36f4044823.jpg')] bg-cover bg-center">
-      <div className="absolute inset-0 bg-black/0"></div>
-      <div className="w-[380px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20 text-gray-900">
-        <h2 className="text-center text-3xl font-serif font-bold mb-6 text-white">
+    <div
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage:
+          "url('https://i.pinimg.com/736x/63/d2/4d/63d24d40d82e8e0e7ff38b36f4044823.jpg')",
+      }}
+    >
+      {/* HEADER */}
+      <div className="text-center py-10">
+        <h1 className="text-5xl md:text-6xl font-extrabold font-serif text-white drop-shadow-xl tracking-wide animate__animated animate__fadeInDown">
           Jewellery
-        </h2>
+        </h1>
+        <p className="mt-2 text-white/80 text-lg animate__animated animate__fadeInUp">
+          Lost Something precious? Let's recover it.
+        </p>
+      </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Step 1 */}
-          {step === 1 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Report Type
-                </label>
+      {/* STEPPER */}
+      <div className="max-w-3xl mx-auto px-6 mt-6">
+        <div className="relative flex items-center justify-between pb-10">
+          <div className="absolute top-[28px] left-[6%] right-[6%] h-[4px] bg-white/30 rounded-full"></div>
+
+          <div
+            className="absolute top-[28px] left-[6%] h-[4px] bg-yellow-500 rounded-full transition-all duration-500"
+            style={{ width: `${((step - 1) / (steps.length - 1)) * 86}%` }}
+          ></div>
+
+          {steps.map((label, idx) => {
+            const i = idx + 1;
+            const active = i === step;
+            const done = i < step;
+
+            return (
+              <button
+                key={label}
+                className="relative z-10 flex flex-col items-center cursor-pointer"
+                onClick={() => goToStep(i)}
+              >
+                <div
+                  className={`
+                  w-12 h-12 flex items-center justify-center rounded-full font-bold text-lg transition-all 
+                  ${
+                    active ? "bg-yellow-600 text-white scale-110 shadow-lg" : ""
+                  }
+                  ${done && !active ? "bg-yellow-500 text-white shadow" : ""}
+                  ${
+                    !done && !active
+                      ? "bg-white/30 text-white backdrop-blur-xl border border-white/30"
+                      : ""
+                  }
+                `}
+                >
+                  {i}
+                </div>
+                <span
+                  className={`mt-2 text-sm font-medium ${
+                    active ? "text-white" : "text-white/70"
+                  }`}
+                >
+                  {label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* FORM */}
+      <div className="flex justify-center py-12 px-6">
+        <div
+          ref={formRef}
+          className="w-full max-w-3xl bg-white/10 backdrop-blur-2xl p-10 rounded-3xl shadow-2xl border border-white/30 animate__animated animate__fadeInUp"
+        >
+          <h2 className="text-center text-3xl font-bold mb-8 text-white drop-shadow-lg">
+            {step === 1 && "Basic Details"}
+            {step === 2 && "Location & Description"}
+            {step === 3 && "Jewellery Details"}
+            {step === 4 && "Upload & Submit"}
+          </h2>
+
+          <form className="space-y-6">
+            {/* STEP 1 */}
+            {step === 1 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-white border-1 border-white/40 p-2 focus:outline-none focus:ring-1 focus:ring-white"
+                  className="w-full rounded-lg p-3 bg-white/60 border border-gray-300"
                 >
-                  <option className="text-gray-900" value="">
-                    Select...
-                  </option>
-                  <option className="text-gray-900" value="lost">
-                    Lost
-                  </option>
-                  <option className="text-gray-900" value="found">
-                    Found
-                  </option>
+                  <option value="">Select Report Type</option>
+                  <option value="lost">Lost</option>
+                  <option value="found">Found</option>
                 </select>
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Item Name
-                </label>
                 <input
-                  type="text"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  placeholder="e.g. chain, bracelet, rings"
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
+                  placeholder="Item Name (Ring, Chain, Bracelet)"
+                  className="w-full rounded-lg p-3 bg-white/60 border border-gray-300"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Description
-                </label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Enter details like color, brand, etc."
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none resize-none h-20"
+                  placeholder="Description"
+                  className="w-full rounded-lg p-3 bg-white/60 border border-gray-300"
                 />
+
+                <div className="flex justify-end">
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(2)}
+                  />
+                </div>
               </div>
+            )}
 
-              <button
-                type="button"
-                onClick={() => setStep(2)}
-                className="w-full rounded-lg bg-gray-700 hover:bg-white transition font-semibold py-2 text-emerald-400"
-              >
-                Next →
-              </button>
-            </>
-          )}
-
-          {/* Step 2 */}
-          {step === 2 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Date Lost/Found
-                </label>
+            {/* STEP 2 */}
+            {step === 2 && (
+              <div className="grid grid-cols-2 gap-4 animate__animated animate__fadeIn">
                 <input
                   type="date"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 outline-none"
+                  className="rounded-lg p-3 bg-white/60 border col-span-2"
                 />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Location
-                </label>
                 <input
-                  type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Where it was lost/found"
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
+                  placeholder="Location"
+                  className="rounded-lg p-3 bg-white/60 border col-span-2"
                 />
-              </div>
 
-              {/* New fields */}
-              <div>
-                <label className="block text-sm mb-1 text-white">Brand</label>
                 <input
-                  type="text"
                   value={brand}
                   onChange={(e) => setBrand(e.target.value)}
-                  placeholder="e.g. Tanishq"
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
+                  placeholder="Brand (e.g. Tanishq)"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">Color</label>
                 <input
-                  type="text"
                   value={color}
                   onChange={(e) => setColor(e.target.value)}
-                  placeholder="e.g. Gold, Silver"
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
+                  placeholder="Color (Gold, Silver)"
+                  className="rounded-lg p-3 bg-white/60 border"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Material
-                </label>
-                <input
-                  type="text"
-                  value={material}
-                  onChange={(e) => setMaterial(e.target.value)}
-                  placeholder="e.g. Platinum, Gold"
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Unique ID / Engraving
-                </label>
-                <input
-                  type="text"
-                  value={uniqueId}
-                  onChange={(e) => setUniqueId(e.target.value)}
-                  placeholder="e.g. Serial number, engraving"
-                  className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
-                />
-              </div>
-
-              {reportType === "lost" && (
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Reward
-                  </label>
-                  <input
-                    type="number"
-                    value={reward}
-                    onChange={(e) => setReward(e.target.value)}
-                    placeholder="Optional reward amount"
-                    className="w-full rounded-lg border-b border-white/40 focus:border-emerald-400 bg-transparent text-white p-2 placeholder-white outline-none"
+                <div className="col-span-2 flex justify-between mt-2">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(1)}
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(3)}
                   />
                 </div>
-              )}
-
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setStep(1)}
-                  className="w-1/2 rounded-lg bg-gray-500 hover:bg-gray-600 transition font-semibold py-2 text-white"
-                >
-                  ← Back
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStep(3)}
-                  className="w-1/2 rounded-lg bg-gray-700 hover:bg-white transition font-semibold py-2 text-emerald-400"
-                >
-                  Next →
-                </button>
               </div>
-            </>
-          )}
+            )}
 
-          {/* Step 3 */}
-          {step === 3 && (
-            <>
-              {/* File Upload */}
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Upload Item Image
-                </label>
-                <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer bg-white/60 hover:bg-white/80 transition">
-                  <span className="text-gray-700 text-sm">Click to upload</span>
-                  <span className="text-gray-500 text-xs">
-                    PNG, JPG (max 5MB)
-                  </span>
+            {/* STEP 3 */}
+            {step === 3 && (
+              <div className="grid grid-cols-2 gap-4 animate__animated animate__fadeIn">
+                <input
+                  value={material}
+                  onChange={(e) => setMaterial(e.target.value)}
+                  placeholder="Material (Gold, Platinum)"
+                  className="rounded-lg p-3 bg-white/60 border"
+                />
+
+                <input
+                  value={uniqueId}
+                  onChange={(e) => setUniqueId(e.target.value)}
+                  placeholder="Engraving / Unique ID"
+                  className="rounded-lg p-3 bg-white/60 border"
+                />
+
+                {reportType === "lost" && (
+                  <input
+                    value={reward}
+                    onChange={(e) => setReward(e.target.value)}
+                    placeholder="Reward (Optional)"
+                    className="rounded-lg p-3 bg-white/60 border col-span-2"
+                  />
+                )}
+
+                <div className="col-span-2 flex justify-between mt-2">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(2)}
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(4)}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* STEP 4 */}
+            {step === 4 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
+                <label className="border-2 border-dashed p-4 w-full flex flex-col items-center rounded-lg cursor-pointer bg-white/60">
+                  <span>Upload Image</span>
                   <input
                     type="file"
                     className="hidden"
                     onChange={(e) => setImage(e.target.files[0])}
                   />
                 </label>
-                {image && (
-                  <p className="mt-2 text-sm text-white">
-                    Selected: {image.name}
-                  </p>
-                )}
-              </div>
+                {image && <p className="text-white">{image.name}</p>}
 
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setStep(2)}
-                  className="w-1/2 rounded-lg bg-gray-500 hover:bg-gray-600 transition font-semibold py-2 text-white"
-                >
-                  ← Back
-                </button>
-                <button
-                  type="submit"
-                  className="w-1/2 rounded-lg bg-gray-700 hover:bg-white transition font-semibold py-2 text-emerald-400"
-                >
-                  Submit Report
-                </button>
+                <div className="flex justify-between">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(3)}
+                  />
+                  <Button
+                    label="Submit Report"
+                    icon="pi pi-check"
+                    onClick={handleSubmit}
+                  />
+                </div>
               </div>
-            </>
-          )}
-        </form>
+            )}
+          </form>
+        </div>
       </div>
     </div>
   );

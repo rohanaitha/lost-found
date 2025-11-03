@@ -1,9 +1,10 @@
-import { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Button } from "primereact/button";
+import { Toast } from "primereact/toast";
 
 export default function Docs() {
-  // Default states
   const [reportType, setReportType] = useState("");
   const [itemName, setItemName] = useState("");
   const [description, setDescription] = useState("");
@@ -11,134 +12,181 @@ export default function Docs() {
   const [location, setLocation] = useState("");
   const [image, setImage] = useState(null);
 
-  // Extra fields
   const [docType, setDocType] = useState("");
   const [docNumber, setDocNumber] = useState("");
   const [otherDoc, setOtherDoc] = useState("");
   const [issuingAuthority, setIssuingAuthority] = useState("");
+  const [otherAuthority, setOtherAuthority] = useState("");
   const [nameOnDoc, setNameOnDoc] = useState("");
   const [identifier, setIdentifier] = useState("");
   const [reward, setReward] = useState("");
-  const [otherAuthority, setOtherAuthority] = useState("");
 
   const [step, setStep] = useState(1);
+  const steps = ["Type", "Doc Details", "Identifiers", "Location & Upload"];
+
+  const formRef = useRef(null);
+  const toast = useRef(null);
   const navigate = useNavigate();
+
+  const goToStep = (i) => {
+    setStep(i);
+    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      let imageUrl = "";
-      const token = localStorage.getItem("jwt_token");
 
+    try {
+      const token = localStorage.getItem("jwt_token");
+      if (!token)
+        return toast.current.show({
+          severity: "warn",
+          summary: "Login Required",
+        });
+
+      let imageUrl = "";
       if (image) {
         const data = new FormData();
         data.append("file", image);
         data.append("upload_preset", "lostfound_preset");
 
-        const cloudRes = await fetch(
+        const upload = await fetch(
           "https://api.cloudinary.com/v1_1/dsgytnn2w/image/upload",
-          {
-            method: "POST",
-            body: data,
-          }
+          { method: "POST", body: data }
         );
-
-        const cloudData = await cloudRes.json();
-        imageUrl = cloudData.secure_url;
+        const result = await upload.json();
+        imageUrl = result.secure_url;
       }
 
       const payload = {
         reportType,
-        itemName, 
+        itemName,
         description,
         date,
         location,
-        image: imageUrl,
-        // send enum values; put free-text into otherDoc/otherAuthority
-        docType: docType,
+        docType,
         otherDoc: docType === "other" ? otherDoc : "",
         docNumber,
-        issuingAuthority: issuingAuthority,
+        issuingAuthority,
         otherAuthority: issuingAuthority === "Others" ? otherAuthority : "",
         nameOnDoc,
         identifier,
         reward: reportType === "lost" ? reward : "",
+        image: imageUrl,
       };
 
-      const res = await axios.post(
-        "https://lost-found-rtox.onrender.com/docs",
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      await axios.post("https://lost-found-rtox.onrender.com/docs", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-      console.log("✅ Report Submitted:", res.data);
-      alert("Report submitted successfully!");
+      toast.current.show({
+        severity: "success",
+        summary: "Success",
+        detail: "Report Submitted!",
+      });
 
-      // reset
-      setReportType("");
-      setItemName("");
-      setDescription("");
-      setDate("");
-      setLocation("");
-      setImage(null);
-      setDocType("");
-      setOtherDoc("");
-      setDocNumber("");
-      setIssuingAuthority("");
-      setNameOnDoc("");
-      setIdentifier("");
-
-      setReward("");
-      setStep(1);
-
-      navigate("/home");
-    } catch (err) {
-      console.error("❌ Error submitting report:", err);
-      alert("Failed to submit report. Make sure you are logged in.");
+      setTimeout(() => navigate("/home"), 1500);
+    } catch {
+      toast.current.show({
+        severity: "error",
+        summary: "Error",
+        detail: "Failed to submit",
+      });
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-[url('https://i.pinimg.com/1200x/8e/42/7a/8e427a32ce5749db2de8e454adc493ec.jpg')] bg-cover bg-center">
-      <div className="w-[400px] rounded-2xl bg-white/10 p-8 shadow-2xl backdrop-blur-xl border border-white/20 text-gray-900 relative">
-        <h2 className="text-center text-3xl font-serif font-bold mb-6 text-white">
-          Docs Report
-        </h2>
+    <div
+      className="min-h-screen bg-cover bg-center bg-fixed"
+      style={{
+        backgroundImage:
+          "url('https://i.pinimg.com/1200x/8e/42/7a/8e427a32ce5749db2de8e454adc493ec.jpg')",
+      }}
+    >
+      <Toast ref={toast} />
 
-        <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Step 1 */}
-          {step === 1 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Report Type
-                </label>
+      {/* Header */}
+      <div className="text-center py-10">
+        <h1 className="text-5xl font-serif font-extrabold text-white drop-shadow-xl animate__animated animate__fadeInDown">
+          Document Report
+        </h1>
+        <p className="text-white/90 text-lg animate__animated animate__fadeInUp">
+          Help us return someone’s identity 📄
+        </p>
+      </div>
+
+      {/* Stepper */}
+      <div className="max-w-3xl mx-auto px-6 mt-6">
+        <div className="relative flex items-center justify-between pb-10">
+          <div className="absolute top-[28px] left-[6%] right-[6%] h-[4px] bg-white/30 rounded-full"></div>
+          <div
+            className="absolute top-[28px] left-[6%] h-[4px] bg-blue-500 rounded-full transition-all duration-500"
+            style={{ width: `${((step - 1) / (steps.length - 1)) * 86}%` }}
+          ></div>
+
+          {steps.map((label, idx) => {
+            const i = idx + 1;
+            const active = i === step;
+            const done = i < step;
+
+            return (
+              <button
+                key={label}
+                onClick={() => goToStep(i)}
+                className="flex flex-col items-center"
+              >
+                <div
+                  className={`
+                    w-12 h-12 flex items-center justify-center rounded-full font-bold text-lg transition-all
+                    ${active ? "bg-blue-600 text-white scale-110" : ""}
+                    ${done && !active ? "bg-blue-500 text-white" : ""}
+                    ${
+                      !done && !active
+                        ? "bg-white/30 text-white border backdrop-blur-xl"
+                        : ""
+                    }
+                  `}
+                >
+                  {i}
+                </div>
+                <span className="mt-2 text-sm text-white font-medium">
+                  {label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Form card */}
+      <div className="flex justify-center py-10 px-6">
+        <div
+          ref={formRef}
+          className="w-full max-w-3xl bg-white/10 backdrop-blur-2xl p-10 rounded-3xl shadow-2xl border border-white/30 animate__animated animate__fadeInUp"
+        >
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Step 1 */}
+            {step === 1 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <select
                   value={reportType}
                   onChange={(e) => setReportType(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-white p-2 outline-none"
+                  className="w-full p-3 rounded-lg bg-white/70"
                 >
-                  <option value="">Select...</option>
+                  <option value="">Select Report Type</option>
                   <option value="lost">Lost</option>
                   <option value="found">Found</option>
                 </select>
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Document Type
-                </label>
                 <select
                   value={docType}
                   onChange={(e) => setDocType(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-white p-2 outline-none"
+                  className="w-full p-3 rounded-lg bg-white/70"
                 >
-                  <option value="">Select...</option>
+                  <option value="">Select Document Type</option>
                   <option value="aadhar">Aadhar</option>
                   <option value="voter">Voter ID</option>
                   <option value="dl">Driving License</option>
@@ -148,251 +196,170 @@ export default function Docs() {
                   <option value="work">Work ID</option>
                   <option value="other">Other</option>
                 </select>
-                {/* 👇 Extra field when "Other" selected */}
+
                 {docType === "other" && (
                   <textarea
+                    className="w-full p-3 bg-white/60 rounded-lg"
+                    placeholder="Enter document type"
                     value={otherDoc}
                     onChange={(e) => setOtherDoc(e.target.value)}
-                    placeholder="Please specify your document type"
-                    className="mt-2 w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none resize-none h-16"
                   />
                 )}
-              </div>
-            </>
-          )}
 
-          {/* Step 2 */}
-          {step === 2 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Name on Document
-                </label>
+                <Button
+                  label="Next"
+                  icon="pi pi-arrow-right"
+                  onClick={() => setStep(2)}
+                  className="float-right"
+                />
+              </div>
+            )}
+
+            {/* Step 2 */}
+            {step === 2 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <input
-                  type="text"
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                  placeholder="Name on Document"
                   value={nameOnDoc}
                   onChange={(e) => setNameOnDoc(e.target.value)}
-                  placeholder="e.g. Rohan Raj"
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Document Number (partial)
-                </label>
                 <input
-                  type="number"
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                  placeholder="Document number (partial)"
                   value={docNumber}
                   onChange={(e) => setDocNumber(e.target.value)}
-                  placeholder="e.g. ****1234"
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
                 />
-              </div>
 
-              {/* Issuing Authority */}
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Issuing Authority
-                </label>
                 <select
                   value={issuingAuthority}
                   onChange={(e) => setIssuingAuthority(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-white p-2 outline-none border-b border-white/40 focus:border-b-2 focus:border-yellow-500"
+                  className="w-full p-3 rounded-lg bg-white/70"
                 >
-                  <option className="text-gray-900" value="">
-                    Select...
+                  <option value="">Issuing Authority</option>
+                  <option value="UIDAI">UIDAI</option>
+                  <option value="Income Tax Department">Income Tax Dept</option>
+                  <option value="Election Commission of India">
+                    Election Commission
                   </option>
-                  <option className="text-gray-900" value="UIDAI">
-                    UIDAI (Aadhaar)
-                  </option>
-                  <option
-                    className="text-gray-900"
-                    value="Income Tax Department"
-                  >
-                    Income Tax Department (PAN)
-                  </option>
-                  <option
-                    className="text-gray-900"
-                    value="Election Commission of India"
-                  >
-                    Election Commission of India (Voter ID)
-                  </option>
-                  <option className="text-gray-900" value="RTO">
-                    RTO (Driving License)
-                  </option>
-                  <option
-                    className="text-gray-900"
-                    value="Passport Seva Kendra"
-                  >
-                    Passport Seva Kendra
-                  </option>
-                  <option className="text-gray-900" value="College/University">
-                    College/University
-                  </option>
-                  <option className="text-gray-900" value="Employer">
-                    Employer / Company
-                  </option>
-                  <option className="text-gray-900" value="Others">
-                    Others
-                  </option>
+                  <option value="RTO">RTO</option>
+                  <option value="Passport Seva Kendra">Passport Office</option>
+                  <option value="College/University">College</option>
+                  <option value="Employer">Employer</option>
+                  <option value="Others">Others</option>
                 </select>
-              </div>
 
-              {/* Show textarea if "Others" is selected */}
-              {issuingAuthority === "Others" && (
-                <div className="mt-2">
-                  <textarea
+                {issuingAuthority === "Others" && (
+                  <input
+                    className="w-full p-3 bg-white/60 rounded-lg"
+                    placeholder="Authority Name"
                     value={otherAuthority}
                     onChange={(e) => setOtherAuthority(e.target.value)}
-                    placeholder="Enter issuing authority name"
-                    className="w-full rounded-lg border-b border-white/40 focus:border-b-2 focus:border-yellow-500 bg-transparent text-white p-2 placeholder-white outline-none resize-none h-16"
+                  />
+                )}
+
+                <div className="flex justify-between">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(1)}
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(3)}
                   />
                 </div>
-              )}
-            </>
-          )}
+              </div>
+            )}
 
-          {/* Step 3 */}
-          {step === 3 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Additional Identifier
-                </label>
+            {/* Step 3 */}
+            {step === 3 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <input
-                  type="text"
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                  placeholder="Additional Identifier (DOB, Roll No)"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
-                  placeholder="e.g. DOB, Roll No"
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
                 />
-              </div>
 
-              {reportType === "lost" && (
-                <div>
-                  <label className="block text-sm mb-1 text-white">
-                    Reward
-                  </label>
+                {reportType === "lost" && (
                   <input
-                    type="number"
+                    className="w-full p-3 bg-white/60 rounded-lg"
+                    placeholder="Reward (optional)"
                     value={reward}
                     onChange={(e) => setReward(e.target.value)}
-                    placeholder="Reward amount (optional)"
-                    className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
+                  />
+                )}
+
+                <div className="flex justify-between">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(2)}
+                  />
+                  <Button
+                    label="Next"
+                    icon="pi pi-arrow-right"
+                    onClick={() => setStep(4)}
                   />
                 </div>
-              )}
-            </>
-          )}
+              </div>
+            )}
 
-          {/* Step 4 */}
-          {step === 4 && (
-            <>
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Item Name
-                </label>
+            {/* Step 4 */}
+            {step === 4 && (
+              <div className="space-y-4 animate__animated animate__fadeIn">
                 <input
-                  type="text"
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                  placeholder="Item Name"
                   value={itemName}
                   onChange={(e) => setItemName(e.target.value)}
-                  placeholder="e.g. Aadhar, Voter ID"
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Description
-                </label>
                 <textarea
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                  placeholder="Description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Enter details like color, etc."
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none resize-none h-20"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Date Lost/Found
-                </label>
                 <input
                   type="date"
+                  className="w-full p-3 rounded-lg bg-white/60"
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full rounded-lg bg-transparent text-white p-2 outline-none"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Location
-                </label>
                 <input
-                  type="text"
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                  placeholder="Location"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  placeholder="Where it was lost/found"
-                  className="w-full rounded-lg bg-transparent text-white p-2 placeholder-white outline-none"
                 />
-              </div>
 
-              <div>
-                <label className="block text-sm mb-1 text-white">
-                  Upload Item Image
-                </label>
-                <label className="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-400 rounded-lg cursor-pointer bg-white/60 hover:bg-white/80 transition">
-                  <span className="text-gray-700 text-sm">Click to upload</span>
-                  <span className="text-gray-500 text-xs">
-                    PNG, JPG (max 5MB)
-                  </span>
-                  <input
-                    type="file"
-                    className="hidden"
-                    onChange={(e) => setImage(e.target.files[0])}
+                <input
+                  type="file"
+                  onChange={(e) => setImage(e.target.files[0])}
+                  className="w-full p-3 bg-white/60 rounded-lg"
+                />
+
+                <div className="flex justify-between">
+                  <Button
+                    label="Back"
+                    severity="secondary"
+                    icon="pi pi-arrow-left"
+                    onClick={() => setStep(3)}
                   />
-                </label>
-                {image && (
-                  <p className="mt-2 text-sm text-white">
-                    Selected: {image.name}
-                  </p>
-                )}
+                  <Button label="Submit" icon="pi pi-check" type="submit" />
+                </div>
               </div>
-            </>
-          )}
-
-          {/* Navigation */}
-          <div className="flex justify-between mt-4">
-            {step > 1 && (
-              <button
-                type="button"
-                onClick={() => setStep(step - 1)}
-                className="px-4 py-2 rounded-lg bg-gray-400 text-white hover:bg-gray-500"
-              >
-                Previous
-              </button>
             )}
-            {step < 4 && (
-              <button
-                type="button"
-                onClick={() => setStep(step + 1)}
-                className="ml-auto px-4 py-2 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400"
-              >
-                Next
-              </button>
-            )}
-            {step === 4 && (
-              <button
-                type="submit"
-                className="ml-auto px-4 py-2 rounded-lg bg-amber-500 text-black font-semibold shadow-[0_0_15px_rgba(251,191,36,0.6)] hover:bg-amber-400 hover:shadow-[0_0_25px_rgba(251,191,36,0.8)]"
-              >
-                Submit Report
-              </button>
-            )}
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );
