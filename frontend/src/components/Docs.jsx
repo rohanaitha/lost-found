@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
+import BACKEND_URL from "../config";
 
 export default function Docs() {
   const [reportType, setReportType] = useState("");
@@ -75,7 +76,7 @@ export default function Docs() {
         image: imageUrl,
       };
 
-      await axios.post("https://lost-found-rtox.onrender.com/docs", payload, {
+      await axios.post(`${BACKEND_URL}/docs`, payload, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",

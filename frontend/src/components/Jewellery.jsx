@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import BACKEND_URL from "../config";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 
@@ -64,13 +65,9 @@ export default function Jewellery() {
         image: imageUrl,
       };
 
-      await axios.post(
-        "https://lost-found-rtox.onrender.com/jewellery",
-        payload,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post(`${BACKEND_URL}/jewellery`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       alert("Report submitted successfully!");
       setReportType("");

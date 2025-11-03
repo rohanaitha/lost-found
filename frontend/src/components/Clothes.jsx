@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import BACKEND_URL from "../config";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-
 
 export default function Clothes() {
   const [step, setStep] = useState(1);
@@ -66,13 +66,9 @@ export default function Clothes() {
         reward: reportType === "lost" ? reward : "",
       };
 
-      await axios.post(
-        "https://lost-found-rtox.onrender.com/clothes",
-        payload,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post(`${BACKEND_URL}/clothes`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       alert("Report submitted successfully!");
       navigate("/home");

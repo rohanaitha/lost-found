@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import BACKEND_URL from "../config";
 
 export default function Accessories() {
   const [step, setStep] = useState(1);
@@ -56,13 +56,9 @@ export default function Accessories() {
         image: imageUrl,
       };
 
-      await axios.post(
-        "https://lost-found-rtox.onrender.com/accesories",
-        payload,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      await axios.post(`${BACKEND_URL}/accesories`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
       alert("Report submitted successfully!");
       setReportType("");

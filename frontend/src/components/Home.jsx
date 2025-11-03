@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import BACKEND_URL from "../config";
 import axios from "axios";
 import Navbar from "./Navbar";
 import Categories from "./Categories";
@@ -16,7 +17,7 @@ function Home() {
     const fetchPosts = async () => {
       try {
         const res = await axios.get(
-          `https://lost-found-rtox.onrender.com/reports?page=${page}&limit=6`,
+          `${BACKEND_URL}/reports?page=${page}&limit=6`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

@@ -1,0 +1,58 @@
+import Chat from "../model/Chat.js";
+
+// Create or get chat room between 2 users
+export const createOrGetChat = async (req, res) => {
+  const { userId1, userId2 } = req.body;
+
+  try {
+    let chat = await Chat.findOne({
+      members: { $all: [userId1, userId2] },
+    });
+
+    if (!chat) {
+      chat = new Chat({ members: [userId1, userId2] });
+      await chat.save();
+    }
+
+    res.json({ roomId: chat._id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Get all messages in a room
+export const getMessages = async (req, res) => {
+  try {
+    const chat = await Chat.findById(req.params.roomId);
+    res.json(chat.messages);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Add a new message to a room
+export const addMessage = async (req, res) => {
+  const { sender, text } = req.body;
+
+  try {
+    const chat = await Chat.findById(req.params.roomId);
+    if (!chat) {
+      return res.status(404).json({ error: "Chat room not found" });
+    }
+
+    const newMessage = {
+      sender,
+      text,
+      createdAt: new Date(),
+    };
+
+    chat.messages.push(newMessage);
+    await chat.save();
+
+    // Send the saved message back in response
+    res.json(newMessage);
+  } catch (err) {
+    console.error("Error saving message:", err);
+    res.status(500).json({ error: err.message });
+  }
+};

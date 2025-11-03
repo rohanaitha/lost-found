@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import BACKEND_URL from "../config";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
 import { useNavigate } from "react-router-dom";
@@ -15,12 +16,9 @@ function MyProfile() {
         console.log("LocalStorage keys:", Object.keys(localStorage));
         console.log(token);
         console.log("Token in MyProfile:", localStorage.getItem("jwt_token"));
-        const response = await axios.get(
-          "https://lost-found-rtox.onrender.com/myprofile",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get(`${BACKEND_URL}/myprofile`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         console.log("resp:", response);
         setProfile(response.data);
       } catch (err) {
@@ -34,12 +32,9 @@ function MyProfile() {
     const fetchMyPosts = async () => {
       try {
         const token = localStorage.getItem("jwt_token");
-        const response = await axios.get(
-          "https://lost-found-rtox.onrender.com/myPosts",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get(`${BACKEND_URL}/myPosts`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMyPosts(response.data);
       } catch (err) {
         console.log("myposts:", err);
@@ -67,7 +62,7 @@ function MyProfile() {
       // Update backend with new avatar URL
       const token = localStorage.getItem("jwt_token");
       const res = await axios.put(
-        "https://lost-found-rtox.onrender.com/update-avatar",
+        `${BACKEND_URL}/update-avatar`,
         { avatar: data.secure_url },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import PostCard from "./PostCard";
+import BACKEND_URL from "../config";
 
 function Notification() {
   const [posts, setPosts] = useState([]);
@@ -10,7 +11,7 @@ function Notification() {
     const fetchNotifications = async () => {
       try {
         const token = localStorage.getItem("jwt_token");
-        const res = await axios.get("https://lost-found-rtox.onrender.com/me", {
+        const res = await axios.get(`${BACKEND_URL}/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -25,12 +26,9 @@ function Notification() {
         const postPromises = notifications.map(
           (n) =>
             axios
-              .get(
-                `https://lost-found-rtox.onrender.com/post/${n.category}/${n.postId}`,
-                {
-                  headers: { Authorization: `Bearer ${token}` },
-                }
-              )
+              .get(`${BACKEND_URL}/post/${n.category}/${n.postId}`, {
+                headers: { Authorization: `Bearer ${token}` },
+              })
               .then((res) => ({
                 // ensure category is present for DynamicFields
                 ...res.data,

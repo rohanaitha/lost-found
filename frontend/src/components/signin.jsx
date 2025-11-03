@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import BACKEND_URL from "../config";
 
 function SignIn() {
   const [username, setUsername] = useState("");
@@ -21,17 +22,16 @@ function SignIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://lost-found-rtox.onrender.com/login",
-        {
-          Username: username,
-          Password: password,
-        }
-      );
+      const response = await axios.post(`${BACKEND_URL}/login`, {
+        Username: username,
+        Password: password,
+      });
 
       if (response.status === 200) {
         localStorage.setItem("jwt_token", response.data.token);
         showAlert("✅ Login Successful!", "success");
+        localStorage.setItem("currentUserId", response.data.user.id);
+        console.log("response check:", response);
 
         setTimeout(() => {
           navigate("/home");

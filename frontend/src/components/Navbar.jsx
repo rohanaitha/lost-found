@@ -3,6 +3,7 @@ import { Bell, LogOut, User, Search, Home } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import BACKEND_URL from "../config";
 function Navbar() {
   const [Searchbar, setSearchbar] = useState("");
   const [notifications, setNotifications] = useState([]);
@@ -14,7 +15,7 @@ function Navbar() {
     const fetchNotifications = async () => {
       try {
         const token = localStorage.getItem("jwt_token");
-        const res = await axios.get("https://lost-found-rtox.onrender.com/me", {
+        const res = await axios.get(`${BACKEND_URL}/me`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setNotifications(res.data);
@@ -48,6 +49,7 @@ function Navbar() {
 
   function handleLogout() {
     localStorage.removeItem("jwt_token");
+    localStorage.removeItem("currentUserId");
 
     navigate("/login");
   }

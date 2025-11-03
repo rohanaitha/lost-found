@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import BACKEND_URL from "../config";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -16,15 +17,12 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://lost-found-rtox.onrender.com/register",
-        {
-          Username: username,
-          Password: password,
-          Email: email,
-          Pass: pass,
-        }
-      );
+      const response = await axios.post(`${BACKEND_URL}/register`, {
+        Username: username,
+        Password: password,
+        Email: email,
+        Pass: pass,
+      });
 
       if (response.status === 200) {
         setAlertMsg("✅ Registration successful! Please login now.");

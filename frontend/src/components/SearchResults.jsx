@@ -13,7 +13,7 @@ function SearchResults() {
     const fetchResult = async () => {
       try {
         const response = await axios.get(
-          `https://lost-found-rtox.onrender.com/searchResults/${title}`
+          `${BACKEND_URL}/searchResults/${title}`
         );
         setFilterPost(response.data);
         console.log("filter: ", response.data);

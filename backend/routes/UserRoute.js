@@ -26,6 +26,11 @@ import { createElectronics } from "../controllers/ElectronicsController.js";
 import { getOtherProfile } from "../controllers/OtherController.js";
 import { getNotifications } from "../controllers/NotificationController.js";
 import { getPostByCategoryAndId } from "../controllers/ReportController.js";
+import {
+  createOrGetChat,
+  getMessages,
+  addMessage,
+} from "../controllers/ChatController.js";
 const router = express.Router();
 
 router.post("/register", adduser);
@@ -47,5 +52,9 @@ router.get("/posts/:profileId", otherPosts);
 router.get("/searchResults/:title", searchPosts);
 router.get("/me", authMiddleware, getNotifications);
 router.get("/post/:category/:id", authMiddleware, getPostByCategoryAndId);
+router.post("/chat/room", createOrGetChat);          // create or get a room
+router.get("/chat/:roomId", getMessages);           // get messages
+router.post("/chat/:roomId/message", addMessage);   // send/save message
+
 
 export default router;
