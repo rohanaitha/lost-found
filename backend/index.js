@@ -69,6 +69,10 @@ io.on("connection", (socket) => {
 });
 
 // Add Socket.IO route to verify it's working
+app.get("/socket.io/", (req, res) => {
+  res.send("Socket.IO endpoint is running");
+});
+
 
 
 // Existing routes
