@@ -13,7 +13,11 @@ const app = express();
 
 // CORS configuration
 const corsOptions = {
-  origin:"*",
+  origin: [
+    "http://localhost:5173",
+    "https://lost-found-hnh6kt1g5-rohanaithas-projects.vercel.app",
+    "https://lost-found-one-omega.vercel.app",
+  ],
   methods: ["GET", "POST", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
