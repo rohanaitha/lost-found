@@ -1,5 +1,12 @@
 import React from "react";
-import { Bell, LogOut, User, Search, Home } from "lucide-react";
+import {
+  Bell,
+  LogOut,
+  User,
+  Search,
+  Home,
+  MessageCircleMore,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -134,9 +141,17 @@ function Navbar() {
 
       {/* Right Side Icons */}
       <div className="flex items-center space-x-4 text-white drop-shadow-md flex-wrap">
+        {/*messages*/}
+        <button
+          className="relative hover:scale-150 transition"
+          onClick={() => navigate("/inbox")}
+        >
+          <MessageCircleMore className="w-6 h-6 mr-2" />
+        </button>
+
         {/* Notifications */}
         <button
-          className="relative hover:scale-110 transition"
+          className="relative hover:scale-120 transition"
           onClick={() => navigate("/notifications")}
         >
           <Bell className="w-6 h-6" />

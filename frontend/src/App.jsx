@@ -26,6 +26,7 @@ import Kindness from './components/Kindness';
 import Premium from './components/Premium';
 import Notification from './components/Notification';
 import ChatPage from './components/ChatPage';
+import Inbox from './components/Inbox';
 function App() {
 
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/lf-mart/premium" element={<Premium />} />
         <Route path="/notifications" element={<Notification />} />
         <Route path="/chat/:roomId" element={<ChatPage />} />
+        <Route path='/inbox' element={<Inbox/>}/>
       </Routes>
     </BrowserRouter>
   );

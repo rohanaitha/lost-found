@@ -1,4 +1,5 @@
 import Chat from "../model/Chat.js";
+import mongoose from "mongoose";
 
 // Create or get chat room between 2 users
 export const createOrGetChat = async (req, res) => {
@@ -26,8 +27,8 @@ export const getMessages = async (req, res) => {
     const chat = await Chat.findById(req.params.roomId);
     res.json(chat.messages);
   } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
+    res.status().json({ error: err.message });
+  }500
 };
 
 // Add a new message to a room
@@ -53,6 +54,20 @@ export const addMessage = async (req, res) => {
     res.json(newMessage);
   } catch (err) {
     console.error("Error saving message:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const getInbox = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const conversations = await Chat.find({
+      members: { $in: [new mongoose.Types.ObjectId(userId)] },
+    });
+    res.json(conversations);
+  } catch (err) {
+    console.error("Error sending room:", err);
     res.status(500).json({ error: err.message });
   }
 };
