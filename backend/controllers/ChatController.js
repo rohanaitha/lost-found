@@ -28,7 +28,8 @@ export const getMessages = async (req, res) => {
     res.json(chat.messages);
   } catch (err) {
     res.status().json({ error: err.message });
-  }500
+  }
+  500;
 };
 
 // Add a new message to a room
@@ -62,9 +63,22 @@ export const getInbox = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const conversations = await Chat.find({
-      members: { $in: [new mongoose.Types.ObjectId(userId)] },
-    });
+    const conversations = await Chat.aggregate([
+      {
+        $match: {
+          members: new mongoose.Types.ObjectId(userId),
+        },
+      },
+      {
+        $lookup: {
+          from: "profiles",
+          localField: "members",
+          foreignField: "userId",
+          as: "memberDetails",
+        },
+      },
+    ]);
+
     res.json(conversations);
   } catch (err) {
     console.error("Error sending room:", err);

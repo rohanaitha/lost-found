@@ -30,6 +30,7 @@ import {
   createOrGetChat,
   getMessages,
   addMessage,
+  getInbox,
 } from "../controllers/ChatController.js";
 const router = express.Router();
 
@@ -52,9 +53,9 @@ router.get("/posts/:profileId", otherPosts);
 router.get("/searchResults/:title", searchPosts);
 router.get("/me", authMiddleware, getNotifications);
 router.get("/post/:category/:id", authMiddleware, getPostByCategoryAndId);
-router.post("/chat/room", createOrGetChat);          // create or get a room
-router.get("/chat/:roomId", getMessages);           // get messages
-router.post("/chat/:roomId/message", addMessage);   // send/save message
-
+router.post("/chat/room", createOrGetChat); // create or get a room
+router.get("/chat/:roomId", getMessages); // get messages
+router.post("/chat/:roomId/message", addMessage); // send/save message
+router.get("/inbox", authMiddleware, getInbox); // get all conversations
 
 export default router;
