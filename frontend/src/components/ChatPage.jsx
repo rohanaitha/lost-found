@@ -4,8 +4,9 @@ import socket from "../socket";
 import axios from "axios";
 import BACKEND_URL from "../config";
 
-function ChatPage() {
-  const { roomId } = useParams();
+function ChatPage({ roomIdProp }) {
+  const params = useParams();
+  const roomId = roomIdProp || params?.roomId;
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState("");
   const [chatUser, setChatUser] = useState(null);
@@ -14,6 +15,7 @@ function ChatPage() {
 
   // 📨 Load messages + chat user info
   useEffect(() => {
+    if (!roomId) return;
     const loadChat = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/chat/${roomId}`);
@@ -33,13 +35,24 @@ function ChatPage() {
 
   // Socket setup
   useEffect(() => {
+    if (!roomId) return;
+
     socket.emit("joinRoom", roomId);
 
-    socket.on("receiveMessage", (message) => {
+    const onReceive = (message) => {
       setMessages((prev) => [...prev, message]);
-    });
+    };
 
-    return () => socket.off("receiveMessage");
+    socket.on("receiveMessage", onReceive);
+
+    return () => {
+      socket.off("receiveMessage", onReceive);
+      try {
+        socket.emit("leaveRoom", roomId);
+      } catch (e) {
+        // ignore
+      }
+    };
   }, [roomId]);
 
   const sendMessage = async () => {
