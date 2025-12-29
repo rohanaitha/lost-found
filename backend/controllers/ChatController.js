@@ -24,12 +24,34 @@ export const createOrGetChat = async (req, res) => {
 // Get all messages in a room
 export const getMessages = async (req, res) => {
   try {
-    const chat = await Chat.findById(req.params.roomId);
-    res.json(chat.messages);
+    const chat = await Chat.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(req.params.roomId),
+        },
+      },
+      {
+        $lookup: {
+          from: "profiles",
+          localField: "members",
+          foreignField: "userId",
+          as: "memberDetails",
+        },
+      },
+    ]);
+
+    if (chat.length === 0) {
+      return res.status(404).json({ error: "Chat not found" });
+    }
+
+    res.json({
+      messages: chat[0].messages,
+      members: chat[0].memberDetails,
+      roomId: chat[0]._id,
+    });
   } catch (err) {
-    res.status().json({ error: err.message });
+    res.status(500).json({ error: err.message });
   }
-  500;
 };
 
 // Add a new message to a room

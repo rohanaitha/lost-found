@@ -4,7 +4,7 @@ import socket from "../socket";
 import axios from "axios";
 import BACKEND_URL from "../config";
 
-function ChatPage({ roomIdProp }) {
+function ChatPage({ roomIdProp, onBack }) {
   const params = useParams();
   const roomId = roomIdProp || params?.roomId;
   const [messages, setMessages] = useState([]);
@@ -19,14 +19,22 @@ function ChatPage({ roomIdProp }) {
     const loadChat = async () => {
       try {
         const res = await axios.get(`${BACKEND_URL}/chat/${roomId}`);
-        setMessages(res.data || []);
-        setChatUser(res.data.chatUser || null);
+        console.log("Chat response:", res.data);
+        setMessages(res.data.messages || []);
+
+        // Find the other user (not current user) from members
+        const otherUser = res.data.members?.find(
+          (m) => m.userId !== currentUserId
+        );
+        console.log("Other user:", otherUser);
+        console.log("Current user ID:", currentUserId);
+        setChatUser(otherUser || null);
       } catch (err) {
         console.error("Error loading chat:", err);
       }
     };
     loadChat();
-  }, [roomId]);
+  }, [roomId, currentUserId]);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -75,63 +83,102 @@ function ChatPage({ roomIdProp }) {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#fafafa]">
-      {/* 🧩 Header */}
-      <div className="bg-white shadow px-5 py-3 flex items-center gap-3 border-b">
+    <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* ───────── HEADER ───────── */}
+      <div className="bg-white/80 backdrop-blur-md border-b px-6 py-4 flex items-center gap-4 shadow-sm">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="p-2 hover:bg-gray-200 rounded-full transition"
+            title="Back to Inbox"
+          >
+            ←
+          </button>
+        )}
         <img
-          src={chatUser?.profilePic || "/default-avatar.jpg"}
+          src={chatUser?.avatar || "/default-avatar.jpg"}
           alt="User Avatar"
-          className="w-10 h-10 rounded-full object-cover"
+          className="w-11 h-11 rounded-full object-cover ring-2 ring-blue-400/30"
         />
-        <div>
-          <h2 className="text-lg font-semibold">
-            {chatUser?.username || "Chat"}
+
+        <div className="flex-1">
+          <h2 className="text-lg font-bold text-gray-900">
+            {chatUser?.fullName || "Chat"}
           </h2>
-          <p className="text-xs text-gray-500">Active now</p>
         </div>
+
+        <button className="p-2 rounded-full hover:bg-gray-100 transition">
+          ⋮
+        </button>
       </div>
 
-      {/* 💬 Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-3 scrollbar-hide">
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`flex ${
-              msg.sender === currentUserId ? "justify-end" : "justify-start"
-            }`}
-          >
+      {/* ───────── MESSAGES ───────── */}
+      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 scrollbar-thin scrollbar-thumb-gray-300">
+        {messages.map((msg, i) => {
+          const isMe = msg.sender === currentUserId;
+
+          return (
             <div
-              className={`px-4 py-2 rounded-2xl text-sm max-w-[70%] break-words shadow-sm ${
-                msg.sender === currentUserId
-                  ? "bg-blue-500 text-white rounded-br-none"
-                  : "bg-gray-200 text-gray-900 rounded-bl-none"
-              }`}
+              key={i}
+              className={`flex ${isMe ? "justify-end" : "justify-start"}`}
             >
-              {msg.text}
-              <div className="text-[10px] text-gray-400 mt-1 text-right">
-                {new Date(msg.createdAt).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
+              <div
+                className={`
+                relative group px-4 py-2 rounded-2xl max-w-[65%] text-sm break-words
+                transition-all duration-300
+                ${
+                  isMe
+                    ? "bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-br-none shadow-blue-500/30"
+                    : "bg-white text-gray-900 rounded-bl-none shadow"
+                }
+                hover:scale-[1.02]
+              `}
+              >
+                {msg.text}
+
+                {/* Time */}
+                <div
+                  className={`
+                  text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition
+                  ${isMe ? "text-blue-100" : "text-gray-400"}
+                `}
+                >
+                  {new Date(msg.createdAt).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
         <div ref={messagesEndRef} />
       </div>
 
-      {/* ✍️ Input */}
-      <div className="bg-white border-t px-4 py-3 flex items-center gap-2">
+      {/* ───────── INPUT BAR ───────── */}
+      <div className="bg-white/90 backdrop-blur-md border-t px-5 py-4 flex items-center gap-3 shadow-lg">
         <input
           value={newMsg}
           onChange={(e) => setNewMsg(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          placeholder="Message..."
-          className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-1 focus:ring-blue-400"
+          placeholder="Type a message..."
+          className="
+          flex-1 px-5 py-3 rounded-full border
+          focus:outline-none focus:ring-2 focus:ring-blue-400
+          transition shadow-sm
+        "
         />
+
         <button
           onClick={sendMessage}
-          className="px-5 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition"
+          className="
+          px-6 py-3 rounded-full font-semibold text-white
+          bg-gradient-to-r from-blue-500 to-indigo-600
+          shadow-lg shadow-blue-500/30
+          hover:scale-105 hover:shadow-xl
+          active:scale-95
+          transition-all duration-300
+        "
         >
           Send
         </button>
