@@ -47,8 +47,8 @@ export default function EcomNavbar() {
                 placeholder="Search products"
                 className="bg-transparent outline-none text-sm w-64 text-white placeholder-gray-400"
                 onKeyDown={(e) => {
-                  if (e.key === "Enter")
-                    navigate(`/searchResults/${e.target.value}`);
+                  if (e.key === "Enter" && e.target.value.trim())
+                    navigate(`/store/search/${e.target.value}`);
                 }}
               />
             </div>

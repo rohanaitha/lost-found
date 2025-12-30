@@ -25,6 +25,7 @@ import LFMartMain from "./components/LFMartMain";
 import Kindness from "./components/Kindness";
 import Premium from "./components/Premium";
 import Store from "./components/Store/Store";
+import EcomSearchResults from "./components/Store/EcomSearchResults";
 import ProductDetail from "./components/Store/ProductDetail";
 import CartPage from "./components/CartPage";
 import Notification from "./components/Notification";
@@ -52,6 +53,7 @@ function App() {
         <Route path="/lf-mart/kindness" element={<Kindness />} />
         <Route path="/lf-mart/premium" element={<Premium />} />
         <Route path="/store" element={<Store />} />
+        <Route path="/store/search/:query" element={<EcomSearchResults />} />
         <Route path="/store/product/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/notifications" element={<Notification />} />
