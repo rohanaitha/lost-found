@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import axios from "axios";
 import BACKEND_URL from "../config";
 
@@ -56,6 +57,14 @@ function Login() {
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
+
+      <button
+        onClick={() => navigate("/")}
+        className="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 transition text-white"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
 
       {/* Alert Box */}
       {alertMsg && (

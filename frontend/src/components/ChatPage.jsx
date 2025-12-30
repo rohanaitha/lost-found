@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import socket from "../socket";
 import axios from "axios";
 import BACKEND_URL from "../config";
 
 function ChatPage({ roomIdProp, onBack }) {
   const params = useParams();
+  const navigate = useNavigate();
   const roomId = roomIdProp || params?.roomId;
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState("");
@@ -86,15 +88,13 @@ function ChatPage({ roomIdProp, onBack }) {
     <div className="flex flex-col h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* ───────── HEADER ───────── */}
       <div className="bg-white/80 backdrop-blur-md border-b px-6 py-4 flex items-center gap-4 shadow-sm">
-        {onBack && (
-          <button
-            onClick={onBack}
-            className="p-2 hover:bg-gray-200 rounded-full transition"
-            title="Back to Inbox"
-          >
-            ←
-          </button>
-        )}
+        <button
+          onClick={() => (onBack ? onBack() : navigate("/inbox"))}
+          className="p-2 hover:bg-gray-200 rounded-full transition"
+          title="Back to Inbox"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
         <img
           src={chatUser?.avatar || "/default-avatar.jpg"}
           alt="User Avatar"

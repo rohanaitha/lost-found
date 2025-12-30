@@ -82,6 +82,14 @@ export default function Accessories() {
       <div className="absolute inset-0 bg-[url('https://i.pinimg.com/1200x/d6/9b/71/d69b7159d263fa950be54c6f7b44e763.jpg')] bg-cover bg-center"></div>
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/90"></div>
 
+      <button
+        onClick={() => navigate("/home")}
+        className="fixed top-20 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 transition text-white"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
+
       {/* Container */}
       <div className="relative w-full max-w-3xl px-6 py-10">
         {/* Title */}

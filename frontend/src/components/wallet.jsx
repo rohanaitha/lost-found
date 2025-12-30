@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 
 export default function WalletPage() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { money } = location.state || { money: 0 };
   console.log(money);
   useEffect(() => {
@@ -23,6 +25,14 @@ export default function WalletPage() {
   return (
     <div className="relative h-screen flex flex-col justify-center items-center bg-black overflow-hidden">
       <div className="coin-container absolute inset-0"></div>
+
+      <button
+        onClick={() => navigate(-1)}
+        className="fixed top-6 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 transition text-white"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
 
       <h1 className="text-5xl font-extrabold text-yellow-400 z-10 mb-6 animate-pulse">
         💫 L&F Wallet 💫

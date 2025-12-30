@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import PostCard from "./PostCard";
 import BACKEND_URL from "../config";
 
 function Notification() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -75,16 +78,24 @@ function Notification() {
 
   if (loading)
     return <p className="text-gray-400 text-center mt-10">Loading...</p>;
-
   return (
+    <div>
+      <button
+        onClick={() => navigate("/home")}
+        className="flex items-center gap-2 m-4 px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition text-gray-800"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
+      <div className="max-w-7xl mx-auto px-4 py-10">
     <div className="max-w-7xl mx-auto px-4 py-10">
       {posts.length === 0 ? (
         <p className="text-gray-400 text-center">No notifications yet.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <div key={post._id} className="w-full">
-              <div className="bg-yellow-100 text-black rounded-lg px-4 py-2 mb-3 text-center font-semibold shadow">
+        </div>
+      </div>
+    </div>    <div className="bg-yellow-100 text-black rounded-lg px-4 py-2 mb-3 text-center font-semibold shadow">
                 🔔 {post.notificationMessage}
               </div>
               <PostCard post={post} />

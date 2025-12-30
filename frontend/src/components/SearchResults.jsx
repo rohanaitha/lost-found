@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { ArrowLeftCircle } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
+import BACKEND_URL from "../config";
+import { ArrowLeft } from "lucide-react";
 import PostCard from "./PostCard";
-import { useNavigate } from "react-router-dom";
 
 function SearchResults() {
   const [filterPost, setFilterPost] = useState([]);
@@ -50,21 +50,14 @@ function SearchResults() {
       {/* 🔹 Overlay */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* 🔙 Crazy Back Button */}
+      {/* 🔙 Back Button */}
       <div className="absolute top-6 left-6 z-20">
         <button
-          className="group flex items-center gap-2 bg-black/40 border border-white/30 text-white px-4 py-2 rounded-full 
-          backdrop-blur-md hover:bg-white/20 hover:scale-110 transition-all duration-300 
-          shadow-[0_0_15px_rgba(255,255,255,0.4)] animate-pulse"
-          onClick={() => navigate("/home")} // you'll replace this
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition text-white"
+          onClick={() => navigate("/home")}
         >
-          <ArrowLeftCircle
-            size={28}
-            className="group-hover:rotate-[-15deg] transition-transform duration-300 text-yellow-300"
-          />
-          <span className="text-lg font-semibold font-serif tracking-wide group-hover:text-yellow-300">
-            Back
-          </span>
+          <ArrowLeft className="w-5 h-5" />
+          Back to Home
         </button>
       </div>
 

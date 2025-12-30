@@ -3,8 +3,9 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
 import { useParams, useNavigate } from "react-router-dom";
-import socket from "../socket"; // optional, if needed for pre-connection
+import socket from "../socket";
 import BACKEND_URL from "../config";
+import { ArrowLeft } from "lucide-react";
 
 function OtherProfile() {
   const [profile, setProfile] = useState(null);
@@ -69,6 +70,13 @@ function OtherProfile() {
   return (
     <>
       <Navbar />
+      <button
+        onClick={() => navigate(-1)}
+        className="fixed top-20 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 transition text-white"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
 
       <div
         className="min-h-screen text-white py-10 bg-center"

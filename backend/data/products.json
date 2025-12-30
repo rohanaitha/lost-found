@@ -1,0 +1,1496 @@
+{
+  "categories": [
+    {
+      "id": "cat_1",
+      "name": "Tools",
+      "slug": "jewelery"
+    },
+    {
+      "id": "cat_2",
+      "name": "Automotive",
+      "slug": "electronics"
+    },
+    {
+      "id": "cat_3",
+      "name": "Shoes",
+      "slug": "jewelery"
+    },
+    {
+      "id": "cat_4",
+      "name": "Kids",
+      "slug": "kids"
+    },
+    {
+      "id": "cat_5",
+      "name": "Games",
+      "slug": "grocery"
+    },
+    {
+      "id": "cat_6",
+      "name": "Games",
+      "slug": "music"
+    },
+    {
+      "id": "cat_7",
+      "name": "Movies",
+      "slug": "health"
+    },
+    {
+      "id": "cat_8",
+      "name": "Outdoors",
+      "slug": "garden"
+    },
+    {
+      "id": "cat_9",
+      "name": "Kids",
+      "slug": "games"
+    },
+    {
+      "id": "cat_10",
+      "name": "Clothing",
+      "slug": "baby"
+    }
+  ],
+  "products": [
+    {
+      "id": "prod_1",
+      "title": "Small Steel Chips",
+      "slug": "small-steel-chips",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "price": 363,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_3",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7014488997888"
+      ],
+      "sku": "BZBCIBW0",
+      "stock": 432,
+      "rating": 4.01,
+      "reviewsCount": 46,
+      "createdAt": "2025-09-15T04:09:01.589Z"
+    },
+    {
+      "id": "prod_2",
+      "title": "Sleek Rubber Shirt",
+      "slug": "sleek-rubber-shirt",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "price": 74,
+      "salePrice": 46.38,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=2096617842802688"
+      ],
+      "sku": "S5MCCNVY",
+      "stock": 593,
+      "rating": 1.6,
+      "reviewsCount": 933,
+      "createdAt": "2025-12-13T12:24:43.480Z"
+    },
+    {
+      "id": "prod_3",
+      "title": "Luxurious Rubber Chicken",
+      "slug": "luxurious-rubber-chicken",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 89,
+      "salePrice": 60.81,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8486598937149440"
+      ],
+      "sku": "XYONI06E",
+      "stock": 684,
+      "rating": 3.19,
+      "reviewsCount": 482,
+      "createdAt": "2025-07-22T19:34:54.918Z"
+    },
+    {
+      "id": "prod_4",
+      "title": "Handcrafted Bronze Soap",
+      "slug": "handcrafted-bronze-soap",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 250,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8190430048944128"
+      ],
+      "sku": "OGBFKJQW",
+      "stock": 208,
+      "rating": 3.62,
+      "reviewsCount": 1093,
+      "createdAt": "2025-06-06T06:15:46.517Z"
+    },
+    {
+      "id": "prod_5",
+      "title": "Intelligent Steel Chips",
+      "slug": "intelligent-steel-chips",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "price": 422,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=3559196870049792"
+      ],
+      "sku": "TVBJVK5Z",
+      "stock": 196,
+      "rating": 3.29,
+      "reviewsCount": 1042,
+      "createdAt": "2025-12-13T23:07:35.779Z"
+    },
+    {
+      "id": "prod_6",
+      "title": "Tasty Concrete Pizza",
+      "slug": "tasty-concrete-pizza",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "price": 197,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_6",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7464603877376000"
+      ],
+      "sku": "AMXHBXH8",
+      "stock": 296,
+      "rating": 4.18,
+      "reviewsCount": 1605,
+      "createdAt": "2025-10-31T03:34:45.375Z"
+    },
+    {
+      "id": "prod_7",
+      "title": "Ergonomic Steel Chips",
+      "slug": "ergonomic-steel-chips",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 215,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=2643506482905088"
+      ],
+      "sku": "00OCHIJM",
+      "stock": 772,
+      "rating": 1.43,
+      "reviewsCount": 1212,
+      "createdAt": "2025-12-03T10:41:11.599Z"
+    },
+    {
+      "id": "prod_8",
+      "title": "Unbranded Plastic Tuna",
+      "slug": "unbranded-plastic-tuna",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 62,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5614170407960576"
+      ],
+      "sku": "RK53MJFK",
+      "stock": 666,
+      "rating": 4.96,
+      "reviewsCount": 1459,
+      "createdAt": "2025-05-28T15:32:57.102Z"
+    },
+    {
+      "id": "prod_9",
+      "title": "Generic Concrete Salad",
+      "slug": "generic-concrete-salad",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 283,
+      "salePrice": 264.97,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6424337886216192"
+      ],
+      "sku": "QLIYELFU",
+      "stock": 40,
+      "rating": 1.81,
+      "reviewsCount": 1045,
+      "createdAt": "2025-04-15T01:54:39.296Z"
+    },
+    {
+      "id": "prod_10",
+      "title": "Modern Bronze Chair",
+      "slug": "modern-bronze-chair",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 222,
+      "salePrice": 159.09,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5732275362725888"
+      ],
+      "sku": "TJYVHU8F",
+      "stock": 605,
+      "rating": 3.07,
+      "reviewsCount": 821,
+      "createdAt": "2025-06-16T10:18:35.438Z"
+    },
+    {
+      "id": "prod_11",
+      "title": "Oriental Wooden Bike",
+      "slug": "oriental-wooden-bike",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "price": 472,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=1452152243355648"
+      ],
+      "sku": "SVCOID6S",
+      "stock": 456,
+      "rating": 1.63,
+      "reviewsCount": 1608,
+      "createdAt": "2025-10-11T17:46:46.035Z"
+    },
+    {
+      "id": "prod_12",
+      "title": "Intelligent Plastic Salad",
+      "slug": "intelligent-plastic-salad",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "price": 443,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=1099670520594432"
+      ],
+      "sku": "TMJU6GEE",
+      "stock": 427,
+      "rating": 1.91,
+      "reviewsCount": 1,
+      "createdAt": "2025-03-06T21:30:30.585Z"
+    },
+    {
+      "id": "prod_13",
+      "title": "Fantastic Fresh Gloves",
+      "slug": "fantastic-fresh-gloves",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 8,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_5",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4366960202612736"
+      ],
+      "sku": "DG7GKFWA",
+      "stock": 323,
+      "rating": 3.6,
+      "reviewsCount": 437,
+      "createdAt": "2025-06-24T02:42:42.859Z"
+    },
+    {
+      "id": "prod_14",
+      "title": "Bespoke Metal Shirt",
+      "slug": "bespoke-metal-shirt",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "price": 185,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=2223661895385088"
+      ],
+      "sku": "FHUII9HZ",
+      "stock": 36,
+      "rating": 4.92,
+      "reviewsCount": 533,
+      "createdAt": "2025-05-21T23:32:03.370Z"
+    },
+    {
+      "id": "prod_15",
+      "title": "Tasty Granite Shirt",
+      "slug": "tasty-granite-shirt",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 30,
+      "salePrice": 21.05,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5713728943161344"
+      ],
+      "sku": "EG8WURZY",
+      "stock": 242,
+      "rating": 4.21,
+      "reviewsCount": 1185,
+      "createdAt": "2025-04-29T03:24:37.533Z"
+    },
+    {
+      "id": "prod_16",
+      "title": "Ergonomic Soft Pants",
+      "slug": "ergonomic-soft-pants",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 122,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4236091490041856"
+      ],
+      "sku": "DYDOXO5N",
+      "stock": 836,
+      "rating": 1.38,
+      "reviewsCount": 301,
+      "createdAt": "2025-09-04T09:17:03.601Z"
+    },
+    {
+      "id": "prod_17",
+      "title": "Sleek Wooden Chicken",
+      "slug": "sleek-wooden-chicken",
+      "description": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+      "price": 25,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6102957254770688"
+      ],
+      "sku": "D1IVOELE",
+      "stock": 96,
+      "rating": 2.8,
+      "reviewsCount": 348,
+      "createdAt": "2025-01-21T04:20:02.865Z"
+    },
+    {
+      "id": "prod_18",
+      "title": "Handcrafted Plastic Shirt",
+      "slug": "handcrafted-plastic-shirt",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 261,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6086075516715008"
+      ],
+      "sku": "LJ7CVXSH",
+      "stock": 258,
+      "rating": 2.6,
+      "reviewsCount": 457,
+      "createdAt": "2025-05-03T13:51:27.119Z"
+    },
+    {
+      "id": "prod_19",
+      "title": "Intelligent Soft Chips",
+      "slug": "intelligent-soft-chips",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 280,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_3",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=2178411709595648"
+      ],
+      "sku": "Z5XTYTSD",
+      "stock": 188,
+      "rating": 4.43,
+      "reviewsCount": 678,
+      "createdAt": "2025-09-19T16:24:16.820Z"
+    },
+    {
+      "id": "prod_20",
+      "title": "Fantastic Metal Fish",
+      "slug": "fantastic-metal-fish",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 424,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=3643485292855296"
+      ],
+      "sku": "MTDQ5WAM",
+      "stock": 899,
+      "rating": 3.98,
+      "reviewsCount": 1338,
+      "createdAt": "2025-05-23T02:59:57.272Z"
+    },
+    {
+      "id": "prod_21",
+      "title": "Bespoke Steel Pants",
+      "slug": "bespoke-steel-pants",
+      "description": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+      "price": 55,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=45590733914112"
+      ],
+      "sku": "H9IYUGRE",
+      "stock": 995,
+      "rating": 4.72,
+      "reviewsCount": 448,
+      "createdAt": "2025-10-27T06:12:45.049Z"
+    },
+    {
+      "id": "prod_22",
+      "title": "Handmade Steel Bike",
+      "slug": "handmade-steel-bike",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "price": 249,
+      "salePrice": 158.37,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5851372979224576"
+      ],
+      "sku": "KQIEJZX5",
+      "stock": 509,
+      "rating": 2.69,
+      "reviewsCount": 735,
+      "createdAt": "2025-05-12T05:02:38.595Z"
+    },
+    {
+      "id": "prod_23",
+      "title": "Incredible Concrete Bike",
+      "slug": "incredible-concrete-bike",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "price": 297,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4384183535271936"
+      ],
+      "sku": "TUDQNLVD",
+      "stock": 577,
+      "rating": 3.31,
+      "reviewsCount": 1338,
+      "createdAt": "2025-07-03T16:51:45.975Z"
+    },
+    {
+      "id": "prod_24",
+      "title": "Luxurious Wooden Bike",
+      "slug": "luxurious-wooden-bike",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 363,
+      "salePrice": 294.55,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6922519166582784"
+      ],
+      "sku": "E2AZWTXH",
+      "stock": 915,
+      "rating": 2.97,
+      "reviewsCount": 1767,
+      "createdAt": "2025-08-17T08:43:39.260Z"
+    },
+    {
+      "id": "prod_25",
+      "title": "Handmade Steel Sausages",
+      "slug": "handmade-steel-sausages",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 465,
+      "salePrice": 410.24,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5154752300056576"
+      ],
+      "sku": "XYQ4IINB",
+      "stock": 851,
+      "rating": 3.67,
+      "reviewsCount": 537,
+      "createdAt": "2025-09-05T19:04:51.351Z"
+    },
+    {
+      "id": "prod_26",
+      "title": "Recycled Wooden Pants",
+      "slug": "recycled-wooden-pants",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 281,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8376846907342848"
+      ],
+      "sku": "Z46CCFZM",
+      "stock": 140,
+      "rating": 1.2,
+      "reviewsCount": 508,
+      "createdAt": "2025-06-24T06:44:59.983Z"
+    },
+    {
+      "id": "prod_27",
+      "title": "Elegant Fresh Gloves",
+      "slug": "elegant-fresh-gloves",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "price": 372,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6327414091153408"
+      ],
+      "sku": "HMYIIOQO",
+      "stock": 256,
+      "rating": 4.72,
+      "reviewsCount": 1735,
+      "createdAt": "2025-05-21T06:27:27.777Z"
+    },
+    {
+      "id": "prod_28",
+      "title": "Refined Steel Hat",
+      "slug": "refined-steel-hat",
+      "description": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+      "price": 7,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_8",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=1749864205516800"
+      ],
+      "sku": "E4HON3TS",
+      "stock": 338,
+      "rating": 2.73,
+      "reviewsCount": 55,
+      "createdAt": "2025-08-15T09:12:39.827Z"
+    },
+    {
+      "id": "prod_29",
+      "title": "Bespoke Bronze Table",
+      "slug": "bespoke-bronze-table",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 291,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4193734161858560"
+      ],
+      "sku": "9XYHQAR1",
+      "stock": 250,
+      "rating": 4.82,
+      "reviewsCount": 74,
+      "createdAt": "2025-12-16T07:07:31.491Z"
+    },
+    {
+      "id": "prod_30",
+      "title": "Licensed Concrete Pants",
+      "slug": "licensed-concrete-pants",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 271,
+      "salePrice": 201.62,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6935485381345280"
+      ],
+      "sku": "GDXCS5Q3",
+      "stock": 194,
+      "rating": 4.96,
+      "reviewsCount": 1063,
+      "createdAt": "2025-08-02T07:51:27.087Z"
+    },
+    {
+      "id": "prod_31",
+      "title": "Sleek Metal Tuna",
+      "slug": "sleek-metal-tuna",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 73,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8732811747917824"
+      ],
+      "sku": "WIK2NOGQ",
+      "stock": 439,
+      "rating": 4.01,
+      "reviewsCount": 1488,
+      "createdAt": "2025-12-01T20:02:23.047Z"
+    },
+    {
+      "id": "prod_32",
+      "title": "Incredible Steel Mouse",
+      "slug": "incredible-steel-mouse",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "price": 482,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6201455788687360"
+      ],
+      "sku": "P3AU9RFE",
+      "stock": 549,
+      "rating": 2.85,
+      "reviewsCount": 187,
+      "createdAt": "2025-04-13T15:27:27.144Z"
+    },
+    {
+      "id": "prod_33",
+      "title": "Intelligent Rubber Sausages",
+      "slug": "intelligent-rubber-sausages",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "price": 143,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_6",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6646384526622720"
+      ],
+      "sku": "EYRBJQ2F",
+      "stock": 566,
+      "rating": 1.75,
+      "reviewsCount": 712,
+      "createdAt": "2025-11-02T13:34:29.349Z"
+    },
+    {
+      "id": "prod_34",
+      "title": "Oriental Bronze Chair",
+      "slug": "oriental-bronze-chair",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 174,
+      "salePrice": 146.87,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=366852450549760"
+      ],
+      "sku": "JRYHAT16",
+      "stock": 764,
+      "rating": 2.73,
+      "reviewsCount": 983,
+      "createdAt": "2025-03-10T22:45:36.645Z"
+    },
+    {
+      "id": "prod_35",
+      "title": "Recycled Plastic Mouse",
+      "slug": "recycled-plastic-mouse",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 235,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5547084499386368"
+      ],
+      "sku": "WDS2GN0C",
+      "stock": 934,
+      "rating": 1.46,
+      "reviewsCount": 1006,
+      "createdAt": "2025-06-30T14:12:30.216Z"
+    },
+    {
+      "id": "prod_36",
+      "title": "Luxurious Granite Tuna",
+      "slug": "luxurious-granite-tuna",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 344,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5786398426660864"
+      ],
+      "sku": "W1RADWNZ",
+      "stock": 677,
+      "rating": 3.22,
+      "reviewsCount": 776,
+      "createdAt": "2025-06-04T04:37:21.205Z"
+    },
+    {
+      "id": "prod_37",
+      "title": "Generic Bronze Table",
+      "slug": "generic-bronze-table",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 407,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5637963327209472"
+      ],
+      "sku": "NOXEUCCG",
+      "stock": 69,
+      "rating": 3,
+      "reviewsCount": 429,
+      "createdAt": "2025-11-23T16:30:08.441Z"
+    },
+    {
+      "id": "prod_38",
+      "title": "Practical Steel Chair",
+      "slug": "practical-steel-chair",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "price": 51,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=641210330906624"
+      ],
+      "sku": "EJNQG1LO",
+      "stock": 260,
+      "rating": 1.5,
+      "reviewsCount": 563,
+      "createdAt": "2025-07-02T10:01:46.846Z"
+    },
+    {
+      "id": "prod_39",
+      "title": "Electronic Metal Chicken",
+      "slug": "electronic-metal-chicken",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "price": 177,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=352959051333632"
+      ],
+      "sku": "JPNXHXBQ",
+      "stock": 751,
+      "rating": 4.51,
+      "reviewsCount": 1137,
+      "createdAt": "2025-03-10T23:26:43.904Z"
+    },
+    {
+      "id": "prod_40",
+      "title": "Bespoke Frozen Fish",
+      "slug": "bespoke-frozen-fish",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "price": 209,
+      "salePrice": 182.68,
+      "currency": "USD",
+      "categoryId": "cat_8",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5229075637469184"
+      ],
+      "sku": "LRVYREQG",
+      "stock": 751,
+      "rating": 3.15,
+      "reviewsCount": 1480,
+      "createdAt": "2025-03-30T01:31:20.085Z"
+    },
+    {
+      "id": "prod_41",
+      "title": "Gorgeous Bronze Shirt",
+      "slug": "gorgeous-bronze-shirt",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 452,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_5",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7444067078111232"
+      ],
+      "sku": "OJIT6O30",
+      "stock": 959,
+      "rating": 4.31,
+      "reviewsCount": 1811,
+      "createdAt": "2025-02-24T06:20:38.073Z"
+    },
+    {
+      "id": "prod_42",
+      "title": "Electronic Plastic Gloves",
+      "slug": "electronic-plastic-gloves",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "price": 479,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_10",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4346162339381248"
+      ],
+      "sku": "ZUD5R5IB",
+      "stock": 328,
+      "rating": 2.24,
+      "reviewsCount": 1107,
+      "createdAt": "2025-04-29T00:03:22.031Z"
+    },
+    {
+      "id": "prod_43",
+      "title": "Gorgeous Soft Sausages",
+      "slug": "gorgeous-soft-sausages",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 397,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=821511506100224"
+      ],
+      "sku": "VUY3ZY3R",
+      "stock": 737,
+      "rating": 3.83,
+      "reviewsCount": 1776,
+      "createdAt": "2025-06-14T05:05:44.226Z"
+    },
+    {
+      "id": "prod_44",
+      "title": "Fantastic Metal Computer",
+      "slug": "fantastic-metal-computer",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 485,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5568413244063744"
+      ],
+      "sku": "R6P5QHD4",
+      "stock": 397,
+      "rating": 1.64,
+      "reviewsCount": 1644,
+      "createdAt": "2025-02-07T22:18:03.483Z"
+    },
+    {
+      "id": "prod_45",
+      "title": "Handcrafted Bronze Car",
+      "slug": "handcrafted-bronze-car",
+      "description": "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+      "price": 259,
+      "salePrice": 196.69,
+      "currency": "USD",
+      "categoryId": "cat_6",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=3371131606138880"
+      ],
+      "sku": "RMSOEWUZ",
+      "stock": 592,
+      "rating": 2.27,
+      "reviewsCount": 1507,
+      "createdAt": "2025-08-24T15:24:21.323Z"
+    },
+    {
+      "id": "prod_46",
+      "title": "Practical Metal Computer",
+      "slug": "practical-metal-computer",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 243,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_6",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6350835344736256"
+      ],
+      "sku": "QFUK6QUF",
+      "stock": 11,
+      "rating": 2.27,
+      "reviewsCount": 810,
+      "createdAt": "2025-07-12T09:51:01.935Z"
+    },
+    {
+      "id": "prod_47",
+      "title": "Bespoke Steel Fish",
+      "slug": "bespoke-steel-fish",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 63,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5847566516224000"
+      ],
+      "sku": "KKGAEXON",
+      "stock": 478,
+      "rating": 2.12,
+      "reviewsCount": 571,
+      "createdAt": "2025-11-30T05:11:22.927Z"
+    },
+    {
+      "id": "prod_48",
+      "title": "Luxurious Granite Bike",
+      "slug": "luxurious-granite-bike",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 221,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8808146134892544"
+      ],
+      "sku": "YY2KT2WV",
+      "stock": 993,
+      "rating": 4.51,
+      "reviewsCount": 1839,
+      "createdAt": "2025-12-03T12:51:35.178Z"
+    },
+    {
+      "id": "prod_49",
+      "title": "Incredible Granite Chicken",
+      "slug": "incredible-granite-chicken",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 485,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=1952842810130432"
+      ],
+      "sku": "HISZCHAN",
+      "stock": 902,
+      "rating": 3.95,
+      "reviewsCount": 1474,
+      "createdAt": "2025-12-13T21:12:26.574Z"
+    },
+    {
+      "id": "prod_50",
+      "title": "Refined Concrete Chips",
+      "slug": "refined-concrete-chips",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 476,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_5",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=961573164154880"
+      ],
+      "sku": "CKHABESO",
+      "stock": 353,
+      "rating": 1.16,
+      "reviewsCount": 459,
+      "createdAt": "2025-05-31T10:29:24.919Z"
+    },
+    {
+      "id": "prod_51",
+      "title": "Incredible Steel Pants",
+      "slug": "incredible-steel-pants",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "price": 488,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=291076237688832"
+      ],
+      "sku": "XHJPOBGG",
+      "stock": 162,
+      "rating": 3.48,
+      "reviewsCount": 266,
+      "createdAt": "2025-01-31T23:35:44.685Z"
+    },
+    {
+      "id": "prod_52",
+      "title": "Ergonomic Soft Sausages",
+      "slug": "ergonomic-soft-sausages",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 476,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8279206374932480"
+      ],
+      "sku": "P5VSRY2A",
+      "stock": 26,
+      "rating": 3.65,
+      "reviewsCount": 822,
+      "createdAt": "2025-08-15T01:29:55.364Z"
+    },
+    {
+      "id": "prod_53",
+      "title": "Oriental Soft Shoes",
+      "slug": "oriental-soft-shoes",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 494,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5351453728178176"
+      ],
+      "sku": "KNOYPQZP",
+      "stock": 63,
+      "rating": 4.48,
+      "reviewsCount": 937,
+      "createdAt": "2025-12-17T00:45:29.202Z"
+    },
+    {
+      "id": "prod_54",
+      "title": "Practical Bronze Ball",
+      "slug": "practical-bronze-ball",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 11,
+      "salePrice": 9.49,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7321961361309696"
+      ],
+      "sku": "XZKZUYAL",
+      "stock": 726,
+      "rating": 4.77,
+      "reviewsCount": 1890,
+      "createdAt": "2025-03-29T03:17:11.649Z"
+    },
+    {
+      "id": "prod_55",
+      "title": "Luxurious Plastic Bike",
+      "slug": "luxurious-plastic-bike",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 124,
+      "salePrice": 103.48,
+      "currency": "USD",
+      "categoryId": "cat_3",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8593327721021440"
+      ],
+      "sku": "HBCESFKC",
+      "stock": 46,
+      "rating": 1.28,
+      "reviewsCount": 716,
+      "createdAt": "2025-09-23T09:44:48.229Z"
+    },
+    {
+      "id": "prod_56",
+      "title": "Electronic Steel Chicken",
+      "slug": "electronic-steel-chicken",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "price": 252,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_8",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7488328634990592"
+      ],
+      "sku": "WJQOYYY5",
+      "stock": 877,
+      "rating": 3.15,
+      "reviewsCount": 1584,
+      "createdAt": "2025-08-05T04:48:28.245Z"
+    },
+    {
+      "id": "prod_57",
+      "title": "Awesome Bronze Shoes",
+      "slug": "awesome-bronze-shoes",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 19,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5758855118061568"
+      ],
+      "sku": "HNDT8C0Y",
+      "stock": 350,
+      "rating": 3.41,
+      "reviewsCount": 1216,
+      "createdAt": "2025-05-29T03:38:20.108Z"
+    },
+    {
+      "id": "prod_58",
+      "title": "Generic Plastic Towels",
+      "slug": "generic-plastic-towels",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "price": 221,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4930957983350784"
+      ],
+      "sku": "VRMUOICW",
+      "stock": 863,
+      "rating": 4.31,
+      "reviewsCount": 1395,
+      "createdAt": "2025-01-17T21:31:02.270Z"
+    },
+    {
+      "id": "prod_59",
+      "title": "Licensed Bronze Shoes",
+      "slug": "licensed-bronze-shoes",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "price": 464,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_8",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=2326058714005504"
+      ],
+      "sku": "4S2YCULK",
+      "stock": 209,
+      "rating": 4.59,
+      "reviewsCount": 1267,
+      "createdAt": "2025-06-01T21:35:03.781Z"
+    },
+    {
+      "id": "prod_60",
+      "title": "Gorgeous Plastic Car",
+      "slug": "gorgeous-plastic-car",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 271,
+      "salePrice": 180.17,
+      "currency": "USD",
+      "categoryId": "cat_6",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=1368217863847936"
+      ],
+      "sku": "O8HDBBHL",
+      "stock": 412,
+      "rating": 1.53,
+      "reviewsCount": 1794,
+      "createdAt": "2025-02-14T08:17:44.325Z"
+    },
+    {
+      "id": "prod_61",
+      "title": "Recycled Granite Chicken",
+      "slug": "recycled-granite-chicken",
+      "description": "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+      "price": 487,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_3",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=368111752577024"
+      ],
+      "sku": "OALHLA15",
+      "stock": 549,
+      "rating": 4.44,
+      "reviewsCount": 241,
+      "createdAt": "2025-06-18T09:46:04.555Z"
+    },
+    {
+      "id": "prod_62",
+      "title": "Recycled Plastic Mouse",
+      "slug": "recycled-plastic-mouse",
+      "description": "The Football Is Good For Training And Recreational Purposes",
+      "price": 448,
+      "salePrice": 357.47,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6218523789492224"
+      ],
+      "sku": "J25NTCG5",
+      "stock": 512,
+      "rating": 4.61,
+      "reviewsCount": 1748,
+      "createdAt": "2025-11-03T04:11:35.655Z"
+    },
+    {
+      "id": "prod_63",
+      "title": "Unbranded Plastic Car",
+      "slug": "unbranded-plastic-car",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 6,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6739724119048192"
+      ],
+      "sku": "BBZCXMVU",
+      "stock": 236,
+      "rating": 3.13,
+      "reviewsCount": 1237,
+      "createdAt": "2025-03-28T02:06:30.430Z"
+    },
+    {
+      "id": "prod_64",
+      "title": "Fantastic Granite Shoes",
+      "slug": "fantastic-granite-shoes",
+      "description": "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+      "price": 362,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=1330715476099072"
+      ],
+      "sku": "F8IGTQVK",
+      "stock": 532,
+      "rating": 1.51,
+      "reviewsCount": 60,
+      "createdAt": "2025-11-21T08:29:27.234Z"
+    },
+    {
+      "id": "prod_65",
+      "title": "Luxurious Cotton Pants",
+      "slug": "luxurious-cotton-pants",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 269,
+      "salePrice": 164.72,
+      "currency": "USD",
+      "categoryId": "cat_3",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6641955643588608"
+      ],
+      "sku": "NB1YJQD5",
+      "stock": 327,
+      "rating": 1.54,
+      "reviewsCount": 1071,
+      "createdAt": "2025-11-16T18:12:05.066Z"
+    },
+    {
+      "id": "prod_66",
+      "title": "Gorgeous Fresh Pants",
+      "slug": "gorgeous-fresh-pants",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 299,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_8",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5844076586860544"
+      ],
+      "sku": "UT5AXJAY",
+      "stock": 746,
+      "rating": 3.32,
+      "reviewsCount": 1173,
+      "createdAt": "2025-07-25T21:58:48.559Z"
+    },
+    {
+      "id": "prod_67",
+      "title": "Bespoke Bronze Shirt",
+      "slug": "bespoke-bronze-shirt",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 145,
+      "salePrice": 120.91,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5472370972164096"
+      ],
+      "sku": "ZFMUZKBV",
+      "stock": 237,
+      "rating": 2.24,
+      "reviewsCount": 15,
+      "createdAt": "2025-11-23T07:42:11.508Z"
+    },
+    {
+      "id": "prod_68",
+      "title": "Gorgeous Bronze Pants",
+      "slug": "gorgeous-bronze-pants",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 126,
+      "salePrice": 102.67,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=791621387943936"
+      ],
+      "sku": "HNA3TQ43",
+      "stock": 525,
+      "rating": 2.42,
+      "reviewsCount": 36,
+      "createdAt": "2025-08-02T16:14:29.752Z"
+    },
+    {
+      "id": "prod_69",
+      "title": "Handcrafted Frozen Chips",
+      "slug": "handcrafted-frozen-chips",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 60,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_6",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=8732213359149056"
+      ],
+      "sku": "UR0OYFUA",
+      "stock": 723,
+      "rating": 4.63,
+      "reviewsCount": 1337,
+      "createdAt": "2025-03-05T20:34:16.975Z"
+    },
+    {
+      "id": "prod_70",
+      "title": "Unbranded Metal Towels",
+      "slug": "unbranded-metal-towels",
+      "description": "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+      "price": 270,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_3",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7553280171311104"
+      ],
+      "sku": "LCBYKIQC",
+      "stock": 508,
+      "rating": 3.45,
+      "reviewsCount": 1473,
+      "createdAt": "2025-10-02T23:48:30.495Z"
+    },
+    {
+      "id": "prod_71",
+      "title": "Sleek Bronze Chicken",
+      "slug": "sleek-bronze-chicken",
+      "description": "The slim & simple Maple Gaming Keyboard from Dev Byte comes with a sleek body and 7- Color RGB LED Back-lighting for smart functionality",
+      "price": 307,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_1",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5235328449249280"
+      ],
+      "sku": "V9VTJXA3",
+      "stock": 369,
+      "rating": 4.18,
+      "reviewsCount": 673,
+      "createdAt": "2025-07-17T15:55:49.114Z"
+    },
+    {
+      "id": "prod_72",
+      "title": "Rustic Granite Car",
+      "slug": "rustic-granite-car",
+      "description": "New ABC 13 9370, 13.3, 5th Gen CoreA5-8250U, 8GB RAM, 256GB SSD, power UHD Graphics, OS 10 Home, OS Office A & J 2016",
+      "price": 277,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6166072296210432"
+      ],
+      "sku": "O5F8G0L7",
+      "stock": 596,
+      "rating": 3.15,
+      "reviewsCount": 946,
+      "createdAt": "2025-07-11T08:18:37.333Z"
+    },
+    {
+      "id": "prod_73",
+      "title": "Awesome Plastic Bacon",
+      "slug": "awesome-plastic-bacon",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 178,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_9",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6719141182439424"
+      ],
+      "sku": "XP7VJZWC",
+      "stock": 181,
+      "rating": 2.6,
+      "reviewsCount": 758,
+      "createdAt": "2025-12-06T04:48:37.553Z"
+    },
+    {
+      "id": "prod_74",
+      "title": "Unbranded Metal Fish",
+      "slug": "unbranded-metal-fish",
+      "description": "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
+      "price": 289,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_2",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=7457428509556736"
+      ],
+      "sku": "NKCNAPAB",
+      "stock": 815,
+      "rating": 3.07,
+      "reviewsCount": 471,
+      "createdAt": "2025-05-01T16:11:24.643Z"
+    },
+    {
+      "id": "prod_75",
+      "title": "Generic Granite Salad",
+      "slug": "generic-granite-salad",
+      "description": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+      "price": 182,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=6151755513462784"
+      ],
+      "sku": "OSRINTSC",
+      "stock": 301,
+      "rating": 2.12,
+      "reviewsCount": 1080,
+      "createdAt": "2025-04-01T14:15:34.849Z"
+    },
+    {
+      "id": "prod_76",
+      "title": "Modern Granite Towels",
+      "slug": "modern-granite-towels",
+      "description": "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
+      "price": 120,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4790546260295680"
+      ],
+      "sku": "X4UECX7Q",
+      "stock": 940,
+      "rating": 2.53,
+      "reviewsCount": 665,
+      "createdAt": "2025-05-15T08:35:43.168Z"
+    },
+    {
+      "id": "prod_77",
+      "title": "Handmade Plastic Chicken",
+      "slug": "handmade-plastic-chicken",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 74,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_7",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4462379282726912"
+      ],
+      "sku": "XJTZMZ9K",
+      "stock": 312,
+      "rating": 1.71,
+      "reviewsCount": 1414,
+      "createdAt": "2025-09-30T18:33:10.464Z"
+    },
+    {
+      "id": "prod_78",
+      "title": "Oriental Metal Keyboard",
+      "slug": "oriental-metal-keyboard",
+      "description": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+      "price": 21,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_8",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=4449389632290816"
+      ],
+      "sku": "SKL6OX6N",
+      "stock": 847,
+      "rating": 2.95,
+      "reviewsCount": 914,
+      "createdAt": "2025-11-13T22:31:01.223Z"
+    },
+    {
+      "id": "prod_79",
+      "title": "Awesome Plastic Hat",
+      "slug": "awesome-plastic-hat",
+      "description": "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
+      "price": 400,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_5",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=2064912998203392"
+      ],
+      "sku": "PILI0DBH",
+      "stock": 566,
+      "rating": 1.71,
+      "reviewsCount": 1085,
+      "createdAt": "2025-04-13T01:35:20.869Z"
+    },
+    {
+      "id": "prod_80",
+      "title": "Incredible Rubber Pants",
+      "slug": "incredible-rubber-pants",
+      "description": "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+      "price": 415,
+      "salePrice": null,
+      "currency": "USD",
+      "categoryId": "cat_4",
+      "images": [
+        "https://loremflickr.com/640/480/product?lock=5254726134267904"
+      ],
+      "sku": "EOQSHWC9",
+      "stock": 912,
+      "rating": 2.94,
+      "reviewsCount": 1173,
+      "createdAt": "2025-11-09T16:39:35.487Z"
+    }
+  ]
+}

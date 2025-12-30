@@ -4,6 +4,7 @@ import BACKEND_URL from "../config";
 import Navbar from "./Navbar";
 import PostCard from "./PostCard";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 function MyProfile() {
   const [profile, setProfile] = useState(null);
   const [myPosts, setMyPosts] = useState([]);
@@ -81,6 +82,13 @@ function MyProfile() {
   return (
     <>
       <Navbar />
+      <button
+        onClick={() => navigate("/home")}
+        className="fixed top-24 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition text-gray-800"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
       {/* 💰 Floating Wallet Button */}
       <button
         onClick={() => navigate("/wallet", { state: { money } })}

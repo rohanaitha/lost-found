@@ -4,6 +4,11 @@ import {
   loginUser,
   updateAvatar,
 } from "../controllers/ModelController.js";
+import {
+  getProducts,
+  regenerateProducts,
+  getProductById,
+} from "../controllers/StoreController.js";
 import express from "express";
 import authMiddleware from "../middleware/AuthMiddleware.js";
 import {
@@ -57,5 +62,10 @@ router.post("/chat/room", createOrGetChat); // create or get a room
 router.get("/chat/:roomId", getMessages); // get messages
 router.post("/chat/:roomId/message", addMessage); // send/save message
 router.get("/inbox", authMiddleware, getInbox); // get all conversations
+
+// Store endpoints (premium vault)
+router.get("/store/products", getProducts);
+router.get("/store/products/:id", getProductById);
+router.post("/store/regenerate", authMiddleware, regenerateProducts);
 
 export default router;

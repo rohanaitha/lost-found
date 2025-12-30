@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BACKEND_URL from "../config";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import ChatPage from "./ChatPage";
 
 function Inbox() {
@@ -42,7 +43,7 @@ function Inbox() {
               className="p-2 hover:bg-gray-200 rounded-full transition"
               title="Back to Home"
             >
-              ←
+              <ArrowLeft className="w-5 h-5" />
             </button>
             <h2 className="font-bold text-xl tracking-tight">Messages</h2>
           </div>

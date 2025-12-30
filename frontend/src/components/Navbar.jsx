@@ -7,6 +7,8 @@ import {
   Home,
   MessageCircleMore,
 } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
@@ -17,6 +19,7 @@ function Navbar() {
   const [showMobileSearch, setShowMobileSearch] = useState(false);
   const mobileSearchRef = useRef(null);
   const navigate = useNavigate();
+  const { cart } = useCart();
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -193,6 +196,19 @@ function Navbar() {
         >
           <LogOut className="w-6 h-6" />
           <span className="hidden sm:inline font-medium">Logout</span>
+        </button>
+
+        {/* Cart */}
+        <button
+          onClick={() => navigate("/cart")}
+          className="relative hover:scale-105 transition"
+        >
+          <ShoppingCart className="w-6 h-6" />
+          {cart.length > 0 && (
+            <span className="absolute -top-2 -right-2 bg-yellow-400 text-black text-xs font-bold px-1.5 py-0.5 rounded-full">
+              {cart.length}
+            </span>
+          )}
         </button>
       </div>
     </nav>

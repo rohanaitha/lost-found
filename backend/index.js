@@ -73,6 +73,7 @@ app.get("/socket.io/", (req, res) => {
 
 // Existing routes
 app.use("/", UserRoute);
+// NOTE: store endpoints are now provided via UserRoute (e.g. GET /store/products)
 
 // Start the server (use server.listen, not app.listen)
 const PORT = process.env.PORT || 5000;

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "primereact/button";
 
 export default function Electronics() {
@@ -98,6 +99,14 @@ export default function Electronics() {
           "url('https://images.unsplash.com/photo-1504274066651-8d31a536b11a')",
       }}
     >
+      <button
+        onClick={() => navigate("/home")}
+        className="fixed top-20 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 transition text-white"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
+
       {/* HEADER */}
       <div className="text-center py-10">
         <h1 className="text-5xl md:text-6xl font-extrabold font-serif text-black drop-shadow-xl tracking-wide animate__animated animate__fadeInDown">

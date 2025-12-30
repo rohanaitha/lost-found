@@ -84,6 +84,14 @@ export default function Clothes() {
       <div className="absolute inset-0 bg-[url('https://i.pinimg.com/736x/43/d1/35/43d135d38689527d117c56015d80a458.jpg')] bg-cover bg-center"></div>
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
 
+      <button
+        onClick={() => navigate("/home")}
+        className="fixed top-20 left-6 z-50 flex items-center gap-2 px-4 py-2 rounded-full bg-white/20 hover:bg-white/40 transition text-white"
+      >
+        <ArrowLeft className="w-5 h-5" />
+        Back
+      </button>
+
       <div className="relative w-full max-w-3xl px-6 py-10">
         <h1 className="text-5xl font-extrabold text-white text-center mb-2 animate__animated animate__fadeInDown">
           Clothes
